@@ -1,0 +1,28 @@
+<ion-view id="loginPage" view-title="Login">
+  <ion-content style="margin-top: 8px">
+    <div style="text-align: center">
+      <div>
+        Username
+      </div>
+      <div class="vertical-margin">
+        <input class="regular-input" type="text" ng-model="player.name">
+      </div>
+
+      <div>
+        Password
+      </div>
+      <div class="vertical-margin">
+        <input class="regular-input" type="password" ng-model="player.password">
+      </div>
+
+      <button class="button button-balanced" ng-click="login()">
+Login
+      </button>
+
+      <button class="button button-calm" ng-click="startGame()">
+Reset room 1
+      </button>
+
+    </div>
+  </ion-content>
+</ion-view>
