@@ -42,26 +42,43 @@ RoomCtrl.prototype.initController = function () {
 
   vm.showUsersCubes = false;
 
+
+  //general update
+  vm.mySocket.getSocket().on(pushCase.UPDATE_GAME, function () {
+    vm.$log.debug("PUSH RECEIVED:", pushCase.UPDATE_GAME);
+    vm.getGame();
+  });
+
   //in case that session end
   vm.mySocket.getSocket().on(pushCase.SESSION_ENDED, function () {
+    vm.$log.debug("PUSH RECEIVED:", pushCase.SESSION_ENDED);
     vm.onRoundEnded();
   });
 
   //in case that some user gambled
   vm.mySocket.getSocket().on(pushCase.PLAYER_GAMBLED, function () {
+    vm.$log.debug("PUSH RECEIVED:", pushCase.PLAYER_GAMBLED);
     vm.getGame();
   });
 
   //in case of game over
   vm.mySocket.getSocket().on(pushCase.GAME_OVER, function () {
+    vm.$log.debug("PUSH RECEIVED:", pushCase.GAME_OVER);
+    // refresh game
+    vm.onRoundEnded();
+  });
+
+  //in case of game restarted
+  vm.mySocket.getSocket().on(pushCase.GAME_RESTARTED, function () {
+    vm.$log.debug("PUSH RECEIVED:", pushCase.GAME_RESTARTED);
+    // refresh game
     vm.getGame();
   });
 
   vm.roomId = parseInt(vm.$stateParams.roomId);
-  vm.pageTitle = vm.$stateParams.roomName;
 
   //TODO for debug only
-  vm.showRefreshButton = false;
+  vm.showRefreshButton = true;
 
   vm.getGame();
 };
@@ -79,9 +96,8 @@ RoomCtrl.prototype.onRoundEnded = function () {
   //set time out for cubes preview
   vm.$timeout(function () {
     vm.showUsersCubes = false;
-    vm.users = null;
     vm.getGame();
-  }, vm.room.numOfCubes * 700);
+  }, vm.room.numOfCubes * 1000);
 };
 
 /**
@@ -100,21 +116,12 @@ RoomCtrl.prototype.getGame = function () {
     onSuccess: function (result) {
       vm.$log.debug("successfully get game", result);
 
-      //check if the user already set
-      if (vm.users == null) {
-        vm.users = result.users;
-      } else {
-        for (var i = 0; i < vm.users.length; i++) {
-          for (var j = 0; j < result.users.length; j++) {
-            if (vm.users[i].id == result.users[j].id) {
-              vm.users[i].gambleCube = result.users[j].gambleCube;
-              vm.users[i].gambleTimes = result.users[j].gambleTimes;
-              break;
-            }
-          }
-        }
-      }
+      vm.showUsersCubes = false;
+      vm.users = result.users;
       vm.room = result.room;
+
+      //set page name
+      vm.pageTitle = vm.room.name;
 
       angular.forEach(vm.users, function (user) {
         //check who is me
@@ -203,7 +210,36 @@ RoomCtrl.prototype.returnToRooms = function () {
 
   var vm = this;
 
+  vm.requestHandler.createRequest({
+    event: 'logout',
+    onSuccess: function () {
+      vm.$log.debug("game restarted successfully");
+    },
+    onError: function () {
+      vm.$log.debug("failed to restart the game");
+    }
+  });
+
   vm.$state.go('rooms');
+};
+
+RoomCtrl.prototype.restartGame = function () {
+  var vm = this;
+
+  //get the game request
+  vm.requestHandler.createRequest({
+    event: 'restartGame',
+    params: {
+      roomId: vm.roomId,
+      userId: vm.$myPlayer.getId()
+    },
+    onSuccess: function () {
+      vm.$log.debug("game restarted successfully");
+    },
+    onError: function () {
+      vm.$log.debug("failed to restart the game");
+    }
+  });
 };
 
 /**

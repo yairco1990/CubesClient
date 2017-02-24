@@ -5,10 +5,10 @@
     </div>
 
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right vertical-center user-item"
+      <ion-item class="item-avatar item-icon-right vertical-center user-item"
                 ng-repeat="user in vm.users" ng-class="{'isMe': user.isMe, 'isNotMe': !user.isMe}">
         <div class="row">
-          <div class="col col-40">
+          <div class="col" ng-class="{'col-40': !vm.showUsersCubes, 'col-10': vm.showUsersCubes}">
             <h2 ng-class="{'current-player-turn': user.currentUser}" ng-show="!user.isMe">
               {{user.name}}
             </h2>
@@ -26,7 +26,7 @@
           </div>
           <div class="col-90">
             <span ng-repeat="cube in user.cubes" ng-show="vm.showUsersCubes">
-              <img style="height: 40px; width: 40px; margin: 5px" ng-src="{{vm.getCubeImage(cube.cubeNum)}}" />
+              <img style="height: 40px; width: 40px; margin: 5px" ng-src="{{vm.getCubeImage(cube.cubeNum)}}"/>
             </span>
           </div>
         </div>
@@ -39,7 +39,7 @@
 
       <!--USER CUBES-->
       <span ng-repeat="cube in vm.myPlayer.cubes">
-        <img style="height: 40px; width: 40px; margin: 5px" ng-src="{{vm.getCubeImage(cube.cubeNum)}}" />
+        <img style="height: 40px; width: 40px; margin: 5px" ng-src="{{vm.getCubeImage(cube.cubeNum)}}"/>
       </span>
       <br/>
 
@@ -72,7 +72,8 @@
       </div>
 
       <!--LAYING-->
-      <button ng-show="vm.isMyTurn && vm.room.lastGambleCube != null && vm.room.lastGambleTimes != null" style="margin: 10px"
+      <button ng-show="vm.isMyTurn && vm.room.lastGambleCube != null && vm.room.lastGambleTimes != null"
+              style="margin: 10px"
               class="button button-assertive no-padding"
               ng-click="vm.setGamble(null, null, true)">
         שקר!
@@ -82,8 +83,8 @@
       <button ng-show="vm.showRefreshButton" style="    margin: 5px;
     position: absolute;
     bottom: 0;
-    left: 0;" class="button button-energized no-padding" ng-click="vm.getGame()">
-        רענן
+    left: 0;" class="button button-energized no-padding" ng-click="vm.restartGame()">
+Restart
       </button>
 
     </div>

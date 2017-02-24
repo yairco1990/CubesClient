@@ -3,40 +3,10 @@
  */
 angular.module('MyCubes.controllers.login-page', [])
 
-  .controller('LoginCtrl', function ($scope, requestHandler, $http, $state, $cubesApi, $ionicPopup, $myPlayer, $timeout, $log, $window, $rootScope) {
+  .controller('LoginCtrl', function ($scope, requestHandler, $http, $state, $ionicPopup, $myPlayer, $timeout, $log) {
 
     //init player
     $scope.player = {};
-
-    //if user already exist - no need to login
-    //if ($window.localStorage['userId'] != null && $window.localStorage['userName'] != null) {
-    //  var player = {
-    //    id: $window.localStorage['userId'],
-    //    name: $window.localStorage['userName']
-    //  };
-    //  $myPlayer.setPlayer(player);
-    //  $state.go('rooms');
-    //}
-
-    //init room
-    //$scope.startGame = function () {
-    //  $cubesApi.apiRequest({
-    //    action: $cubesApi.apiActions.Cubes.INIT_ROOM,
-    //    params: {
-    //      roomId: 1
-    //    },
-    //    onSuccess: function () {
-    //      $log.debug("successfully init room 1");
-    //    },
-    //    onError: function (response) {
-    //      $log.error("failed to init room 1", response);
-    //    }
-    //  });
-    //};
-
-    //mySocket.getSocket().on('clientLogin', function (data) {
-    //  $log.debug(data);
-    //});
 
     /**
      * login

@@ -12,8 +12,6 @@ angular.module('starter', [
   'btford.socket-io',
 
   //SERVICES
-  'MyCubes.services.api',
-  'MyCubes.services.push-notifications',
   'MyCubes.services.request-handler',
 
   //CONTROLLERS
@@ -22,51 +20,13 @@ angular.module('starter', [
   'MyCubes.controllers.login-page'
 ])
 
-  .run(function ($ionicPlatform, $cubesApi) {
+  .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
 
-      //var push = new Ionic.Push({
-      //  "debug": true,
-      //  "onNotification": function (payload) {
-      //    $log.debug("PUSH SENT ", payload.text);
-      //    $rootScope.$broadcast('pushSent', payload.text);
-      //  },
-      //  "onRegister": function (data) {
-      //    $log.debug(data);
-      //  }
-      //});
-      //
-      //push.register(function (token) {
-      //  $log.info("My Device token:", token.token);
-      //  setToken(token.token);
-      //  push.saveToken(token);  // persist the token in the Ionic Platform
-      //});
-      //
-      ///**
-      // * set the token in the db
-      // * @param token
-      // */
-      //function setToken(token) {
-      //  //set token for device
-      //  $cubesApi.apiRequest({
-      //    action: $cubesApi.apiActions.Cubes.SET_TOKEN,
-      //    params: {
-      //      userId: $myPlayer.getId(),
-      //      webToken: token
-      //    },
-      //    onSuccess: function () {
-      //      $log.info("successfully set token");
-      //    },
-      //    onError: function (response) {
-      //      $log.error("failed to set token ", response);
-      //    }
-      //  });
-      //}
     });
   })
 
   .config(function ($stateProvider, $urlRouterProvider) {
-
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
@@ -89,6 +49,7 @@ angular.module('starter', [
       })
 
       .state('room', {
+        cache: false,
         url: '/room/:roomId:roomName',
         templateUrl: 'pages/room-page/room-page.html',
         controller: 'RoomCtrl as vm',
@@ -106,7 +67,7 @@ angular.module('starter', [
 
   })
 
-  .factory('$myPlayer', function ($window) {
+  .factory('$myPlayer', function ($window, requestHandler, $log) {
 
     var player = null;
 
@@ -115,6 +76,7 @@ angular.module('starter', [
 
     if (localStoragePlayer && isJson(localStoragePlayer)) {
       player = JSON.parse(localStoragePlayer);
+      setSocketId(player.id);
     }
 
     function isJson(str) {
@@ -126,11 +88,28 @@ angular.module('starter', [
       return true;
     }
 
+    //set socket id for user
+    function setSocketId(userId) {
+      requestHandler.createRequest({
+        event: 'setSocketId',
+        params: {
+          userId: userId
+        },
+        onSuccess: function () {
+          $log.debug("successfully set socketId for user");
+        },
+        onError: function (error) {
+          $log.debug("failed to set socketId for user");
+        }
+      });
+    }
+
     return {
       //set player
       setPlayer: function (user) {
         player = user;
         $window.localStorage.setItem('player', JSON.stringify(user));
+        setSocketId(player.id);
       },
 
       //get player
@@ -150,7 +129,7 @@ angular.module('starter', [
 
   })
 
-  .factory('mySocket', function (socketFactory) {
+  .factory('mySocket', function (socketFactory, $log) {
 
     var mySocket = {};
 

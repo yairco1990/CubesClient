@@ -3,7 +3,7 @@
  */
 angular.module('MyCubes.controllers.rooms-page', [])
 
-  .controller('RoomsCtrl', function ($scope, $http, $state, $myPlayer, $window, $cubesApi, $rootScope, $log, requestHandler) {
+  .controller('RoomsCtrl', function ($scope, $http, $state, $myPlayer, $window, $rootScope, $log, requestHandler) {
 
     //if user already exist - no need to login
     //if ($window.localStorage['userId'] != null && $window.localStorage['userName'] != null) {
@@ -37,9 +37,22 @@ angular.module('MyCubes.controllers.rooms-page', [])
      * @param roomId
      */
     $scope.getIntoRoom = function (roomId, roomName) {
-      $state.go('room', {
-        roomId: roomId,
-        roomName: roomName
+
+      requestHandler.createRequest({
+        event: 'enterRoom',
+        params: {
+          roomId: roomId,
+          userId: $myPlayer.getId()
+        },
+        onSuccess: function () {
+          $state.go('room', {
+            roomId: roomId,
+            roomName: roomName
+          });
+        },
+        onError: function (error) {
+          $log.error("failed to enter to room", error);
+        }
       });
     };
 
