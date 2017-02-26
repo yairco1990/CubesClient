@@ -77,6 +77,10 @@ RoomCtrl.prototype.initController = function () {
 
   vm.roomId = parseInt(vm.$stateParams.roomId);
 
+  vm.showUserPanel = true;
+
+  vm.pageTitle = vm.$stateParams.roomName;
+
   //TODO for debug only
   vm.showRestartButton = false;
 
@@ -89,6 +93,17 @@ RoomCtrl.prototype.initController = function () {
 RoomCtrl.prototype.onRoundEnded = function () {
 
   var vm = this;
+
+  //TODO sort the user's cubes
+  vm.users.forEach(function (user) {
+    user.cubes.sort(function (cube) {
+      if (cube.cubeNum == 1 || cube.cubeNum == vm.room.lastGambleCube) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  });
 
   //show all users cubes
   vm.showUsersCubes = true;
@@ -133,29 +148,19 @@ RoomCtrl.prototype.getGame = function () {
         }
 
         //check who current user turn
-        if (user.id == vm.room.currentUserTurnId) {
-          user.currentUser = true;
-        } else {
-          user.currentUser = false;
-        }
+        user.currentUser = user.id == vm.room.currentUserTurnId;
 
         //check who last user turn
-        if (user.id == vm.room.lastUserTurnId) {
-          user.lastUser = true;
-        } else {
-          user.lastUser = false;
-        }
+        user.lastUser = user.id == vm.room.lastUserTurnId;
       });
 
       //check if i am the current turn
-      if (vm.room.currentUserTurnId == vm.$myPlayer.getId()) {
-        vm.isMyTurn = true;
-      } else {
-        vm.isMyTurn = false;
-      }
+      vm.isMyTurn = vm.room.currentUserTurnId == vm.$myPlayer.getId();
 
       //set gambling to minimum
       vm.setGambleToMinimum();
+
+      vm.showUserPanel = true;
     },
     onError: function (error) {
       vm.$log.error("failed to get game", error);
@@ -170,6 +175,8 @@ RoomCtrl.prototype.getGame = function () {
 RoomCtrl.prototype.setGamble = function (gambleTimes, gambleCube, isLying) {
 
   var vm = this;
+
+  vm.showUserPanel = false;
 
   //send gamble request
   vm.requestHandler.createRequest({
@@ -186,17 +193,17 @@ RoomCtrl.prototype.setGamble = function (gambleTimes, gambleCube, isLying) {
       vm.$log.debug("successfully sent gamble");
       if (isLying) {
 
-        vm.showUsersCubes = true;
         if (result == "CORRECT_GAMBLE") {
 
-          vm.showAlert("You wrong!", "The gamble was correct!");
+          vm.showAlert("You wrong!", "The gamble was correct!", "red");
         } else {
 
-          vm.showAlert("You right!", "He is a bluffer!");
+          vm.showAlert("You right!", "He is a bluffer!", "green");
         }
       }
     },
     onError: function (error) {
+      vm.showUserPanel = true;
 
       vm.$log.error("failed to set gamble due to", error);
     }
@@ -245,18 +252,18 @@ RoomCtrl.prototype.restartGame = function () {
 /**
  * show alert
  */
-RoomCtrl.prototype.showAlert = function (title, template) {
+RoomCtrl.prototype.showAlert = function (title, description, color) {
 
   var vm = this;
 
   var alertPopup = vm.$ionicPopup.show({
     title: title,
-    template: template
+    template: "<style>.popup-head { background-color:" + color + " !important; }</style><p>" + description + "<p/>"
   });
 
   vm.$timeout(function () {
     alertPopup.close();
-  }, 2000);
+  }, 2500);
 };
 
 RoomCtrl.prototype.getGambleTimes = function () {

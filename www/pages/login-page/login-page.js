@@ -27,7 +27,7 @@ angular.module('MyCubes.controllers.login-page', [])
 
           //show success popup
           var alertPopup = $ionicPopup.show({
-            title: 'התחברת בהצלחה!'
+            title: 'Successfully logged in!'
           });
 
           //close popup after 3 seconds and move to rooms
@@ -42,8 +42,8 @@ angular.module('MyCubes.controllers.login-page', [])
 
           //show success popup
           var alertPopup = $ionicPopup.alert({
-            title: 'שגיאה בהתחברות',
-            subTitle: 'שם המשתמש שהזנת לא קיים'
+            title: 'Failed to login',
+            subTitle: 'Check username and password'
           });
           alertPopup.then(function (res) {
           });

@@ -39,7 +39,17 @@ angular.module('starter', [
       .state('login', {
         url: '/login',
         templateUrl: 'pages/login-page/login-page.html',
-        controller: 'LoginCtrl'
+        controller: 'LoginCtrl',
+        resolve: {
+          pageData: function ($myPlayer, $state, $timeout, $log) {
+            if ($myPlayer.getPlayer() != null) {
+              $log.debug("there is a player - move to rooms state");
+              $timeout(function(){
+                $state.go('rooms');
+              }, 0);
+            }
+          }
+        }
       })
 
       .state('rooms', {
@@ -133,8 +143,21 @@ angular.module('starter', [
 
     var mySocket = {};
 
+    var ENVIRONMENTS = {
+      LOCAL: {
+        host: 'localhost:3000'
+      },
+      DEVELOPMENT: {
+        host: 'https://dice-lies.herokuapp.com/'
+      }
+    };
+
+    var selectedEnvironment = ENVIRONMENTS.DEVELOPMENT;
+
+    $log.debug("environment host selected = ", selectedEnvironment.host);
+
     mySocket = socketFactory({
-      ioSocket: io.connect('https://dice-lies.herokuapp.com/')
+      ioSocket: io.connect(selectedEnvironment.host)
     });
 
     return {

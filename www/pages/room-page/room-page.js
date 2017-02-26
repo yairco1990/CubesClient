@@ -50,9 +50,9 @@ RoomCtrl.prototype.initController = function () {
   });
 
   //in case that session end
-  vm.mySocket.getSocket().on(pushCase.SESSION_ENDED, function () {
+  vm.mySocket.getSocket().on(pushCase.SESSION_ENDED, function (data) {
     vm.$log.debug("PUSH RECEIVED:", pushCase.SESSION_ENDED);
-    vm.onRoundEnded();
+    vm.onRoundEnded(data.users, data.endRoundResult, data.isUserLeft);
   });
 
   //in case that some user gambled
@@ -62,10 +62,10 @@ RoomCtrl.prototype.initController = function () {
   });
 
   //in case of game over
-  vm.mySocket.getSocket().on(pushCase.GAME_OVER, function () {
+  vm.mySocket.getSocket().on(pushCase.GAME_OVER, function (data) {
     vm.$log.debug("PUSH RECEIVED:", pushCase.GAME_OVER);
     // refresh game
-    vm.onRoundEnded();
+    vm.onRoundEnded(data.users, data.endRoundResult, data.isUserLeft);
   });
 
   //in case of game restarted
@@ -79,6 +79,8 @@ RoomCtrl.prototype.initController = function () {
 
   vm.showUserPanel = true;
 
+  vm.pageTitle = vm.$stateParams.roomName;
+
   //TODO for debug only
   vm.showRestartButton = false;
 
@@ -88,18 +90,45 @@ RoomCtrl.prototype.initController = function () {
 /**
  * when round ended - show cubes and restart the game after X time
  */
-RoomCtrl.prototype.onRoundEnded = function () {
+RoomCtrl.prototype.onRoundEnded = function (users, endRoundResult, isUserLeft) {
 
   var vm = this;
+
+  //that's mean that one left in the room
+  if (isUserLeft && users.length == 2) {
+    vm.getGame();
+    return;
+  }
+
+  vm.users = users;
+  vm.endRoundResult = endRoundResult;
+
+  vm.parseUsersObject(vm.users);
+
+  //sort the user's cubes
+  vm.users.forEach(function (user) {
+    if (user.cubes) {
+      user.cubes.sort(function (cube) {
+        if (cube.cubeNum == 1 || cube.cubeNum == vm.room.lastGambleCube) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+    }
+  });
 
   //show all users cubes
   vm.showUsersCubes = true;
 
+  //calc time of waiting
+  var timeToWait = vm.room.numOfCubes * 1000;
+  timeToWait = timeToWait < 5000 ? 5000 : timeToWait;
+
   //set time out for cubes preview
   vm.$timeout(function () {
-    vm.showUsersCubes = false;
     vm.getGame();
-  }, vm.room.numOfCubes * 1000);
+  }, timeToWait);
 };
 
 /**
@@ -113,7 +142,8 @@ RoomCtrl.prototype.getGame = function () {
   vm.requestHandler.createRequest({
     event: 'getGame',
     params: {
-      roomId: vm.roomId
+      roomId: vm.roomId,
+      userId: vm.$myPlayer.getId()
     },
     onSuccess: function (result) {
       vm.$log.debug("successfully get game", result);
@@ -122,24 +152,10 @@ RoomCtrl.prototype.getGame = function () {
       vm.users = result.users;
       vm.room = result.room;
 
+      vm.parseUsersObject(vm.users);
+
       //set page name
       vm.pageTitle = vm.room.name;
-
-      angular.forEach(vm.users, function (user) {
-        //check who is me
-        if (user.id == vm.$myPlayer.getId()) {
-          user.isMe = true;
-          vm.myPlayer = user;
-        } else {
-          user.isMe = false;
-        }
-
-        //check who current user turn
-        user.currentUser = user.id == vm.room.currentUserTurnId;
-
-        //check who last user turn
-        user.lastUser = user.id == vm.room.lastUserTurnId;
-      });
 
       //check if i am the current turn
       vm.isMyTurn = vm.room.currentUserTurnId == vm.$myPlayer.getId();
@@ -148,12 +164,40 @@ RoomCtrl.prototype.getGame = function () {
       vm.setGambleToMinimum();
 
       vm.showUserPanel = true;
+
+      vm.showUsersCubes = false;
+
+      vm.endRoundResult = null;
     },
     onError: function (error) {
       vm.$log.error("failed to get game", error);
     }
   });
 
+};
+
+/**
+ * parse user object
+ */
+RoomCtrl.prototype.parseUsersObject = function (users) {
+
+  var vm = this;
+
+  angular.forEach(users, function (user) {
+    //check who is me
+    if (user.id == vm.$myPlayer.getId()) {
+      user.isMe = true;
+      vm.myPlayer = user;
+    } else {
+      user.isMe = false;
+    }
+
+    //check who current user turn
+    user.currentUser = user.id == vm.room.currentUserTurnId;
+
+    //check who last user turn
+    user.lastUser = user.id == vm.room.lastUserTurnId;
+  });
 };
 
 /**
@@ -180,13 +224,12 @@ RoomCtrl.prototype.setGamble = function (gambleTimes, gambleCube, isLying) {
       vm.$log.debug("successfully sent gamble");
       if (isLying) {
 
-        vm.showUsersCubes = true;
         if (result == "CORRECT_GAMBLE") {
 
-          vm.showAlert("You wrong!", "The gamble was correct!");
+          vm.showAlert("You wrong!", "The gamble was correct!", "red");
         } else {
 
-          vm.showAlert("You right!", "He is a bluffer!");
+          vm.showAlert("You right!", "He is a bluffer!", "green");
         }
       }
     },
@@ -240,18 +283,18 @@ RoomCtrl.prototype.restartGame = function () {
 /**
  * show alert
  */
-RoomCtrl.prototype.showAlert = function (title, description) {
+RoomCtrl.prototype.showAlert = function (title, description, color) {
 
   var vm = this;
 
   var alertPopup = vm.$ionicPopup.show({
     title: title,
-    template: description
+    template: "<style>.popup-head { background-color:" + color + " !important; }</style><p>" + description + "<p/>"
   });
 
   vm.$timeout(function () {
     alertPopup.close();
-  }, 2000);
+  }, 2500);
 };
 
 RoomCtrl.prototype.getGambleTimes = function () {
@@ -327,6 +370,19 @@ RoomCtrl.prototype.isMe = function (user) {
   var vm = this;
 
   return user.id == vm.$myPlayer.getId();
+};
+
+RoomCtrl.prototype.getEndRoundTextResult = function () {
+  var vm = this;
+
+  var text = "";
+
+  if (vm.endRoundResult) {
+    var isRightText = vm.endRoundResult.isRight ? " RIGHT!!" : "LOST!!";
+    text = vm.endRoundResult.sayLying + " gambled that " + vm.endRoundResult.gambleTimes + " of " + vm.endRoundResult.gambleCube + " it's a bluff and he is " + isRightText;
+  }
+
+  return text;
 };
 
 /////////////////////////////////////////increase and decrease gambling details - works very good until 21/2/2017!/////////////////////////////////////////////////

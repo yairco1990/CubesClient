@@ -39,7 +39,17 @@ angular.module('starter', [
       .state('login', {
         url: '/login',
         templateUrl: 'pages/login-page/login-page.html',
-        controller: 'LoginCtrl'
+        controller: 'LoginCtrl',
+        resolve: {
+          pageData: function ($myPlayer, $state, $timeout, $log) {
+            if ($myPlayer.getPlayer() != null) {
+              $log.debug("there is a player - move to rooms state");
+              $timeout(function(){
+                $state.go('rooms');
+              }, 0);
+            }
+          }
+        }
       })
 
       .state('rooms', {

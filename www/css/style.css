@@ -12,11 +12,11 @@ html {
   align-items: center;
 }
 
-.no-padding{
+.no-padding {
   padding: 0 !important;
 }
 
-.no-margin{
+.no-margin {
   margin: 0 !important;
 }
 
@@ -31,25 +31,40 @@ html {
   background-color: grey;
 }
 
-#roomPage .user-item{
+#roomPage .user-item {
   padding: 0px 15px 0px 10px;
   min-height: 40px;
 }
 
-#roomPage .current-user-turn{
+#roomPage .current-user-turn {
   background-color: #6cff31;
   height: 70px;
 }
 
-#roomPage .not-current-user-turn{
+#roomPage .user-cube {
+  height: 40px;
+  width: 40px;
+  margin: 5px;
+  align-self: center;
+}
+
+#roomPage .gambled-cube {
+  height: 50px !important;
+  width: 50px !important;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #e2d093;
+}
+
+#roomPage .not-current-user-turn {
   background-color: #91f3ff;
 }
 
-#roomPage .disabled-player{
+#roomPage .disabled-player {
   opacity: 0.5;
 }
 
-#roomPage .cube-item{
+#roomPage .cube-item {
   /*border-style: solid;*/
   /*border-width: 1px 1px 1px 1px;*/
   /*font-size: 30px;*/
@@ -59,22 +74,22 @@ html {
   /*margin: 5px;*/
 }
 
-#loginPage .regular-input{
+#loginPage .regular-input {
   border-style: solid;
   border-width: 1px 1px 1px 1px;
   border-radius: 5px;
   display: inline;
 }
 
-.vertical-margin{
+.vertical-margin {
   margin: 8px 0;
 }
 
-#roomPage .current-player-turn{
+#roomPage .current-player-turn {
   font-weight: bold;
 }
 
-#roomPage .last-player-turn{
+#roomPage .last-player-turn {
   font-weight: bold;
   border: red solid;
   border-width: 2px;
@@ -82,11 +97,11 @@ html {
   padding: 3px;
 }
 
-#roomPage .scroll{
+#roomPage .scroll {
   height: 100%;
   min-height: 100%;
 }
 
-.opacity-05{
+.opacity-05 {
   opacity: 0.5;
 }
