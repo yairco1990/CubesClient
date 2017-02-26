@@ -7,5 +7,6 @@ var pushCase = {
   PLAYER_GAMBLED: "playerGambled",
   GAME_OVER: "gameOver",
   GAME_RESTARTED: "gameRestarted",
-  UPDATE_GAME: "updateGame"
+  UPDATE_GAME: "updateGame",
+  NEW_MESSAGE: "newMessage"
 };

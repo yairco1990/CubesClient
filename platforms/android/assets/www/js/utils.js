@@ -32,7 +32,7 @@ function isNotNull(val) {
   return !isNull(val);
 }
 
-function isInt(n){
+function isInt(n) {
   return Number(n) === n && n % 1 === 0;
 }
 
@@ -58,78 +58,34 @@ function getSortableByPropertyName(property, reverse) {
       return 0;
     }
 
-    return o2[property] ?  -1 : 1;
+    return o2[property] ? -1 : 1;
   };
 }
 
+var MyUtils = {
+  /**
+   * get user by id
+   * @param users
+   * @param id
+   * @returns {*}
+   */
+  getUserById: function (users, id) {
+    var selectedUser = users[0];
+    users.forEach(function (user) {
+      if (user.id == id) {
+        selectedUser = user;
+      }
+    });
+    return selectedUser;
+  },
 
-
-/**
- * invokes all who the functions that listens to ready alert after the ready function is called numOfFunc times.
- * @param numOfFunc
- * @param animation
- * @constructor
- */
-function ReadyInvoker(numOfFunc, withLoading) {
-  numOfFunc = numOfFunc || 1;
-
-  this.withLoading = withLoading === true;
-
-  if (this.withLoading) {
-    // showLoadingBar(numOfFunc == 1 ? 5 : 0);
-  }
-
-  this.numOfFunc = this.numOfFuncLeft = numOfFunc;
-  this.listeners = [];
-  this.stopped = false;
-}
-
-/**
- * invoke the given function when ready
- * @param func
- */
-ReadyInvoker.prototype.wait = function (func) {
-  if (!this.stopped) {
-    if (this.numOfFuncLeft > 0) {
-      this.listeners.push(func);
-    } else {
-      func();
-    }
+  isInTheList: function (list, obj) {
+    var isInTheList = false;
+    list.forEach(function (item) {
+      if (item == obj) {
+        isInTheList = true;
+      }
+    });
+    return isInTheList;
   }
 };
-
-/**
- * notify that another function is ready, checks if all the functions are ready, if so invoke all the ready listeners
- */
-ReadyInvoker.prototype.ready = function () {
-  this.numOfFuncLeft--;
-
-  if (this.numOfFuncLeft === 0) {
-    if (this.withLoading) {
-      // showLoadingBar(100);
-    }
-
-    while (this.listeners.length > 0) {
-      this.listeners[0]();
-      this.listeners.splice(0, 1);
-    }
-  } else {
-
-    if (this.withLoading) {
-      // showLoadingBar(((this.numOfFunc - this.numOfFuncLeft) * 100) / this.numOfFunc);
-    }
-  }
-};
-
-/**
- * stop the invoker, and don't invoke any wait functions
- */
-ReadyInvoker.prototype.stop = function () {
-  this.stopped = true;
-};
-
-
-ReadyInvoker.prototype.isEnded = function () {
-  return this.numOfFuncLeft <= 0;
-};
-

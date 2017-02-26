@@ -44,7 +44,7 @@ angular.module('starter', [
           pageData: function ($myPlayer, $state, $timeout, $log) {
             if ($myPlayer.getPlayer() != null) {
               $log.debug("there is a player - move to rooms state");
-              $timeout(function(){
+              $timeout(function () {
                 $state.go('rooms');
               }, 0);
             }
@@ -152,7 +152,7 @@ angular.module('starter', [
       }
     };
 
-    var selectedEnvironment = ENVIRONMENTS.LOCAL;
+    var selectedEnvironment = ENVIRONMENTS.DEVELOPMENT;
 
     $log.debug("environment host selected = ", selectedEnvironment.host);
 

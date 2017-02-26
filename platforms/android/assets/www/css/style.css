@@ -37,31 +37,80 @@ html {
 }
 
 #roomPage .current-user-turn {
-  background-color: #6cff31;
+  background-color: #4cd216;
   height: 70px;
 }
 
 #roomPage .user-cube {
-  height: 40px;
-  width: 40px;
-  margin: 5px;
-  align-self: center;
+  height: 50px !important;
+  width: 50px !important;
+  padding: 5px 4px 4px 5px;
+  margin-left: 5px;
+  border-radius: 5px;
 }
 
 #roomPage .gambled-cube {
-  height: 50px !important;
-  width: 50px !important;
-  padding: 5px;
+  background-color: #f48484;
+}
+
+#roomPage .chat-div {
+  background-color: #e1e5d9;
+  z-index: 10;
+  width: 90%;
+  height: 90%;
+  position: absolute;
+  left: 5%;
+  top: 5%;
+  border: black solid;
   border-radius: 5px;
-  background-color: #e2d093;
+  border-width: 1px;
+  padding: 8px;
 }
 
 #roomPage .not-current-user-turn {
-  background-color: #91f3ff;
+  background-color: #bcfcaa;
+}
+
+#roomPage .gamble-summarize {
+  color: #1d1cff;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+#roomPage .gamble-summarize-right {
+  color: green;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+#roomPage .gamble-summarize-wrong {
+  color: red;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+#roomPage .gamble-summarize-name {
+  color: #e56d1a;
+  font-size: 15px;
+  font-weight: 900
+}
+
+#roomPage .message-sender {
+  font-size: 15px;
+  font-weight: 900
+}
+
+#roomPage .message-content {
+  font-size: 15px;
+}
+
+#roomPage .message-its-me {
+  color: #4338ff;
 }
 
 #roomPage .disabled-player {
-  opacity: 0.5;
+  background-color: #c0c7b2;
+  opacity: 0.4;
 }
 
 #roomPage .cube-item {

@@ -79,9 +79,16 @@ RoomCtrl.prototype.initController = function () {
   //in case of game restarted
   vm.mySocket.getSocket().on(pushCase.NEW_MESSAGE, function (message) {
     vm.$log.debug("PUSH RECEIVED:", pushCase.NEW_MESSAGE);
+
+    //insert the new message
     vm.messages.push(message);
     if (!vm.chatOn) {
       vm.unreadMessages++;
+    }
+
+    //remove old messages
+    if (vm.messages.length > 10) {
+      vm.messages.splice(0, 1);
     }
   });
 
@@ -196,7 +203,6 @@ RoomCtrl.prototype.parseUsersObject = function (users) {
   var vm = this;
 
   //sort the users
-  vm.$log.debug("starting round user = " + MyUtils.getUserById(users, vm.startRoundUserId).name);
   users = vm.sortUsers(users, vm.startRoundUserId);
 
   angular.forEach(users, function (user) {
@@ -301,6 +307,10 @@ RoomCtrl.prototype.returnToRooms = function () {
     event: 'logout',
     onSuccess: function () {
       vm.$log.debug("game restarted successfully");
+
+      //remove socket listeners
+      vm.mySocket.getSocket().removeAllListeners();
+
     },
     onError: function () {
       vm.$log.debug("failed to restart the game");

@@ -41,7 +41,8 @@ RoomCtrl.prototype.initController = function () {
   var vm = this;
 
   vm.showUsersCubes = false;
-
+  vm.messages = [];
+  vm.unreadMessages = 0;
 
   //general update
   vm.mySocket.getSocket().on(pushCase.UPDATE_GAME, function () {
@@ -50,9 +51,9 @@ RoomCtrl.prototype.initController = function () {
   });
 
   //in case that session end
-  vm.mySocket.getSocket().on(pushCase.SESSION_ENDED, function () {
+  vm.mySocket.getSocket().on(pushCase.SESSION_ENDED, function (data) {
     vm.$log.debug("PUSH RECEIVED:", pushCase.SESSION_ENDED);
-    vm.onRoundEnded();
+    vm.onRoundEnded(data.users, data.endRoundResult, data.isUserLeft);
   });
 
   //in case that some user gambled
@@ -62,10 +63,10 @@ RoomCtrl.prototype.initController = function () {
   });
 
   //in case of game over
-  vm.mySocket.getSocket().on(pushCase.GAME_OVER, function () {
+  vm.mySocket.getSocket().on(pushCase.GAME_OVER, function (data) {
     vm.$log.debug("PUSH RECEIVED:", pushCase.GAME_OVER);
     // refresh game
-    vm.onRoundEnded();
+    vm.onRoundEnded(data.users, data.endRoundResult, data.isUserLeft);
   });
 
   //in case of game restarted
@@ -73,6 +74,22 @@ RoomCtrl.prototype.initController = function () {
     vm.$log.debug("PUSH RECEIVED:", pushCase.GAME_RESTARTED);
     // refresh game
     vm.getGame();
+  });
+
+  //in case of game restarted
+  vm.mySocket.getSocket().on(pushCase.NEW_MESSAGE, function (message) {
+    vm.$log.debug("PUSH RECEIVED:", pushCase.NEW_MESSAGE);
+
+    //insert the new message
+    vm.messages.push(message);
+    if (!vm.chatOn) {
+      vm.unreadMessages++;
+    }
+
+    //remove old messages
+    if (vm.messages.length > 10) {
+      vm.messages.splice(0, 1);
+    }
   });
 
   vm.roomId = parseInt(vm.$stateParams.roomId);
@@ -84,41 +101,57 @@ RoomCtrl.prototype.initController = function () {
   //TODO for debug only
   vm.showRestartButton = false;
 
-  vm.getGame();
+  vm.getGame(true);
 };
 
 /**
  * when round ended - show cubes and restart the game after X time
  */
-RoomCtrl.prototype.onRoundEnded = function () {
+RoomCtrl.prototype.onRoundEnded = function (users, endRoundResult, isUserLeft) {
 
   var vm = this;
 
-  //TODO sort the user's cubes
+  //that's mean that one left in the room
+  if (isUserLeft && users.length == 2) {
+    vm.getGame();
+    return;
+  }
+
+  vm.users = users;
+  vm.endRoundResult = endRoundResult;
+
+  vm.parseUsersObject(vm.users);
+
+  //sort the user's cubes
   vm.users.forEach(function (user) {
-    user.cubes.sort(function (cube) {
-      if (cube.cubeNum == 1 || cube.cubeNum == vm.room.lastGambleCube) {
-        return -1;
-      } else {
-        return 1;
-      }
-    });
+    if (user.cubes) {
+      user.cubes.sort(function (cube) {
+        if (cube.cubeNum == 1 || cube.cubeNum == vm.room.lastGambleCube) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+    }
   });
 
   //show all users cubes
   vm.showUsersCubes = true;
 
+  //calc time of waiting
+  var timeToWait = vm.room.numOfCubes * 1000;
+  timeToWait = timeToWait < 6000 ? 6000 : timeToWait;
+
   //set time out for cubes preview
   vm.$timeout(function () {
-    vm.showUsersCubes = false;
-    vm.getGame();
-  }, vm.room.numOfCubes * 1000);
+    vm.getGame(true);
+  }, timeToWait);
 };
 
 /**
  * get game details - users, room state and cubes.
  */
-RoomCtrl.prototype.getGame = function () {
+RoomCtrl.prototype.getGame = function (isStartOfRound) {
 
   var vm = this;
 
@@ -126,7 +159,8 @@ RoomCtrl.prototype.getGame = function () {
   vm.requestHandler.createRequest({
     event: 'getGame',
     params: {
-      roomId: vm.roomId
+      roomId: vm.roomId,
+      userId: vm.$myPlayer.getId()
     },
     onSuccess: function (result) {
       vm.$log.debug("successfully get game", result);
@@ -135,24 +169,14 @@ RoomCtrl.prototype.getGame = function () {
       vm.users = result.users;
       vm.room = result.room;
 
+      if (isStartOfRound) {
+        vm.startRoundUserId = vm.room.currentUserTurnId;
+      }
+
+      vm.parseUsersObject(vm.users);
+
       //set page name
       vm.pageTitle = vm.room.name;
-
-      angular.forEach(vm.users, function (user) {
-        //check who is me
-        if (user.id == vm.$myPlayer.getId()) {
-          user.isMe = true;
-          vm.myPlayer = user;
-        } else {
-          user.isMe = false;
-        }
-
-        //check who current user turn
-        user.currentUser = user.id == vm.room.currentUserTurnId;
-
-        //check who last user turn
-        user.lastUser = user.id == vm.room.lastUserTurnId;
-      });
 
       //check if i am the current turn
       vm.isMyTurn = vm.room.currentUserTurnId == vm.$myPlayer.getId();
@@ -161,12 +185,74 @@ RoomCtrl.prototype.getGame = function () {
       vm.setGambleToMinimum();
 
       vm.showUserPanel = true;
+
+      vm.endRoundResult = null;
     },
     onError: function (error) {
       vm.$log.error("failed to get game", error);
     }
   });
 
+};
+
+/**
+ * parse user object
+ */
+RoomCtrl.prototype.parseUsersObject = function (users) {
+
+  var vm = this;
+
+  //sort the users
+  users = vm.sortUsers(users, vm.startRoundUserId);
+
+  angular.forEach(users, function (user) {
+    //check who is me
+    if (user.id == vm.$myPlayer.getId()) {
+      user.isMe = true;
+      vm.myPlayer = user;
+    } else {
+      user.isMe = false;
+    }
+
+    //check who current user turn
+    user.currentUser = user.id == vm.room.currentUserTurnId;
+
+    //check who last user turn
+    user.lastUser = user.id == vm.room.lastUserTurnId;
+  });
+};
+
+/**
+ * sort users
+ * @param users
+ * @param currentUsrTurnId
+ */
+RoomCtrl.prototype.sortUsers = function (users, currentUsrTurnId) {
+
+  var newUsersList = [];
+  var key = 1;
+
+  //get start user
+  var currentUser = MyUtils.getUserById(users, currentUsrTurnId);
+
+  //until everybody is in the list
+  while (!MyUtils.isInTheList(newUsersList, currentUser)) {
+    currentUser.key = key++;
+
+    newUsersList.push(currentUser);
+
+    currentUser = MyUtils.getUserById(users, currentUser.nextUserTurnId);
+  }
+
+  //insert the off players
+  users.forEach(function (user) {
+    if (!user.isLoggedIn) {
+      user.key = key++;
+      newUsersList.push(user);
+    }
+  });
+
+  return newUsersList;
 };
 
 /**
@@ -221,6 +307,10 @@ RoomCtrl.prototype.returnToRooms = function () {
     event: 'logout',
     onSuccess: function () {
       vm.$log.debug("game restarted successfully");
+
+      //remove socket listeners
+      vm.mySocket.getSocket().removeAllListeners();
+
     },
     onError: function () {
       vm.$log.debug("failed to restart the game");
@@ -230,6 +320,9 @@ RoomCtrl.prototype.returnToRooms = function () {
   vm.$state.go('rooms');
 };
 
+/**
+ * restart room - FOR DEBUG ONLY!!!!
+ */
 RoomCtrl.prototype.restartGame = function () {
   var vm = this;
 
@@ -247,6 +340,28 @@ RoomCtrl.prototype.restartGame = function () {
       vm.$log.debug("failed to restart the game");
     }
   });
+};
+
+RoomCtrl.prototype.sendMessage = function () {
+  var vm = this;
+
+  if (vm.messageContent) {
+    //get the game request
+    vm.requestHandler.createRequest({
+      event: 'sendMessage',
+      params: {
+        userId: vm.$myPlayer.getId(),
+        content: vm.messageContent
+      },
+      onSuccess: function () {
+        vm.messageContent = "";
+        vm.$log.debug("message successfully sent");
+      },
+      onError: function () {
+        vm.$log.debug("failed to send message");
+      }
+    });
+  }
 };
 
 /**
@@ -339,6 +454,36 @@ RoomCtrl.prototype.isMe = function (user) {
   var vm = this;
 
   return user.id == vm.$myPlayer.getId();
+};
+
+RoomCtrl.prototype.getMessageText = function (message) {
+
+  var vm = this;
+
+  var classes = "";
+  if (message.userId == vm.$myPlayer.getId()) {
+    classes = "message-its-me"
+  }
+
+  var text = "<label class='message-sender " + classes + "'>" + message.name + "</label>:" + "<label class='message-content'>&nbsp" + message.content + "</label>";
+
+  return text;
+};
+
+RoomCtrl.prototype.getEndRoundTextResult = function () {
+  var vm = this;
+
+  var text = "";
+
+  if (vm.endRoundResult) {
+    var isRightText = vm.endRoundResult.isRight ? " WON!" : "LOST!";
+    var isRightClass = vm.endRoundResult.isRight ? 'gamble-summarize-right' : 'gamble-summarize-wrong';
+
+    text = "<label class='gamble-summarize-name'>" + vm.endRoundResult.sayLying + "</label> gambled that " + "<p class='gamble-summarize'>" + vm.endRoundResult.gambleTimes +
+      " times of " + vm.endRoundResult.gambleCube + "</p>" + " it's a bluff and he " + "<label class='" + isRightClass + "'>" + isRightText + "</label>";
+  }
+
+  return text;
 };
 
 /////////////////////////////////////////increase and decrease gambling details - works very good until 21/2/2017!/////////////////////////////////////////////////
