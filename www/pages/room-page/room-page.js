@@ -77,8 +77,10 @@ RoomCtrl.prototype.initController = function () {
 
   vm.roomId = parseInt(vm.$stateParams.roomId);
 
+  vm.showUserPanel = true;
+
   //TODO for debug only
-  vm.showRefreshButton = true;
+  vm.showRestartButton = false;
 
   vm.getGame();
 };
@@ -133,29 +135,19 @@ RoomCtrl.prototype.getGame = function () {
         }
 
         //check who current user turn
-        if (user.id == vm.room.currentUserTurnId) {
-          user.currentUser = true;
-        } else {
-          user.currentUser = false;
-        }
+        user.currentUser = user.id == vm.room.currentUserTurnId;
 
         //check who last user turn
-        if (user.id == vm.room.lastUserTurnId) {
-          user.lastUser = true;
-        } else {
-          user.lastUser = false;
-        }
+        user.lastUser = user.id == vm.room.lastUserTurnId;
       });
 
       //check if i am the current turn
-      if (vm.room.currentUserTurnId == vm.$myPlayer.getId()) {
-        vm.isMyTurn = true;
-      } else {
-        vm.isMyTurn = false;
-      }
+      vm.isMyTurn = vm.room.currentUserTurnId == vm.$myPlayer.getId();
 
       //set gambling to minimum
       vm.setGambleToMinimum();
+
+      vm.showUserPanel = true;
     },
     onError: function (error) {
       vm.$log.error("failed to get game", error);
@@ -170,6 +162,8 @@ RoomCtrl.prototype.getGame = function () {
 RoomCtrl.prototype.setGamble = function (gambleTimes, gambleCube, isLying) {
 
   var vm = this;
+
+  vm.showUserPanel = false;
 
   //send gamble request
   vm.requestHandler.createRequest({
@@ -189,14 +183,15 @@ RoomCtrl.prototype.setGamble = function (gambleTimes, gambleCube, isLying) {
         vm.showUsersCubes = true;
         if (result == "CORRECT_GAMBLE") {
 
-          vm.showAlert("טעית!", "ההימור היה נכון...");
+          vm.showAlert("You wrong!", "The gamble was correct!");
         } else {
 
-          vm.showAlert("צדקת!", "הוא בלופר...");
+          vm.showAlert("You right!", "He is a bluffer!");
         }
       }
     },
     onError: function (error) {
+      vm.showUserPanel = true;
 
       vm.$log.error("failed to set gamble due to", error);
     }
@@ -245,13 +240,13 @@ RoomCtrl.prototype.restartGame = function () {
 /**
  * show alert
  */
-RoomCtrl.prototype.showAlert = function (title, template) {
+RoomCtrl.prototype.showAlert = function (title, description) {
 
   var vm = this;
 
   var alertPopup = vm.$ionicPopup.show({
     title: title,
-    template: template
+    template: description
   });
 
   vm.$timeout(function () {

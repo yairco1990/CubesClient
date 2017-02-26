@@ -1,7 +1,7 @@
 {
   "name": "mycubes",
-  "version": "1.1.1",
-  "description": "MyCubes: An Ionic project",
+  "version": "1.0.0",
+  "description": "Dice Lies: One of the good bluffing game ever!",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-concat": "^2.2.0",
@@ -30,5 +30,7 @@
       "id": "phonegap-plugin-push"
     }
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [
+    "android"
+  ]
 }

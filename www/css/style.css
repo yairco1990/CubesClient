@@ -1,6 +1,6 @@
 /* Empty. Add your own CSS if you like */
 html {
-  direction: rtl;
+  direction: ltr;
 }
 
 .bar .title.title-left {
@@ -36,12 +36,17 @@ html {
   min-height: 40px;
 }
 
-#roomPage .isMe{
+#roomPage .current-user-turn{
   background-color: #6cff31;
+  height: 70px;
 }
 
-#roomPage .isNotMe{
+#roomPage .not-current-user-turn{
   background-color: #91f3ff;
+}
+
+#roomPage .disabled-player{
+  opacity: 0.5;
 }
 
 #roomPage .cube-item{
@@ -71,6 +76,10 @@ html {
 
 #roomPage .last-player-turn{
   font-weight: bold;
+  border: red solid;
+  border-width: 2px;
+  border-radius: 8px;
+  padding: 3px;
 }
 
 #roomPage .scroll{

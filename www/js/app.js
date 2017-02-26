@@ -133,8 +133,21 @@ angular.module('starter', [
 
     var mySocket = {};
 
+    var ENVIRONMENTS = {
+      LOCAL: {
+        host: 'localhost:3000'
+      },
+      DEVELOPMENT: {
+        host: 'https://dice-lies.herokuapp.com/'
+      }
+    };
+
+    var selectedEnvironment = ENVIRONMENTS.LOCAL;
+
+    $log.debug("environment host selected = ", selectedEnvironment.host);
+
     mySocket = socketFactory({
-      ioSocket: io.connect('192.168.1.107:3000')
+      ioSocket: io.connect(selectedEnvironment.host)
     });
 
     return {
