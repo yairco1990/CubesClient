@@ -41,6 +41,8 @@ RoomCtrl.prototype.initController = function () {
   var vm = this;
 
   vm.showUsersCubes = false;
+  vm.messages = [];
+  vm.unreadMessages = 0;
 
   //general update
   vm.mySocket.getSocket().on(pushCase.UPDATE_GAME, function () {
@@ -74,6 +76,15 @@ RoomCtrl.prototype.initController = function () {
     vm.getGame();
   });
 
+  //in case of game restarted
+  vm.mySocket.getSocket().on(pushCase.NEW_MESSAGE, function (message) {
+    vm.$log.debug("PUSH RECEIVED:", pushCase.NEW_MESSAGE);
+    vm.messages.push(message);
+    if (!vm.chatOn) {
+      vm.unreadMessages++;
+    }
+  });
+
   vm.roomId = parseInt(vm.$stateParams.roomId);
 
   vm.showUserPanel = true;
@@ -83,7 +94,7 @@ RoomCtrl.prototype.initController = function () {
   //TODO for debug only
   vm.showRestartButton = false;
 
-  vm.getGame();
+  vm.getGame(true);
 };
 
 /**
@@ -299,6 +310,9 @@ RoomCtrl.prototype.returnToRooms = function () {
   vm.$state.go('rooms');
 };
 
+/**
+ * restart room - FOR DEBUG ONLY!!!!
+ */
 RoomCtrl.prototype.restartGame = function () {
   var vm = this;
 
@@ -316,6 +330,28 @@ RoomCtrl.prototype.restartGame = function () {
       vm.$log.debug("failed to restart the game");
     }
   });
+};
+
+RoomCtrl.prototype.sendMessage = function () {
+  var vm = this;
+
+  if (vm.messageContent) {
+    //get the game request
+    vm.requestHandler.createRequest({
+      event: 'sendMessage',
+      params: {
+        userId: vm.$myPlayer.getId(),
+        content: vm.messageContent
+      },
+      onSuccess: function () {
+        vm.messageContent = "";
+        vm.$log.debug("message successfully sent");
+      },
+      onError: function () {
+        vm.$log.debug("failed to send message");
+      }
+    });
+  }
 };
 
 /**
@@ -410,17 +446,31 @@ RoomCtrl.prototype.isMe = function (user) {
   return user.id == vm.$myPlayer.getId();
 };
 
+RoomCtrl.prototype.getMessageText = function (message) {
+
+  var vm = this;
+
+  var classes = "";
+  if (message.userId == vm.$myPlayer.getId()) {
+    classes = "message-its-me"
+  }
+
+  var text = "<label class='message-sender " + classes + "'>" + message.name + "</label>:" + "<label class='message-content'>&nbsp" + message.content + "</label>";
+
+  return text;
+};
+
 RoomCtrl.prototype.getEndRoundTextResult = function () {
   var vm = this;
 
   var text = "";
 
   if (vm.endRoundResult) {
-    var isRightText = vm.endRoundResult.isRight ? " WIN!" : "LOST!";
+    var isRightText = vm.endRoundResult.isRight ? " WON!" : "LOST!";
     var isRightClass = vm.endRoundResult.isRight ? 'gamble-summarize-right' : 'gamble-summarize-wrong';
 
     text = "<label class='gamble-summarize-name'>" + vm.endRoundResult.sayLying + "</label> gambled that " + "<p class='gamble-summarize'>" + vm.endRoundResult.gambleTimes +
-      " times of " + vm.endRoundResult.gambleCube + "</p>" + " it's a bluff and he is " + "<label class='" + isRightClass + "'>" + isRightText + "</label>";
+      " times of " + vm.endRoundResult.gambleCube + "</p>" + " it's a bluff and he " + "<label class='" + isRightClass + "'>" + isRightText + "</label>";
   }
 
   return text;
