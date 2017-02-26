@@ -42,7 +42,6 @@ RoomCtrl.prototype.initController = function () {
 
   vm.showUsersCubes = false;
 
-
   //general update
   vm.mySocket.getSocket().on(pushCase.UPDATE_GAME, function () {
     vm.$log.debug("PUSH RECEIVED:", pushCase.UPDATE_GAME);
@@ -123,18 +122,18 @@ RoomCtrl.prototype.onRoundEnded = function (users, endRoundResult, isUserLeft) {
 
   //calc time of waiting
   var timeToWait = vm.room.numOfCubes * 1000;
-  timeToWait = timeToWait < 5000 ? 5000 : timeToWait;
+  timeToWait = timeToWait < 6000 ? 6000 : timeToWait;
 
   //set time out for cubes preview
   vm.$timeout(function () {
-    vm.getGame();
+    vm.getGame(true);
   }, timeToWait);
 };
 
 /**
  * get game details - users, room state and cubes.
  */
-RoomCtrl.prototype.getGame = function () {
+RoomCtrl.prototype.getGame = function (isStartOfRound) {
 
   var vm = this;
 
@@ -152,6 +151,10 @@ RoomCtrl.prototype.getGame = function () {
       vm.users = result.users;
       vm.room = result.room;
 
+      if (isStartOfRound) {
+        vm.startRoundUserId = vm.room.currentUserTurnId;
+      }
+
       vm.parseUsersObject(vm.users);
 
       //set page name
@@ -164,8 +167,6 @@ RoomCtrl.prototype.getGame = function () {
       vm.setGambleToMinimum();
 
       vm.showUserPanel = true;
-
-      vm.showUsersCubes = false;
 
       vm.endRoundResult = null;
     },
@@ -183,6 +184,10 @@ RoomCtrl.prototype.parseUsersObject = function (users) {
 
   var vm = this;
 
+  //sort the users
+  vm.$log.debug("starting round user = " + MyUtils.getUserById(users, vm.startRoundUserId).name);
+  users = vm.sortUsers(users, vm.startRoundUserId);
+
   angular.forEach(users, function (user) {
     //check who is me
     if (user.id == vm.$myPlayer.getId()) {
@@ -198,6 +203,39 @@ RoomCtrl.prototype.parseUsersObject = function (users) {
     //check who last user turn
     user.lastUser = user.id == vm.room.lastUserTurnId;
   });
+};
+
+/**
+ * sort users
+ * @param users
+ * @param currentUsrTurnId
+ */
+RoomCtrl.prototype.sortUsers = function (users, currentUsrTurnId) {
+
+  var newUsersList = [];
+  var key = 1;
+
+  //get start user
+  var currentUser = MyUtils.getUserById(users, currentUsrTurnId);
+
+  //until everybody is in the list
+  while (!MyUtils.isInTheList(newUsersList, currentUser)) {
+    currentUser.key = key++;
+
+    newUsersList.push(currentUser);
+
+    currentUser = MyUtils.getUserById(users, currentUser.nextUserTurnId);
+  }
+
+  //insert the off players
+  users.forEach(function (user) {
+    if (!user.isLoggedIn) {
+      user.key = key++;
+      newUsersList.push(user);
+    }
+  });
+
+  return newUsersList;
 };
 
 /**
@@ -378,8 +416,11 @@ RoomCtrl.prototype.getEndRoundTextResult = function () {
   var text = "";
 
   if (vm.endRoundResult) {
-    var isRightText = vm.endRoundResult.isRight ? " RIGHT!!" : "LOST!!";
-    text = vm.endRoundResult.sayLying + " gambled that " + vm.endRoundResult.gambleTimes + " of " + vm.endRoundResult.gambleCube + " it's a bluff and he is " + isRightText;
+    var isRightText = vm.endRoundResult.isRight ? " WIN!" : "LOST!";
+    var isRightClass = vm.endRoundResult.isRight ? 'gamble-summarize-right' : 'gamble-summarize-wrong';
+
+    text = "<label class='gamble-summarize-name'>" + vm.endRoundResult.sayLying + "</label> gambled that " + "<p class='gamble-summarize'>" + vm.endRoundResult.gambleTimes +
+      " times of " + vm.endRoundResult.gambleCube + "</p>" + " it's a bluff and he is " + "<label class='" + isRightClass + "'>" + isRightText + "</label>";
   }
 
   return text;
