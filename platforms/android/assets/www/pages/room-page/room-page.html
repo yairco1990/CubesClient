@@ -1,37 +1,44 @@
 <ion-view id="roomPage" view-title="{{vm.pageTitle}}">
-  <ion-nav-buttons side="left">
-    <button class="button" ng-click="vm.returnToRooms()">
+  <ion-nav-buttons side="right">
+
+    <button class="button" ng-click="vm.setChatStatus(vm.chatOn = !vm.chatOn)">
+      Chat {{vm.unreadMessages > 0 ? "(" + vm.unreadMessages + ")" : ""}}
+    </button>
+
+    <button class="button" ng-click="vm.returnToRooms()" style="margin-left: 2px">
       Back to rooms
     </button>
 
-    <button class="button" ng-click="vm.chatOn = !vm.chatOn; vm.unreadMessages = 0;" style="margin-left: 2px">
-      Chat {{vm.unreadMessages > 0 ? "(" + vm.unreadMessages + ")" : ""}}
-    </button>
   </ion-nav-buttons>
 
   <!--PAGE CONTENT-->
   <ion-content>
 
-    <!--CHAT DIV-->
-    <div class="chat-div" ng-show="vm.chatOn">
-      <div style="text-align: right">
-        <span ng-click="vm.chatOn = false;" style="padding: 10px">X</span>
-      </div>
-      <div>
-        <div ng-repeat="message in vm.messages">
-
-          <div class="row" ng-bind-html="vm.getMessageText(message)">
-
-          </div>
-
+    <div style="position: absolute;min-width: 100%;min-height: 100%;background-color: rgba(0, 0, 0, 0.34);z-index: 10;"
+         ng-show="vm.chatOn">
+      <!--CHAT DIV-->
+      <div class="chat-div">
+        <div style="text-align: right">
+          <span ng-click="vm.setChatStatus(false)" style="padding: 10px">X</span>
         </div>
-      </div>
+        <ul>
+          <li class="item" ng-repeat="message in vm.messages" style="padding: 5px !important;">
 
-      <div class="row">
-        <input class="col-75" ng-model="vm.messageContent">
-        <button class="col-25 button button-positive" style="margin: 2px;" ng-click="vm.sendMessage()">
-          Send
-        </button>
+            <div class="row" ng-bind-html="vm.getMessageText(message)">
+
+            </div>
+
+          </li>
+        </ul>
+
+        <div class="row">
+          <div class="col-75" style="padding: 2px;">
+            <input ng-model="vm.messageContent" style="width: 100%; height: 100%;">
+          </div>
+          <button class="col-25 button button-positive" style="margin: 2px;" ng-click="vm.sendMessage()">
+            Send
+          </button>
+        </div>
       </div>
     </div>
 

@@ -16,8 +16,10 @@ angular.module('starter', [
 
   //CONTROLLERS
   'MyCubes.controllers.rooms-page',
+  'MyCubes.controllers.create-room-page',
   'MyCubes.controllers.room-page',
-  'MyCubes.controllers.login-page'
+  'MyCubes.controllers.login-page',
+  'MyCubes.controllers.register-page'
 ])
 
   .run(function ($ionicPlatform) {
@@ -28,27 +30,36 @@ angular.module('starter', [
 
   .config(function ($stateProvider, $urlRouterProvider) {
 
+    var validPageFunction = function ($myPlayer, $state, $timeout, $log) {
+      if ($myPlayer.getPlayer() != null) {
+        $log.debug("there is a player - move to rooms state");
+        $timeout(function () {
+          $state.go('rooms');
+        }, 0);
+      }
+    };
+
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
     // Set up the various states which the app can be in.
     // Each state's controller can be found in controllers.js
     $stateProvider
 
-    // Each tab has its own nav history stack:
-
       .state('login', {
         url: '/login',
         templateUrl: 'pages/login-page/login-page.html',
         controller: 'LoginCtrl',
         resolve: {
-          pageData: function ($myPlayer, $state, $timeout, $log) {
-            if ($myPlayer.getPlayer() != null) {
-              $log.debug("there is a player - move to rooms state");
-              $timeout(function () {
-                $state.go('rooms');
-              }, 0);
-            }
-          }
+          pageData: validPageFunction
+        }
+      })
+
+      .state('register', {
+        url: '/register',
+        templateUrl: 'pages/register-page/register-page.html',
+        controller: 'RegisterCtrl',
+        resolve: {
+          pageData: validPageFunction
         }
       })
 
@@ -56,6 +67,12 @@ angular.module('starter', [
         url: '/rooms',
         templateUrl: 'pages/rooms-page/rooms-page.html',
         controller: 'RoomsCtrl'
+      })
+
+      .state('create-room', {
+        url: '/create-room',
+        templateUrl: 'pages/rooms-page/create-room-page.html',
+        controller: 'CreateRoomCtrl'
       })
 
       .state('room', {
@@ -122,6 +139,11 @@ angular.module('starter', [
         setSocketId(player.id);
       },
 
+      //set player to null
+      setPlayerToNull: function () {
+        player = null;
+      },
+
       //get player
       getPlayer: function () {
         return player;
@@ -152,7 +174,7 @@ angular.module('starter', [
       }
     };
 
-    var selectedEnvironment = ENVIRONMENTS.DEVELOPMENT;
+    var selectedEnvironment = ENVIRONMENTS.LOCAL;
 
     $log.debug("environment host selected = ", selectedEnvironment.host);
 

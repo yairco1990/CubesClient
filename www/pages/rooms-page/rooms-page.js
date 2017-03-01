@@ -5,15 +5,6 @@ angular.module('MyCubes.controllers.rooms-page', [])
 
   .controller('RoomsCtrl', function ($scope, $http, $state, $myPlayer, $window, $rootScope, $log, requestHandler) {
 
-    //if user already exist - no need to login
-    //if ($window.localStorage['userId'] != null && $window.localStorage['userName'] != null) {
-    //  var player = {
-    //    id: $window.localStorage['userId'],
-    //    name: $window.localStorage['userName']
-    //  };
-    //  $myPlayer.setPlayer(player);
-    //}
-
     function getRooms() {
 
       requestHandler.createRequest({
@@ -31,6 +22,10 @@ angular.module('MyCubes.controllers.rooms-page', [])
     }
 
     getRooms();
+
+    $rootScope.getRooms = function () {
+      getRooms();
+    };
 
     /**
      * on room selected - go to room page
@@ -54,6 +49,22 @@ angular.module('MyCubes.controllers.rooms-page', [])
           $log.error("failed to enter to room", error);
         }
       });
+    };
+
+    /**
+     * logout
+     */
+    $scope.logout = function () {
+      var localStoragePlayer = $window.localStorage.removeItem('player');
+
+      $myPlayer.setPlayerToNull();
+
+      $state.go('login');
+    };
+
+
+    $scope.createRoom = function () {
+      $state.go('create-room');
     };
 
   });

@@ -86,10 +86,16 @@ RoomCtrl.prototype.initController = function () {
       vm.unreadMessages++;
     }
 
+    //scroll to last message
+    $('.chat-div').ready(function () {
+      if ($('ul li').last().position()) {
+        $('.chat-div').scrollTop($('ul li').last().position().top + $('ul li').last().height());
+      }
+    });
     //remove old messages
-    if (vm.messages.length > 10) {
-      vm.messages.splice(0, 1);
-    }
+    // if (vm.messages.length > 10) {
+    //   vm.messages.splice(0, 1);
+    // }
   });
 
   vm.roomId = parseInt(vm.$stateParams.roomId);
@@ -531,6 +537,24 @@ RoomCtrl.prototype.decreaseCube = function () {
 
   if (vm.gambleCube > 2 && vm.canDecreaseCube()) {
     vm.gambleCube--;
+  }
+};
+
+
+RoomCtrl.prototype.setChatStatus = function (isOn) {
+  var vm = this;
+
+  vm.chatOn = isOn;
+
+  if (isOn) {
+    vm.unreadMessages = 0;
+
+    //scroll to last message
+    $('.chat-div').ready(function () {
+      if ($('ul li').last().position()) {
+        $('.chat-div').scrollTop($('ul li').last().position().top + $('ul li').last().height());
+      }
+    });
   }
 };
 

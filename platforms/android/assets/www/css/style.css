@@ -4,7 +4,7 @@ html {
 }
 
 .bar .title.title-left {
-  text-align: right;
+  text-align: left;
 }
 
 .vertical-center {
@@ -54,6 +54,7 @@ html {
 }
 
 #roomPage .chat-div {
+  overflow: auto;
   background-color: #e1e5d9;
   z-index: 10;
   width: 90%;

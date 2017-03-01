@@ -1,9 +1,24 @@
 <ion-view id="roomsPage" view-title="Rooms" >
+
+  <ion-nav-buttons side="right">
+
+
+    <button class="button" ng-click="createRoom()" style="margin-right: 2px">
+      Create room
+    </button>
+
+    <button class="button" ng-click="logout()">
+      Logout
+    </button>
+
+  </ion-nav-buttons>
+
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right vertical-center" ng-repeat="room in rooms" type="item-text-wrap" ng-click="getIntoRoom(room.id, room.name)">
+      <ion-item class="item-avatar item-icon-right vertical-center main-color" style="padding-left: 20px;"
+                ng-repeat="room in rooms" type="item-text-wrap" ng-click="getIntoRoom(room.id, room.name)">
         <h2 class="room-name">{{room.name}}</h2>
-        <i class="icon ion-chevron-left icon-accessory"></i>
+        <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>
   </ion-content>

@@ -8,6 +8,7 @@ angular.module('MyCubes.controllers.login-page', [])
     //init player
     $scope.player = {};
 
+
     /**
      * login
      */
@@ -16,7 +17,7 @@ angular.module('MyCubes.controllers.login-page', [])
       requestHandler.createRequest({
         event: 'login',
         params: {
-          name: $scope.player.name,
+          name: $scope.player.username,
           password: $scope.player.password
         },
         onSuccess: function (user) {
@@ -49,6 +50,13 @@ angular.module('MyCubes.controllers.login-page', [])
           });
         }
       });
+    };
+
+    /**
+     * move to register page
+     */
+    $scope.moveToRegister = function(){
+        $state.go('register');
     };
 
   });
