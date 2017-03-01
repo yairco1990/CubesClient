@@ -26,6 +26,7 @@ angular.module('MyCubes.controllers.create-room-page', [])
         params: {
           roomName: $scope.room.name,
           initialCubeNumber: $scope.room.initialCubeNumber,
+          password: $scope.room.password,
           userId: $myPlayer.getId()
         },
         onSuccess: function () {
@@ -34,8 +35,6 @@ angular.module('MyCubes.controllers.create-room-page', [])
           var alertPopup = $ionicPopup.show({
             title: 'Room created successfully!'
           });
-
-          $rootScope.getRooms && $rootScope.getRooms();
 
           //close popup after 3 seconds and move to rooms
           $timeout(function () {

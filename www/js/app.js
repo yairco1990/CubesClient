@@ -155,6 +155,10 @@ angular.module('starter', [
           return null;
         }
         return player.id;
+      },
+
+      isLoggedIn : function(){
+        return player != null;
       }
     };
 

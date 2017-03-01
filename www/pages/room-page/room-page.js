@@ -152,7 +152,7 @@ debugger;
     //update user left
     //show success popup
     var alertPopup = vm.$ionicPopup.show({
-      title: 'Player left the room. restart the round.'
+      title: 'Player left the room. Restart the round.'
     });
 
     //close popup after 3 seconds
