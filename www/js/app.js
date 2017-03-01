@@ -103,7 +103,7 @@ angular.module('starter', [
 
     if (localStoragePlayer && isJson(localStoragePlayer)) {
       player = JSON.parse(localStoragePlayer);
-      setSocketId(player.id);
+      setSocketId();
     }
 
     function isJson(str) {
@@ -116,11 +116,11 @@ angular.module('starter', [
     }
 
     //set socket id for user
-    function setSocketId(userId) {
+    function setSocketId() {
       requestHandler.createRequest({
         event: 'setSocketId',
         params: {
-          userId: userId
+          userId: player.id
         },
         onSuccess: function () {
           $log.debug("successfully set socketId for user");
@@ -132,11 +132,16 @@ angular.module('starter', [
     }
 
     return {
+
+      sendSocketId: function () {
+        setSocketId();
+      },
+
       //set player
       setPlayer: function (user) {
         player = user;
         $window.localStorage.setItem('player', JSON.stringify(user));
-        setSocketId(player.id);
+        setSocketId();
       },
 
       //set player to null
@@ -157,7 +162,7 @@ angular.module('starter', [
         return player.id;
       },
 
-      isLoggedIn : function(){
+      isLoggedIn: function () {
         return player != null;
       }
     };

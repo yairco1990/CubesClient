@@ -116,7 +116,7 @@ RoomCtrl.prototype.initController = function () {
 RoomCtrl.prototype.onRoundEnded = function (users, endRoundResult, isUserLeft) {
 
   var vm = this;
-debugger;
+  debugger;
   //that's mean that now only one player(2 is before he quit) left in the room
   if (isUserLeft && users.length == 2) {
     vm.getGame();
@@ -148,7 +148,7 @@ debugger;
   var timeToWait = vm.room.numOfCubes * 1000;
   timeToWait = timeToWait < 6000 || isUserLeft ? 6000 : timeToWait;
 
-  if(isUserLeft){
+  if (isUserLeft) {
     //update user left
     //show success popup
     var alertPopup = vm.$ionicPopup.show({
@@ -383,6 +383,17 @@ RoomCtrl.prototype.sendMessage = function () {
       }
     });
   }
+};
+
+/**
+ * send socket id
+ */
+RoomCtrl.prototype.sendSocketId = function () {
+  var vm = this;
+
+  vm.$myPlayer.sendSocketId();
+
+  vm.getGame();
 };
 
 /**
