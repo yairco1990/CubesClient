@@ -73,7 +73,7 @@ RoomCtrl.prototype.initController = function () {
   vm.mySocket.getSocket().on(pushCase.GAME_RESTARTED, function () {
     vm.$log.debug("PUSH RECEIVED:", pushCase.GAME_RESTARTED);
     // refresh game
-    vm.getGame();
+    vm.getGame(true);
   });
 
   //in case of game restarted
@@ -116,8 +116,8 @@ RoomCtrl.prototype.initController = function () {
 RoomCtrl.prototype.onRoundEnded = function (users, endRoundResult, isUserLeft) {
 
   var vm = this;
-
-  //that's mean that one left in the room
+  debugger;
+  //that's mean that now only one player(2 is before he quit) left in the room
   if (isUserLeft && users.length == 2) {
     vm.getGame();
     return;
@@ -146,7 +146,22 @@ RoomCtrl.prototype.onRoundEnded = function (users, endRoundResult, isUserLeft) {
 
   //calc time of waiting
   var timeToWait = vm.room.numOfCubes * 1000;
-  timeToWait = timeToWait < 6000 ? 6000 : timeToWait;
+  timeToWait = timeToWait < 6000 || isUserLeft ? 6000 : timeToWait;
+
+  if (isUserLeft) {
+    //update user left
+    //show success popup
+    var alertPopup = vm.$ionicPopup.show({
+      title: 'Player left the room. Restart the round.'
+    });
+
+    //close popup after 3 seconds
+    vm.$timeout(function () {
+      alertPopup.close();
+    }, 4000);
+
+    timeToWait = 5000;
+  }
 
   //set time out for cubes preview
   vm.$timeout(function () {
@@ -327,7 +342,7 @@ RoomCtrl.prototype.returnToRooms = function () {
 };
 
 /**
- * restart room - FOR DEBUG ONLY!!!!
+ * restart room
  */
 RoomCtrl.prototype.restartGame = function () {
   var vm = this;
@@ -368,6 +383,17 @@ RoomCtrl.prototype.sendMessage = function () {
       }
     });
   }
+};
+
+/**
+ * send socket id
+ */
+RoomCtrl.prototype.sendSocketId = function () {
+  var vm = this;
+
+  vm.$myPlayer.sendSocketId();
+
+  vm.getGame();
 };
 
 /**

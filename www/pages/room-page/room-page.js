@@ -76,6 +76,12 @@ RoomCtrl.prototype.initController = function () {
     vm.getGame(true);
   });
 
+  //handle user reconnect
+  vm.mySocket.getSocket().on("connect", function () {
+    // refresh game
+    vm.getGame();
+  });
+
   //in case of game restarted
   vm.mySocket.getSocket().on(pushCase.NEW_MESSAGE, function (message) {
     vm.$log.debug("PUSH RECEIVED:", pushCase.NEW_MESSAGE);

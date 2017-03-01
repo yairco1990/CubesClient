@@ -94,7 +94,7 @@ angular.module('starter', [
 
   })
 
-  .factory('$myPlayer', function ($window, requestHandler, $log) {
+  .factory('$myPlayer', function ($window, requestHandler, $log, mySocket) {
 
     var player = null;
 
@@ -130,6 +130,12 @@ angular.module('starter', [
         }
       });
     }
+
+    //handle reconnections
+    mySocket.getSocket().on("connect", function () {
+      $log.debug("player reconnected - send socket id");
+      setSocketId();
+    });
 
     return {
 
