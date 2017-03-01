@@ -174,7 +174,7 @@ angular.module('starter', [
       }
     };
 
-    var selectedEnvironment = ENVIRONMENTS.LOCAL;
+    var selectedEnvironment = ENVIRONMENTS.DEVELOPMENT;
 
     $log.debug("environment host selected = ", selectedEnvironment.host);
 
