@@ -117,25 +117,21 @@ angular.module('starter', [
 
     //set socket id for user
     function setSocketId() {
-      requestHandler.createRequest({
-        event: 'setSocketId',
-        params: {
-          userId: player.id
-        },
-        onSuccess: function () {
-          $log.debug("successfully set socketId for user");
-        },
-        onError: function (error) {
-          $log.debug("failed to set socketId for user");
-        }
-      });
+      if (player && player.id) {
+        requestHandler.createRequest({
+          event: 'setSocketId',
+          params: {
+            userId: player.id
+          },
+          onSuccess: function () {
+            $log.debug("successfully set socketId for user");
+          },
+          onError: function (error) {
+            $log.debug("failed to set socketId for user");
+          }
+        });
+      }
     }
-
-    //handle reconnections
-    mySocket.getSocket().on("connect", function () {
-      $log.debug("player reconnected - send socket id");
-      setSocketId();
-    });
 
     return {
 

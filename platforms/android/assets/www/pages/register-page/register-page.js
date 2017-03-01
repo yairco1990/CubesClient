@@ -5,6 +5,8 @@ angular.module('MyCubes.controllers.register-page', [])
 
   .controller('RegisterCtrl', function ($scope, requestHandler, $http, $state, $ionicPopup, $myPlayer, $timeout, $log) {
 
+    $log.debug("init register ctrl");
+
     //init player
     $scope.player = {};
 
@@ -36,7 +38,7 @@ angular.module('MyCubes.controllers.register-page', [])
             //close popup after 3 seconds and move to rooms
             $timeout(function () {
               alertPopup.close();
-              $state.go('rooms');
+              $state.go('rooms', {reload: true});
             }, 500);
           },
           onError: function (error) {

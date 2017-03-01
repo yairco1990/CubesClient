@@ -3,32 +3,43 @@
  */
 angular.module('MyCubes.controllers.rooms-page', [])
 
-  .controller('RoomsCtrl', function ($scope, $http, $state, $myPlayer, $window, $rootScope, $log, requestHandler, mySocket, $ionicPopup) {
+  .controller('RoomsCtrl', function ($scope, $http, $state, $myPlayer, $window, $rootScope, $log, requestHandler, $ionicPopup) {
 
-    //in case of new room
-    mySocket.getSocket().on(pushCase.NEW_ROOM_CREATED, function () {
-      $log.debug("PUSH RECEIVED:", pushCase.NEW_ROOM_CREATED);
-      // refresh rooms page
-      getRooms();
-    });
+    $log.debug("init rooms ctrl");
 
-    function getRooms() {
+    $rootScope.getRooms = function() {
 
       requestHandler.createRequest({
         event: 'getRooms',
         params: {},
         onSuccess: function (rooms) {
+
+          rooms.sort(function(a, b){
+            if(a.name < b.name) return -1;
+            if(a.name > b.name) return 1;
+            return 0;
+          });
+
+          // rooms.sort(function(a, b){
+          //   if(a.createdAt.valueOf() < b.createdAt.valueOf()) return 1;
+          //   if(a.createdAt.valueOf() > b.createdAt.valueOf()) return -1;
+          //   return 0;
+          // });
+
           $log.debug("successfully get rooms", rooms);
 
           $scope.rooms = rooms;
+
+          // Stop the ion-refresher from spinning
+          $scope.$broadcast('scroll.refreshComplete');
         },
         onError: function (error) {
           $log.error("failed to get rooms", error);
         }
       });
-    }
+    };
 
-    getRooms();
+    $rootScope.getRooms();
 
     /**
      * on room selected - go to room page

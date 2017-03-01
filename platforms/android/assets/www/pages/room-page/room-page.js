@@ -44,6 +44,8 @@ RoomCtrl.prototype.initController = function () {
   vm.messages = [];
   vm.unreadMessages = 0;
 
+  vm.$log.debug("init room ctrl");
+
   //general update
   vm.mySocket.getSocket().on(pushCase.UPDATE_GAME, function () {
     vm.$log.debug("PUSH RECEIVED:", pushCase.UPDATE_GAME);
@@ -76,6 +78,12 @@ RoomCtrl.prototype.initController = function () {
     vm.getGame(true);
   });
 
+  //handle user reconnect
+  vm.mySocket.getSocket().on("connect", function () {
+    // refresh game
+    vm.sendSocketId();
+  });
+
   //in case of game restarted
   vm.mySocket.getSocket().on(pushCase.NEW_MESSAGE, function (message) {
     vm.$log.debug("PUSH RECEIVED:", pushCase.NEW_MESSAGE);
@@ -92,10 +100,6 @@ RoomCtrl.prototype.initController = function () {
         $('.chat-div').scrollTop($('ul li').last().position().top + $('ul li').last().height());
       }
     });
-    //remove old messages
-    // if (vm.messages.length > 10) {
-    //   vm.messages.splice(0, 1);
-    // }
   });
 
   vm.roomId = parseInt(vm.$stateParams.roomId);
@@ -116,7 +120,7 @@ RoomCtrl.prototype.initController = function () {
 RoomCtrl.prototype.onRoundEnded = function (users, endRoundResult, isUserLeft) {
 
   var vm = this;
-  debugger;
+
   //that's mean that now only one player(2 is before he quit) left in the room
   if (isUserLeft && users.length == 2) {
     vm.getGame();
@@ -338,7 +342,7 @@ RoomCtrl.prototype.returnToRooms = function () {
     }
   });
 
-  vm.$state.go('rooms');
+  vm.$state.go('rooms', {reload: true});
 };
 
 /**

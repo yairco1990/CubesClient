@@ -5,9 +5,10 @@ angular.module('MyCubes.controllers.login-page', [])
 
   .controller('LoginCtrl', function ($scope, requestHandler, $http, $state, $ionicPopup, $myPlayer, $timeout, $log) {
 
+    $log.debug("init login ctrl");
+
     //init player
     $scope.player = {};
-
 
     /**
      * login
@@ -34,7 +35,7 @@ angular.module('MyCubes.controllers.login-page', [])
           //close popup after 3 seconds and move to rooms
           $timeout(function () {
             alertPopup.close();
-            $state.go('rooms');
+            $state.go('rooms', {reload: true});
           }, 500);
         },
         onError: function (error) {

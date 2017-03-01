@@ -1,7 +1,7 @@
 <ion-view id="roomPage" view-title="{{vm.pageTitle}}">
   <ion-nav-buttons side="right">
 
-    <button class="button" ng-click="vm.setChatStatus(vm.chatOn = !vm.chatOn)">
+    <button class="button" ng-click="vm.setChatStatus(vm.chatOn = !vm.chatOn)" ng-class="{'unread-messages': vm.unreadMessages > 0}">
       Chat {{vm.unreadMessages > 0 ? "(" + vm.unreadMessages + ")" : ""}}
     </button>
 
@@ -14,9 +14,13 @@
 
   <ion-nav-buttons side="left">
 
-    <button class="button" ng-click="vm.restartGame()" ng-if="vm.room.ownerId == vm.myPlayer.id">
+    <button class="button" ng-click="vm.restartGame()" ng-if="vm.room.ownerId == vm.myPlayer.id && vm.users.length > 1">
       Restart game
     </button>
+
+    <!--<button class="button" style="margin-left: 2px;padding: 0 2px;" ng-click="vm.sendSocketId()">-->
+      <!--<i class="icon ion-refresh"></i>-->
+    <!--</button>-->
 
   </ion-nav-buttons>
 
@@ -26,7 +30,7 @@
     <div style="position: absolute;min-width: 100%;min-height: 100%;background-color: rgba(0, 0, 0, 0.34);z-index: 10;"
          ng-show="vm.chatOn">
       <!--CHAT DIV-->
-      <div class="chat-div">
+      <div class="chat-div main-color">
         <div style="text-align: right">
           <span ng-click="vm.setChatStatus(false)" style="padding: 10px">X</span>
         </div>
@@ -44,7 +48,7 @@
           <div class="col-75" style="padding: 2px;">
             <input class="regular-input" ng-model="vm.messageContent" style="width: 100%; height: 100%;">
           </div>
-          <button class="col-25 button button-positive" style="margin: 2px;" ng-click="vm.sendMessage()">
+          <button class="col-25 button button-positive small-button" style="margin: 2px;" ng-click="vm.sendMessage()">
             Send
           </button>
         </div>
@@ -65,9 +69,11 @@
             <!--USER NAME-->
             <div class="col" ng-class="{'col-40': !vm.showUsersCubes, 'col-20': vm.showUsersCubes}">
               <h2 ng-class="{'foo': user.currentUser}" ng-show="!user.isMe">
+                <i class="ion-chevron-right" ng-show="user.currentUser"></i>
                 {{user.name}} ({{user.currentNumOfCubes ? user.currentNumOfCubes : 'Off'}})
               </h2>
               <h2 ng-class="{'foo': user.currentUser}" ng-show="user.isMe" style="font-weight: 900">
+                <i class="ion-chevron-right" ng-show="user.currentUser"></i>
                 Me
               </h2>
             </div>
@@ -76,7 +82,6 @@
             <div class="col col-60"
                  ng-show="!vm.showUsersCubes && user.gambleTimes != null && user.gambleCube != null">
               <label ng-class="{'last-player-turn': user.lastUser}" ng-show="user.id != vm.room.currentUserTurnId">
-                Gamble:
                 {{user.gambleTimes}}
                 Times of
                 {{user.gambleCube}}

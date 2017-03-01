@@ -5,6 +5,8 @@ angular.module('MyCubes.controllers.create-room-page', [])
 
   .controller('CreateRoomCtrl', function ($scope, $http, $state, $myPlayer, $window, $rootScope, $log, requestHandler, $timeout, $ionicPopup) {
 
+    $log.debug("init create room ctrl");
+
     //init
     $scope.room = {};
 
@@ -36,6 +38,8 @@ angular.module('MyCubes.controllers.create-room-page', [])
             title: 'Room created successfully!'
           });
 
+          $rootScope.getRooms && $rootScope.getRooms();
+
           //close popup after 3 seconds and move to rooms
           $timeout(function () {
             alertPopup.close();
@@ -65,7 +69,7 @@ angular.module('MyCubes.controllers.create-room-page', [])
      * logout
      */
     $scope.backToRooms = function () {
-      $state.go('rooms');
+      $state.go('rooms', {reload: true});
     };
 
   });
