@@ -110,6 +110,7 @@ ion-content{
 
 #roomPage .message-content {
   font-size: 15px;
+  white-space: initial;
 }
 
 #roomPage .message-its-me {

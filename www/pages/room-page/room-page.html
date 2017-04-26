@@ -27,6 +27,11 @@
   <!--PAGE CONTENT-->
   <ion-content>
 
+    <ion-refresher
+      pulling-text="Pull to refresh the game"
+      on-refresh="vm.setSocketDetails()">
+    </ion-refresher>
+
     <div style="position: absolute;min-width: 100%;min-height: 100%;background-color: rgba(0, 0, 0, 0.34);z-index: 10;"
          ng-show="vm.chatOn">
       <!--CHAT DIV-->
@@ -81,11 +86,11 @@
             <!--GAMBLING DETAILS-->
             <div class="col col-60"
                  ng-show="!vm.showUsersCubes && user.gambleTimes != null && user.gambleCube != null">
-              <label ng-class="{'last-player-turn': user.lastUser}" ng-show="user.id != vm.room.currentUserTurnId">
+              <h3 ng-class="{'last-player-turn': user.lastUser}" ng-show="user.id != vm.room.currentUserTurnId" style="text-align: center">
                 {{user.gambleTimes}}
                 Times of
                 {{user.gambleCube}}
-              </label>
+              </h3>
             </div>
 
             <!--SHOW USER CUBES AFTER ROUND FINISHED-->

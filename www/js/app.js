@@ -33,7 +33,7 @@ angular.module('starter', [
     var validPageFunction = function ($myPlayer, $state, $timeout, $log) {
       if ($myPlayer.getPlayer() != null) {
         $log.debug("there is a player - move to rooms state");
-        $timeout(function () {
+        return $timeout(function () {
           $state.go('rooms');
         }, 0);
       }
@@ -94,18 +94,18 @@ angular.module('starter', [
 
   })
 
-  .factory('$myPlayer', function ($window, requestHandler, $log, mySocket) {
+  .factory('$myPlayer', function ($window, requestHandler, $log, mySocket, $rootScope) {
 
     var player = null;
 
-    //check for user
+    //check for user in local storage
     var localStoragePlayer = $window.localStorage.getItem('player');
-
     if (localStoragePlayer && isJson(localStoragePlayer)) {
       player = JSON.parse(localStoragePlayer);
-      setSocketId();
+      setSocketDetails();
     }
 
+    //is json function
     function isJson(str) {
       try {
         JSON.parse(str);
@@ -116,18 +116,20 @@ angular.module('starter', [
     }
 
     //set socket id for user
-    function setSocketId() {
-      if (player && player.id) {
+    function setSocketDetails() {
+
+      if (player && player.roomId) {
         requestHandler.createRequest({
-          event: 'setSocketId',
+          event: 'setSocketDetails',
           params: {
-            userId: player.id
+            roomId: player.roomId,
+            userId: player.userId
           },
           onSuccess: function () {
-            $log.debug("successfully set socketId for user");
+            $log.warn("successfully set socket details");
           },
           onError: function (error) {
-            $log.debug("failed to set socketId for user");
+            $log.error("failed to set socket details");
           }
         });
       }
@@ -135,15 +137,22 @@ angular.module('starter', [
 
     return {
 
-      sendSocketId: function () {
-        setSocketId();
+      setSocketDetails: function () {
+        setSocketDetails();
+      },
+
+      setRoomId: function (roomId) {
+        player.roomId = roomId;
+        $window.localStorage.setItem('player', JSON.stringify(player));
+
+        //register the user for room notifications
+        setSocketDetails();
       },
 
       //set player
       setPlayer: function (user) {
         player = user;
         $window.localStorage.setItem('player', JSON.stringify(user));
-        setSocketId();
       },
 
       //set player to null
@@ -166,10 +175,15 @@ angular.module('starter', [
 
       isLoggedIn: function () {
         return player != null;
+      },
+
+      removeSocketEvents: function () {
+        //remove socket listeners
+        mySocket.getSocket().removeAllListeners();
+
+        // setReconnectSocketEvent();
       }
     };
-
-
   })
 
   .factory('mySocket', function (socketFactory, $log) {
@@ -180,12 +194,15 @@ angular.module('starter', [
       LOCAL: {
         host: 'localhost:3000'
       },
+      TEAMMATE: {
+        host: '192.168.1.107:3000'
+      },
       DEVELOPMENT: {
         host: 'https://dice-lies.herokuapp.com/'
       }
     };
 
-    var selectedEnvironment = ENVIRONMENTS.DEVELOPMENT;
+    var selectedEnvironment = ENVIRONMENTS.TEAMMATE;
 
     $log.debug("environment host selected = ", selectedEnvironment.host);
 

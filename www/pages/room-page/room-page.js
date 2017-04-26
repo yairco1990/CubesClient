@@ -17,7 +17,7 @@ angular.module('MyCubes.controllers.room-page', [])
  * @param requestHandler
  * @constructor
  */
-function RoomCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, mySocket, requestHandler) {
+function RoomCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, mySocket, requestHandler, $ionicPlatform, $scope) {
 
   var vm = this;
 
@@ -29,6 +29,8 @@ function RoomCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, 
   vm.$timeout = $timeout;
   vm.mySocket = mySocket;
   vm.requestHandler = requestHandler;
+  vm.$ionicPlatform = $ionicPlatform;
+  vm.$scope = $scope;
 
   vm.initController();
 }
@@ -80,8 +82,9 @@ RoomCtrl.prototype.initController = function () {
 
   //handle user reconnect
   vm.mySocket.getSocket().on("connect", function () {
+    vm.$log.debug("player reconnected - send socket id(room page)");
     // refresh game
-    vm.sendSocketId();
+    vm.setSocketDetails();
   });
 
   //in case of game restarted
@@ -100,6 +103,21 @@ RoomCtrl.prototype.initController = function () {
         $('.chat-div').scrollTop($('ul li').last().position().top + $('ul li').last().height());
       }
     });
+
+  });
+
+  //back button event function
+  var doCustomBack = function () {
+    vm.returnToRooms();
+  };
+
+  // registerBackButtonAction() returns a function which can be used to deregister it
+  var deregisterHardBack = vm.$ionicPlatform.registerBackButtonAction(
+    doCustomBack, 101
+  );
+
+  vm.$scope.$on('$destroy', function () {
+    deregisterHardBack();
   });
 
   vm.roomId = parseInt(vm.$stateParams.roomId);
@@ -212,6 +230,9 @@ RoomCtrl.prototype.getGame = function (isStartOfRound) {
       vm.showUserPanel = true;
 
       vm.endRoundResult = null;
+
+      // Stop the ion-refresher from spinning
+      vm.$scope.$broadcast('scroll.refreshComplete');
     },
     onError: function (error) {
       vm.$log.error("failed to get game", error);
@@ -329,12 +350,15 @@ RoomCtrl.prototype.returnToRooms = function () {
   var vm = this;
 
   vm.requestHandler.createRequest({
-    event: 'logout',
+    event: 'exitRoom',
+    params: {
+      userId: vm.$myPlayer.getId()
+    },
     onSuccess: function () {
       vm.$log.debug("game restarted successfully");
 
       //remove socket listeners
-      vm.mySocket.getSocket().removeAllListeners();
+      vm.$myPlayer.removeSocketEvents();
 
     },
     onError: function () {
@@ -392,10 +416,10 @@ RoomCtrl.prototype.sendMessage = function () {
 /**
  * send socket id
  */
-RoomCtrl.prototype.sendSocketId = function () {
+RoomCtrl.prototype.setSocketDetails = function () {
   var vm = this;
 
-  vm.$myPlayer.sendSocketId();
+  vm.$myPlayer.setSocketDetails();
 
   vm.getGame();
 };

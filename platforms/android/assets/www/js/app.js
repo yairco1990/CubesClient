@@ -133,12 +133,6 @@ angular.module('starter', [
       }
     }
 
-    //handle reconnections
-    mySocket.getSocket().on("connect", function () {
-      $log.debug("player reconnected - send socket id");
-      setSocketId();
-    });
-
     return {
 
       sendSocketId: function () {

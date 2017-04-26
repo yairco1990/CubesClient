@@ -110,6 +110,7 @@ ion-content{
 
 #roomPage .message-content {
   font-size: 15px;
+  white-space: initial;
 }
 
 #roomPage .message-its-me {
@@ -159,9 +160,9 @@ ion-content{
 
 #roomPage .last-player-turn {
   font-weight: bold;
-  border: red solid;
+  border: #ff0000 solid;
   border-width: 2px;
-  border-radius: 8px;
+  border-radius: 2px;
   padding: 3px;
 }
 
@@ -177,4 +178,8 @@ ion-content{
 .small-button{
   line-height: 5px !important;
   min-height: 24px !important;
+}
+
+.unread-messages{
+  background-color: #4cd216 !important;
 }

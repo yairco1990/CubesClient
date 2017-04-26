@@ -17,7 +17,7 @@ angular.module('MyCubes.controllers.room-page', [])
  * @param requestHandler
  * @constructor
  */
-function RoomCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, mySocket, requestHandler) {
+function RoomCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, mySocket, requestHandler, $ionicPlatform, $scope) {
 
   var vm = this;
 
@@ -29,6 +29,8 @@ function RoomCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, 
   vm.$timeout = $timeout;
   vm.mySocket = mySocket;
   vm.requestHandler = requestHandler;
+  vm.$ionicPlatform = $ionicPlatform;
+  vm.$scope = $scope;
 
   vm.initController();
 }
@@ -100,6 +102,21 @@ RoomCtrl.prototype.initController = function () {
         $('.chat-div').scrollTop($('ul li').last().position().top + $('ul li').last().height());
       }
     });
+
+  });
+
+  //back button event function
+  var doCustomBack = function () {
+    vm.returnToRooms();
+  };
+
+  // registerBackButtonAction() returns a function which can be used to deregister it
+  var deregisterHardBack = vm.$ionicPlatform.registerBackButtonAction(
+    doCustomBack, 101
+  );
+
+  vm.$scope.$on('$destroy', function () {
+    deregisterHardBack();
   });
 
   vm.roomId = parseInt(vm.$stateParams.roomId);
