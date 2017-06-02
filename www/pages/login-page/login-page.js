@@ -3,7 +3,7 @@
  */
 angular.module('MyCubes.controllers.login-page', [])
 
-  .controller('LoginCtrl', function ($scope, requestHandler, $http, $state, $ionicPopup, $myPlayer, $timeout, $log) {
+  .controller('LoginCtrl', function ($scope, requestHandler, $http, $state, $ionicPopup, $myPlayer, $timeout, $log, $ionicHistory) {
 
     $log.debug("init login ctrl");
 
@@ -35,6 +35,11 @@ angular.module('MyCubes.controllers.login-page', [])
           //close popup after 3 seconds and move to rooms
           $timeout(function () {
             alertPopup.close();
+
+            //set new root of history to the rooms page
+            $ionicHistory.nextViewOptions({historyRoot: true});
+
+            //move to rooms
             $state.go('rooms', {reload: true});
           }, 500);
         },
