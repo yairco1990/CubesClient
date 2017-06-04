@@ -210,7 +210,7 @@ angular.module('starter', [
             }
         };
 
-        var selectedEnvironment = ENVIRONMENTS.TEAMMATE;
+        var selectedEnvironment = ENVIRONMENTS.DEVELOPMENT;
 
         $log.debug("environment host selected = ", selectedEnvironment.host);
 
