@@ -99,7 +99,7 @@ RoomCtrl.prototype.initController = function () {
             vm.unreadMessages++;
         }
 
-        if (vm.messages.length > 5) {
+        if (vm.messages.length > 10) {
             vm.messages.splice(0, 1);
         }
         vm.scrollToLastMessage();
