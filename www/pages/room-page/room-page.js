@@ -17,7 +17,7 @@ angular.module('MyCubes.controllers.room-page', [])
  * @param requestHandler
  * @constructor
  */
-function RoomCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, mySocket, requestHandler, $ionicPlatform, $scope, $ionicHistory) {
+function RoomCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, mySocket, requestHandler, $ionicPlatform, $scope, $ionicHistory, $ionicPopover) {
 
     var vm = this;
 
@@ -32,6 +32,7 @@ function RoomCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, 
     vm.$ionicPlatform = $ionicPlatform;
     vm.$scope = $scope;
     vm.$ionicHistory = $ionicHistory;
+    vm.$ionicPopover = $ionicPopover;
 
     vm.initController();
 }
@@ -98,7 +99,7 @@ RoomCtrl.prototype.initController = function () {
             vm.unreadMessages++;
         }
 
-        if (vm.messages.length > 8) {
+        if (vm.messages.length > 5) {
             vm.messages.splice(0, 1);
         }
         vm.scrollToLastMessage();
@@ -121,6 +122,9 @@ RoomCtrl.prototype.initController = function () {
     vm.roomId = parseInt(vm.$stateParams.roomId);
 
     vm.showUserPanel = true;
+
+    vm.showMyDice = true;
+    vm.diceStatusButton = "Hide";
 
     vm.pageTitle = vm.$stateParams.roomName;
 
@@ -212,6 +216,9 @@ RoomCtrl.prototype.getGame = function (isStartOfRound) {
 
             if (isStartOfRound) {
                 vm.startRoundUserId = vm.room.currentUserTurnId;
+
+                vm.showMyDice = true;
+                vm.diceStatusButton = "Hide";
             }
 
             vm.parseUsersObject(vm.users);
@@ -530,10 +537,29 @@ RoomCtrl.prototype.getNextMinimumGamble = function () {
     };
 };
 
+/**
+ * get dice image
+ * @param cubeNum
+ * @returns {string}
+ */
 RoomCtrl.prototype.getCubeImage = function (cubeNum) {
     var vm = this;
 
     return "img/cube-" + cubeNum + ".png";
+};
+/**
+ * get my dice image
+ * @param cubeNum
+ * @returns {*}
+ */
+RoomCtrl.prototype.getMyCubeImage = function (cubeNum) {
+    var vm = this;
+
+    if (!vm.showMyDice) {
+        return "img/blank-dice.png";
+    } else {
+        return vm.getCubeImage(cubeNum);
+    }
 };
 
 RoomCtrl.prototype.isMe = function (user) {
@@ -657,6 +683,13 @@ RoomCtrl.prototype.decreaseCube = function () {
     if (vm.gambleCube > 2 && vm.canDecreaseCube()) {
         vm.gambleCube--;
     }
+};
+RoomCtrl.prototype.changeDiceStatus = function () {
+    var vm = this;
+
+    vm.showMyDice = !vm.showMyDice;
+
+    vm.diceStatusButton = vm.showMyDice ? "Hide" : "Show";
 };
 
 /**

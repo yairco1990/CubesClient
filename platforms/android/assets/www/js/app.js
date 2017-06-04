@@ -14,6 +14,9 @@ angular.module('starter', [
     //SERVICES
     'MyCubes.services.request-handler',
 
+    // DIRECTIVES
+    'MyCubes.directives.loader',
+
     //CONTROLLERS
     'MyCubes.controllers.rooms-page',
     'MyCubes.controllers.create-room-page',
@@ -71,7 +74,8 @@ angular.module('starter', [
             })
 
             .state('rooms', {
-                url: '/rooms',
+                cache: false,
+                url: '/',
                 templateUrl: 'pages/rooms-page/rooms-page.html',
                 controller: 'RoomsCtrl'
             })
@@ -209,7 +213,7 @@ angular.module('starter', [
             }
         };
 
-        var selectedEnvironment = ENVIRONMENTS.TEAMMATE;
+        var selectedEnvironment = ENVIRONMENTS.DEVELOPMENT;
 
         $log.debug("environment host selected = ", selectedEnvironment.host);
 

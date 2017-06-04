@@ -15,16 +15,12 @@ angular.module('MyCubes.controllers.rooms-page', [])
                 onSuccess: function (rooms) {
 
                     rooms.sort(function (a, b) {
-                        if (a.name < b.name) return -1;
-                        if (a.name > b.name) return 1;
+                        var aUsers = a.users.length;
+                        var bUsers = b.users.length;
+                        if (aUsers > bUsers) return -1;
+                        if (aUsers < bUsers) return 1;
                         return 0;
                     });
-
-                    // rooms.sort(function(a, b){
-                    //   if(a.createdAt.valueOf() < b.createdAt.valueOf()) return 1;
-                    //   if(a.createdAt.valueOf() > b.createdAt.valueOf()) return -1;
-                    //   return 0;
-                    // });
 
                     $log.debug("successfully get rooms", rooms);
 
@@ -32,6 +28,8 @@ angular.module('MyCubes.controllers.rooms-page', [])
 
                     // Stop the ion-refresher from spinning
                     $scope.$broadcast('scroll.refreshComplete');
+
+                    $scope.isLoaded = true;
                 },
                 onError: function (error) {
                     $log.error("failed to get rooms", error);

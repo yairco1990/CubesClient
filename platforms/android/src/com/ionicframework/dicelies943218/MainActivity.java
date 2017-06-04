@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.ionicframework.mycubes943218;
+package com.ionicframework.dicelies943218;
 
 import android.os.Bundle;
 import org.apache.cordova.*;

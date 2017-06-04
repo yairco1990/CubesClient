@@ -16,7 +16,7 @@ angular.module('MyCubes.controllers.create-room-page', [])
     $scope.createRoom = function () {
 
       //validate
-      if ($scope.room.initialCubeNumber > 6 || $scope.room.initialCubeNumber < 1) {
+      if ($scope.room.initialCubeNumber > 5 || $scope.room.initialCubeNumber < 1) {
         return;
       }
       if (!$scope.room.name) {
