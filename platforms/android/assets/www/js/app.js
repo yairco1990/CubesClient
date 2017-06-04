@@ -27,7 +27,9 @@ angular.module('starter', [
 
     .run(function ($rootScope, $ionicPlatform, $myPlayer, $state) {
         $ionicPlatform.ready(function () {
-
+            setTimeout(function() {
+                navigator.splashscreen.hide();
+            }, 100);
         });
 
         $rootScope.$on('$stateChangeStart', function(event, toState){
@@ -208,12 +210,12 @@ angular.module('starter', [
             TEAMMATE: {
                 host: '192.168.1.105:3000'
             },
-            DEVELOPMENT: {
+            PRODUCTION: {
                 host: 'http://40.68.96.104:3000'
             }
         };
 
-        var selectedEnvironment = ENVIRONMENTS.DEVELOPMENT;
+        var selectedEnvironment = ENVIRONMENTS.PRODUCTION;
 
         $log.debug("environment host selected = ", selectedEnvironment.host);
 

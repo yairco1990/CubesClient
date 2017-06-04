@@ -1,186 +1,227 @@
-<ion-view id="roomPage" view-title="{{vm.pageTitle}}">
-  <ion-nav-buttons side="right">
+<ion-view id="roomPage">
+    <ion-nav-buttons side="right">
 
-    <button class="button" ng-click="vm.setChatStatus(vm.chatOn = !vm.chatOn)">
-      Chat {{vm.unreadMessages > 0 ? "(" + vm.unreadMessages + ")" : ""}}
-    </button>
-
-    <button class="button" ng-click="vm.returnToRooms()" style="margin-left: 2px">
-      Back to rooms
-    </button>
-
-  </ion-nav-buttons>
-
-
-  <ion-nav-buttons side="left">
-
-    <button class="button" ng-click="vm.restartGame()" ng-if="vm.room.ownerId == vm.myPlayer.id && vm.users.length > 1">
-      Restart game
-    </button>
-
-    <!--<button class="button" style="margin-left: 2px;padding: 0 2px;" ng-click="vm.sendSocketId()">-->
-      <!--<i class="icon ion-refresh"></i>-->
-    <!--</button>-->
-
-  </ion-nav-buttons>
-
-  <!--PAGE CONTENT-->
-  <ion-content>
-
-    <div style="position: absolute;min-width: 100%;min-height: 100%;background-color: rgba(0, 0, 0, 0.34);z-index: 10;"
-         ng-show="vm.chatOn">
-      <!--CHAT DIV-->
-      <div class="chat-div main-color">
-        <div style="text-align: right">
-          <span ng-click="vm.setChatStatus(false)" style="padding: 10px">X</span>
-        </div>
-        <ul>
-          <li class="item" ng-repeat="message in vm.messages" style="padding: 5px !important;">
-
-            <div class="row" ng-bind-html="vm.getMessageText(message)">
-
-            </div>
-
-          </li>
-        </ul>
-
-        <div class="row">
-          <div class="col-75" style="padding: 2px;">
-            <input class="regular-input" ng-model="vm.messageContent" style="width: 100%; height: 100%;">
-          </div>
-          <button class="col-25 button button-positive small-button" style="margin: 2px;" ng-click="vm.sendMessage()">
-            Send
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="game-div">
-
-      <ion-list>
-
-        <!--LIST ITEM-->
-        <ion-item class="item-avatar item-icon-right vertical-center user-item"
-                  ng-repeat="user in vm.users | orderBy: 'key'"
-                  ng-class="{'current-user-turn': user.currentUser, 'not-current-user-turn': !user.currentUser, 'disabled-player': !user.isLoggedIn}">
-
-          <div class="row">
-
-            <!--USER NAME-->
-            <div class="col" ng-class="{'col-40': !vm.showUsersCubes, 'col-20': vm.showUsersCubes}">
-              <h2 ng-class="{'foo': user.currentUser}" ng-show="!user.isMe">
-                {{user.name}} ({{user.currentNumOfCubes ? user.currentNumOfCubes : 'Off'}})
-              </h2>
-              <h2 ng-class="{'foo': user.currentUser}" ng-show="user.isMe" style="font-weight: 900">
-                Me
-              </h2>
-            </div>
-
-            <!--GAMBLING DETAILS-->
-            <div class="col col-60"
-                 ng-show="!vm.showUsersCubes && user.gambleTimes != null && user.gambleCube != null">
-              <label ng-class="{'last-player-turn': user.lastUser}" ng-show="user.id != vm.room.currentUserTurnId">
-                Gamble:
-                {{user.gambleTimes}}
-                Times of
-                {{user.gambleCube}}
-              </label>
-            </div>
-
-            <!--SHOW USER CUBES AFTER ROUND FINISHED-->
-            <div class="col-80" ng-show="vm.showUsersCubes" style="display: flex;">
-            <span ng-repeat="cube in user.cubes" style="align-self: center">
-              <img class="user-cube"
-                   ng-class="{'gambled-cube': cube.cubeNum == vm.room.lastGambleCube || cube.cubeNum == 1}"
-                   ng-src="{{vm.getCubeImage(cube.cubeNum)}}"/>
-            </span>
-            </div>
-          </div>
-        </ion-item>
-
-        <!--END ROUND RESULT-->
-        <ion-item ng-if="vm.showUsersCubes && vm.endRoundResult" style="padding: 0 !important;">
-          <div style="text-align: center;padding: 20px;">
-          <span style="color: #326fab;margin-left: 12px;" ng-bind-html="vm.getEndRoundTextResult()">
-          </span>
-          </div>
-        </ion-item>
-
-      </ion-list>
-
-      <!--if no players in the room-->
-      <div
-        style="bottom: 0; width: 100%; background-color: #0c60ee;text-align: center; position: absolute;padding: 20px 0;color: white;font-size: 15px"
-        ng-show="!vm.showUsersCubes && vm.users.length < 2">
-        The are no players in the room
-      </div>
-
-      <!--FOOTER - cubes and gambling stuff -->
-      <div style="bottom: 0; width: 100%; background-color: #0c60ee;text-align: center; position: absolute"
-           ng-show="!vm.showUsersCubes && vm.users.length > 1 && vm.myPlayer.currentNumOfCubes > 0">
-
-        <!--USER CUBES-->
-        <span ng-repeat="cube in vm.myPlayer.cubes">
-          <img style="height: 40px; width: 40px; margin: 5px" ng-src="{{vm.getCubeImage(cube.cubeNum)}}"/>
-         </span>
-
-        <br/>
-
-        <!--GAMBLING-->
-        <div ng-show="vm.isMyTurn && vm.showUserPanel" class="row vertical-center no-padding">
-
-          <!--GAMBLE TIMES-->
-          <div class="col col-20" style="color: white; font-size: 20px">
-            <div class="col" ng-click="vm.increaseTimes()">
-              <i class="ion-chevron-up"></i>
-            </div>
-            {{vm.getGambleTimes()}}
-            <div class="col" ng-click="vm.decreaseTimes()" ng-class="{'opacity-05': !vm.canDecreaseTimes()}">
-              <i class="ion-chevron-down"></i>
-            </div>
-          </div>
-
-          <!--JUST TEXT-->
-          <div class="col col-20" style="color: white; font-size: 20px">
-            Times of
-          </div>
-
-          <!--GAMBLE CUBE-->
-          <div class="col col-20" style="color: white; font-size: 20px">
-            <div class="col" ng-click="vm.increaseCube()">
-              <i class="ion-chevron-up"></i>
-            </div>
-            {{vm.getGambleCube()}}
-            <div class="col" ng-click="vm.decreaseCube()" ng-class="{'opacity-05': !vm.canDecreaseCube()}">
-              <i class="ion-chevron-down"></i>
-            </div>
-          </div>
-
-          <!--SEND GAMBLE BUTTON-->
-          <button class="col col-34 button button-balanced"
-                  ng-click="vm.setGamble(vm.gambleTimes, vm.gambleCube, false)">
-            Send gamble
-          </button>
-        </div>
-
-        <!--LYING BUTTON-->
-        <button
-          ng-show="vm.isMyTurn && vm.room.lastGambleCube != null && vm.room.lastGambleTimes != null && vm.showUserPanel"
-          style="margin: 10px"
-          class="button button-assertive no-padding"
-          ng-click="vm.setGamble(null, null, true)">
-          It's a lie!
+        <button class="button" ng-click="vm.setChatStatus(vm.chatOn = !vm.chatOn)"
+                ng-class="{'unread-messages': vm.unreadMessages > 0}">
+            Chat {{vm.unreadMessages > 0 ? "(" + vm.unreadMessages + ")" : ""}}
         </button>
 
-        <!--REFRESH FOR DEBUG!!-->
-        <button ng-show="vm.showRestartButton" style="    margin: 5px;
+        <button class="button" ng-click="vm.returnToRooms()" style="margin-left: 2px">
+            Back to rooms
+        </button>
+
+    </ion-nav-buttons>
+
+
+    <ion-nav-buttons side="left">
+
+        <button class="button" ng-click="vm.restartGame()"
+                ng-if="vm.room.ownerId == vm.myPlayer.id && vm.users.length > 1">
+            Restart game
+        </button>
+
+    </ion-nav-buttons>
+
+    <!--PAGE CONTENT-->
+    <ion-content>
+
+        <ion-refresher
+            pulling-text="Pull to refresh the game"
+            on-refresh="vm.setSocketDetails()">
+        </ion-refresher>
+
+        <!--CHAT DIV-->
+        <div
+            style="position: absolute;min-width: 100%;min-height: 100%;background-color: rgba(0, 0, 0, 0.34);z-index: 10;"
+            ng-show="vm.chatOn">
+            <!--CHAT DIV-->
+            <div class="chat-div main-color">
+                <div style="text-align: right">
+                    <span ng-click="vm.setChatStatus(false)" style="padding: 10px">X</span>
+                </div>
+                <ul>
+                    <li class="item" ng-repeat="message in vm.messages" style="padding: 5px !important;">
+
+                        <div class="row" ng-bind-html="vm.getMessageText(message)">
+
+                        </div>
+
+                    </li>
+                </ul>
+
+                <div class="row" style="padding-right: 20px;position: absolute;bottom: 10px;">
+                    <div class="col-75" style="padding: 2px;">
+                        <input class="regular-input" ng-model="vm.messageContent" style="width: 100%; height: 100%;">
+                    </div>
+                    <button class="col-25 button button-positive small-button" style="margin: 2px;"
+                            ng-click="vm.sendMessage()">
+                        Send
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!--GAME DIV-->
+        <div class="game-div">
+
+            <ion-list>
+
+                <!--LIST ITEM-->
+                <ion-item class="item-avatar item-icon-right vertical-center user-item"
+                          ng-repeat="user in vm.users | orderBy: 'key'"
+                          ng-class="{'current-user-turn': user.currentUser, 'not-current-user-turn': !user.currentUser, 'disabled-player': !user.isLoggedIn}">
+
+                    <div class="row">
+
+                        <!--USER NAME-->
+                        <div class="col" ng-class="{'col-40': !vm.showUsersCubes, 'col-20': vm.showUsersCubes}">
+                            <h2 ng-class="{'foo': user.currentUser}" ng-show="!user.isMe">
+                                <i class="ion-chevron-right" ng-show="user.currentUser"></i>
+                                {{user.name}} ({{user.currentNumOfCubes ? user.currentNumOfCubes : 'Off'}})
+                            </h2>
+                            <h2 ng-class="{'foo': user.currentUser}" ng-show="user.isMe" style="font-weight: 900">
+                                <i class="ion-chevron-right" ng-show="user.currentUser"></i>
+                                Me
+                                ({{user.currentNumOfCubes ? user.currentNumOfCubes : 'Off'}})
+                            </h2>
+                        </div>
+
+                        <!--GAMBLING DETAILS-->
+                        <div class="col col-60"
+                             ng-show="!vm.showUsersCubes && user.gambleTimes != null && user.gambleCube != null">
+                            <h3 ng-class="{'last-player-turn': user.lastUser}"
+                                ng-show="user.id != vm.room.currentUserTurnId"
+                                style="text-align: center">
+                                {{user.gambleTimes}}
+                                Times of
+                                {{user.gambleCube}}
+                            </h3>
+                        </div>
+
+                        <!--SHOW USER CUBES AFTER ROUND FINISHED-->
+                        <div class="col-80" ng-show="vm.showUsersCubes" style="display: flex;">
+                            <span ng-repeat="cube in user.cubes" style="align-self: center">
+                              <img class="user-cube"
+                                   ng-class="{'gambled-cube': cube.cubeNum == vm.room.lastGambleCube || cube.cubeNum == 1}"
+                                   ng-src="{{vm.getCubeImage(cube.cubeNum)}}"/>
+                            </span>
+                        </div>
+                    </div>
+                </ion-item>
+
+                <!--NUM OF TOTAL DICE-->
+                <ion-item ng-hide="vm.showUsersCubes && vm.endRoundResult" style="padding: 0 !important;">
+                    <div style="text-align: center;padding: 5px;">
+                      <span style="color: #326fab;margin-left: 12px;">
+                        Total Dice: <label style="font-weight:bold;color:red">{{vm.getNumOfTotalDice()}}</label>
+                          <!--Shlish: <label style="font-weight:bold;color:red">{{(vm.getNumOfTotalDice()/3).toFixed(1)}}</label>-->
+                      </span>
+                    </div>
+                </ion-item>
+
+                <!--END ROUND RESULT-->
+                <ion-item ng-if="vm.showUsersCubes && vm.endRoundResult" style="padding: 0 !important;">
+                    <div style="text-align: center;padding: 20px;">
+                      <span style="color: #326fab;margin-left: 12px;" ng-bind-html="vm.getEndRoundTextResult()">
+                      </span>
+                    </div>
+                </ion-item>
+
+            </ion-list>
+
+            <!--ROOM NAME-->
+            <div style="    margin-top: 30px;
+    text-align: center;">
+                <h3 style="opacity: 0.15;">
+                    <b>{{vm.pageTitle}}</b>
+                </h3>
+            </div>
+
+            <!--if no players in the room-->
+            <div
+                style="bottom: 0; width: 100%; background-color: #0c60ee;text-align: center; position: absolute;padding: 20px 0;color: white;font-size: 15px"
+                ng-show="!vm.showUsersCubes && vm.users.length < 2">
+                The are no players in the room
+            </div>
+
+            <!--FOOTER - cubes and gambling stuff -->
+            <div
+                style="bottom: 0; width: 100%; background-color: #0c60ee;text-align: center; position: absolute;z-index: 5;"
+                ng-show="!vm.showUsersCubes && vm.users.length > 1 && vm.myPlayer.currentNumOfCubes > 0">
+                <!--USER CUBES-->
+                <div style="height: 40px; width: 40px; margin: 5px;display: inline-block"
+                     ng-repeat="cube in vm.myPlayer.cubes">
+                    <img style="width: 100%; height: 100%" ng-src="{{vm.getMyCubeImage(cube.cubeNum)}}"/>
+                </div>
+
+                <div
+                    style="color: white;height: 40px; width: 50px;display: inline-block;border: solid 1px;margin-left: 10px;border-radius: 2px">
+                    <label style="width: 100%; height: 100%;display: table;padding-top: 10px;"
+                           ng-click="vm.changeDiceStatus()">
+                        {{vm.diceStatusButton}}
+                    </label>
+                </div>
+
+                <br/>
+
+                <!--GAMBLING-->
+                <div ng-show="vm.isMyTurn && vm.showUserPanel" class="row vertical-center no-padding">
+
+                    <!--GAMBLE TIMES-->
+                    <div class="col col-20" style="color: white; font-size: 20px">
+                        <div class="col" ng-click="vm.increaseTimes()">
+                            <i class="ion-chevron-up"></i>
+                        </div>
+                        {{vm.getGambleTimes()}}
+                        <div class="col" ng-click="vm.decreaseTimes()"
+                             ng-class="{'opacity-05': !vm.canDecreaseTimes()}">
+                            <i class="ion-chevron-down"></i>
+                        </div>
+                    </div>
+
+                    <!--JUST TEXT-->
+                    <div class="col col-20" style="color: white; font-size: 20px">
+                        X
+                    </div>
+
+                    <!--GAMBLE CUBE-->
+                    <div class="col col-20" style="color: white; font-size: 20px">
+                        <div class="col" ng-click="vm.increaseCube()" style="padding-bottom: 0">
+                            <i class="ion-chevron-up"></i>
+                        </div>
+                        <img style="height: 37px !important;width: 37px !important;padding: 1px 0px 0px 1px;"
+                             ng-src="{{vm.getCubeImage(vm.getGambleCube())}}"/>
+                        <div class="col" ng-click="vm.decreaseCube()" style="padding-top: 0"
+                             ng-class="{'opacity-05': !vm.canDecreaseCube()}">
+                            <i class="ion-chevron-down"></i>
+                        </div>
+                    </div>
+
+                    <!--SEND GAMBLE BUTTON-->
+                    <button class="col col-34 button button-balanced"
+                            ng-click="vm.setGamble(vm.gambleTimes, vm.gambleCube, false)">
+                        Send gamble
+                    </button>
+                </div>
+
+                <!--LYING BUTTON-->
+                <button
+                    ng-show="vm.isMyTurn && vm.room.lastGambleCube != null && vm.room.lastGambleTimes != null && vm.showUserPanel"
+                    style="margin-bottom: 10px;"
+                    class="button button-assertive no-padding"
+                    ng-click="vm.setGamble(null, null, true)">
+                    It's a lie!
+                </button>
+
+                <!--REFRESH FOR DEBUG!!-->
+                <button ng-show="vm.showRestartButton" style="    margin: 5px;
     position: absolute;
     bottom: 0;
     left: 0;" class="button button-energized no-padding" ng-click="vm.restartGame()">
-          Restart
-        </button>
+                    Restart
+                </button>
 
-      </div>
-    </div>
-  </ion-content>
+            </div>
+        </div>
+    </ion-content>
 </ion-view>

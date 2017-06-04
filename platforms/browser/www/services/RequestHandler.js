@@ -5,25 +5,27 @@
 angular.module('MyCubes.services.request-handler', [])
 
 
-  .factory('requestHandler', ['mySocket',
-    function (mySocket) {
-      return {
-        createRequest: function (request) {
-          mySocket.getSocket().emit(request.event, request.params,
-            function (data) {
+    .factory('requestHandler', ['mySocket',
+        function (mySocket) {
+            return {
+                createRequest: function (request) {
+                    mySocket.getSocket().emit(request.event, request.params,
+                        function (data) {
 
-              if (data.response == "success") {
+                            if (data.response == "success") {
 
-                request.onSuccess(data.result);
-              } else {
+                                request.onSuccess && request.onSuccess(data.result);
+                            } else {
 
-                request.onError(data.result);
-              }
+                                request.onError && request.onError(data.result);
+                            }
+
+                            request.onFinally && request.onFinally(data);
+                        }
+                    )
+                    ;
+                }
             }
-          )
-          ;
-        }
-      }
-    }])
+        }])
 ;
 

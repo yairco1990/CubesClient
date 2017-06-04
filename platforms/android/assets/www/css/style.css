@@ -3,6 +3,14 @@ html {
     direction: ltr;
 }
 
+/*FOR PC OR TABLETS*/
+@media screen and (min-width: 600px) {
+    ion-side-menu-content {
+        height: 800px !important;
+        width: 600px !important;
+    }
+}
+
 ion-content {
     background-color: #f1f1f1;
 }

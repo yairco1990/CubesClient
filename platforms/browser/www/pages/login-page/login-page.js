@@ -3,61 +3,66 @@
  */
 angular.module('MyCubes.controllers.login-page', [])
 
-  .controller('LoginCtrl', function ($scope, requestHandler, $http, $state, $ionicPopup, $myPlayer, $timeout, $log) {
+    .controller('LoginCtrl', function ($scope, requestHandler, $http, $state, $ionicPopup, $myPlayer, $timeout, $log, $ionicHistory) {
 
-    $log.debug("init login ctrl");
+        $log.debug("init login ctrl");
 
-    //init player
-    $scope.player = {};
+        //init player
+        $scope.player = {};
 
-    /**
-     * login
-     */
-    $scope.login = function () {
+        /**
+         * login
+         */
+        $scope.login = function () {
 
-      requestHandler.createRequest({
-        event: 'login',
-        params: {
-          name: $scope.player.username,
-          password: $scope.player.password
-        },
-        onSuccess: function (user) {
-          $log.debug("successfully logged in");
+            requestHandler.createRequest({
+                event: 'login',
+                params: {
+                    name: $scope.player.username,
+                    password: $scope.player.password
+                },
+                onSuccess: function (user) {
+                    $log.debug("successfully logged in");
 
-          //set the player to the service
-          $myPlayer.setPlayer(user);
+                    //set the player to the service
+                    $myPlayer.setPlayer(user);
 
-          //show success popup
-          var alertPopup = $ionicPopup.show({
-            title: 'Successfully logged in!'
-          });
+                    //show success popup
+                    var alertPopup = $ionicPopup.show({
+                        title: 'Successfully logged in!'
+                    });
 
-          //close popup after 3 seconds and move to rooms
-          $timeout(function () {
-            alertPopup.close();
-            $state.go('rooms', {reload: true});
-          }, 500);
-        },
-        onError: function (error) {
+                    //close popup after 3 seconds and move to rooms
+                    $timeout(function () {
+                        alertPopup.close();
 
-          $log.error("failed to login", error);
+                        //set new root of history to the rooms page
+                        $ionicHistory.nextViewOptions({historyRoot: true});
 
-          //show success popup
-          var alertPopup = $ionicPopup.alert({
-            title: 'Failed to login',
-            subTitle: 'Check username and password'
-          });
-          alertPopup.then(function (res) {
-          });
-        }
-      });
-    };
+                        //move to rooms
+                        $state.go('rooms', {reload: true});
+                    }, 500);
+                },
+                onError: function (error) {
 
-    /**
-     * move to register page
-     */
-    $scope.moveToRegister = function(){
-        $state.go('register');
-    };
+                    $log.error("failed to login", error);
 
-  });
+                    //show success popup
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Failed to login',
+                        subTitle: 'Check username and password'
+                    });
+                    alertPopup.then(function (res) {
+                    });
+                }
+            });
+        };
+
+        /**
+         * move to register page
+         */
+        $scope.moveToRegister = function () {
+            $state.go('register');
+        };
+
+    });
