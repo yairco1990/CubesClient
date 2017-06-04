@@ -71,6 +71,7 @@ angular.module('starter', [
             })
 
             .state('rooms', {
+                cache: false,
                 url: '/rooms',
                 templateUrl: 'pages/rooms-page/rooms-page.html',
                 controller: 'RoomsCtrl'
@@ -202,14 +203,14 @@ angular.module('starter', [
                 host: 'localhost:3000'
             },
             TEAMMATE: {
-                host: '192.168.1.107:3000'
+                host: '192.168.1.105:3000'
             },
             DEVELOPMENT: {
-                host: 'http://40.68.96.104'
+                host: 'http://40.68.96.104:3000'
             }
         };
 
-        var selectedEnvironment = ENVIRONMENTS.DEVELOPMENT;
+        var selectedEnvironment = ENVIRONMENTS.TEAMMATE;
 
         $log.debug("environment host selected = ", selectedEnvironment.host);
 
