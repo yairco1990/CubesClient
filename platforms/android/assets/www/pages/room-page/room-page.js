@@ -99,7 +99,7 @@ RoomCtrl.prototype.initController = function () {
             vm.unreadMessages++;
         }
 
-        if (vm.messages.length > 5) {
+        if (vm.messages.length > 10) {
             vm.messages.splice(0, 1);
         }
         vm.scrollToLastMessage();
@@ -120,13 +120,13 @@ RoomCtrl.prototype.initController = function () {
     });
 
     vm.roomId = parseInt(vm.$stateParams.roomId);
-
     vm.showUserPanel = true;
-
     vm.showMyDice = true;
     vm.diceStatusButton = "Hide";
-
     vm.pageTitle = vm.$stateParams.roomName;
+
+    //count number of retries to send gamble
+    vm.setGambleRetries = 0;
 
     //TODO for debug only
     vm.showRestartButton = false;
@@ -327,7 +327,10 @@ RoomCtrl.prototype.setGamble = function (gambleTimes, gambleCube, isLying) {
         },
         onSuccess: function (result) {
 
+            vm.setGambleRetries = 0;
+
             vm.$log.debug("successfully sent gamble");
+
             if (isLying) {
 
                 if (result == "CORRECT_GAMBLE") {
@@ -340,7 +343,12 @@ RoomCtrl.prototype.setGamble = function (gambleTimes, gambleCube, isLying) {
             }
         },
         onError: function (error) {
-            vm.showUserPanel = true;
+
+            vm.setGambleRetries++;
+
+            if (vm.setGambleRetries < 3) {
+                vm.setGamble(gambleTimes, gambleCube, isLying);
+            }
 
             vm.$log.error("failed to set gamble due to", error);
         }

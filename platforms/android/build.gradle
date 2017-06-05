@@ -86,8 +86,8 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
-apply from: "phonegap-plugin-push/mycubes943218-push.gradle"
-apply from: "cordova-plugin-crosswalk-webview/mycubes943218-xwalk.gradle"
+apply from: "cordova-plugin-crosswalk-webview/dicelies943218-xwalk.gradle"
+apply from: "phonegap-plugin-push/dicelies943218-push.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()

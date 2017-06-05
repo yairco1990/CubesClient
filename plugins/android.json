@@ -8,26 +8,7 @@
     },
     "installed_plugins": {
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.mycubes943218"
-        },
-        "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.ionicframework.mycubes943218"
-        },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.mycubes943218"
-        },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.ionicframework.mycubes943218"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.mycubes943218"
-        },
-        "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.mycubes943218"
-        },
-        "phonegap-plugin-push": {
-            "SENDER_ID": "GCM_PROJECT_NUMBER",
-            "PACKAGE_NAME": "com.ionicframework.mycubes943218"
+            "PACKAGE_NAME": "com.ionicframework.dicelies943218"
         },
         "cordova-plugin-crosswalk-webview": {
             "XWALK_VERSION": "21+",
@@ -35,7 +16,26 @@
             "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
             "XWALK_MODE": "embedded",
             "XWALK_MULTIPLEAPK": "true",
-            "PACKAGE_NAME": "com.ionicframework.mycubes943218"
+            "PACKAGE_NAME": "com.ionicframework.dicelies943218"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.dicelies943218"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ionicframework.dicelies943218"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.ionicframework.dicelies943218"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.dicelies943218"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.dicelies943218"
+        },
+        "phonegap-plugin-push": {
+            "SENDER_ID": "GCM_PROJECT_NUMBER",
+            "PACKAGE_NAME": "com.ionicframework.dicelies943218"
         }
     },
     "dependent_plugins": {}

@@ -49,7 +49,7 @@
                     </li>
                 </ul>
 
-                <div class="row" style="padding-right: 20px;position: absolute;bottom: 10px;">
+                <div class="row" style="padding-right: 20px;position: absolute;bottom: 10px;z-index: 5;background-color: #f1f1f1;">
                     <div class="col-75" style="padding: 2px;">
                         <input class="regular-input" ng-model="vm.messageContent" style="width: 100%; height: 100%;">
                     </div>
@@ -155,7 +155,7 @@
                 </div>
 
                 <div
-                    style="color: white;height: 40px; width: 50px;display: inline-block;border: solid 1px;margin-left: 10px;border-radius: 2px">
+                    style="color: white;height: 40px; width: 50px;display: inline-block;border: solid 1px;margin-left: 10px;border-radius: 2px;background-color: #3b7324;">
                     <label style="width: 100%; height: 100%;display: table;padding-top: 10px;"
                            ng-click="vm.changeDiceStatus()">
                         {{vm.diceStatusButton}}
