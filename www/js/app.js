@@ -24,26 +24,29 @@ angular.module('starter', [
     'MyCubes.controllers.create-room-page',
     'MyCubes.controllers.room-page',
     'MyCubes.controllers.login-page',
+    'MyCubes.controllers.dashboard-page',
+    'MyCubes.controllers.rules-page',
+    'MyCubes.controllers.scores-page',
     'MyCubes.controllers.register-page'
 ])
 
     .run(function ($rootScope, $ionicPlatform, $myPlayer, $state) {
         $ionicPlatform.ready(function () {
-            setTimeout(function() {
-                if(navigator && navigator.splashscreen) {
+            setTimeout(function () {
+                if (navigator && navigator.splashscreen) {
                     navigator.splashscreen.hide();
                 }
             }, 100);
         });
 
-        $rootScope.$on('$stateChangeStart', function(event, toState){
+        $rootScope.$on('$stateChangeStart', function (event, toState) {
 
-            if(toState.name === 'login' && $myPlayer.isLoggedIn()){
+            if (toState.name === 'login' && $myPlayer.isLoggedIn()) {
                 event.preventDefault();
-                $state.go('rooms');
+                $state.go('dashboard');
             }
 
-            if(!$myPlayer.isLoggedIn() && toState.name !== 'login' && toState.name !== 'register'){
+            if (!$myPlayer.isLoggedIn() && toState.name !== 'login' && toState.name !== 'register') {
                 event.preventDefault();
                 $state.go('login');
             }
@@ -51,15 +54,6 @@ angular.module('starter', [
     })
 
     .config(function ($stateProvider, $urlRouterProvider) {
-
-        // var validPageFunction = function ($myPlayer, $state, $timeout, $log) {
-        //     if ($myPlayer.getPlayer() != null) {
-        //         $log.debug("there is a player - move to rooms state");
-        //         return $timeout(function () {
-        //             $state.go('rooms');
-        //         }, 0);
-        //     }
-        // };
 
         // Ionic uses AngularUI Router which uses the concept of states
         // Learn more here: https://github.com/angular-ui/ui-router
@@ -81,9 +75,74 @@ angular.module('starter', [
 
             .state('rooms', {
                 cache: false,
-                url: '/',
+                url: '/rooms',
                 templateUrl: 'pages/rooms-page/rooms-page.html',
                 controller: 'RoomsCtrl'
+            })
+
+            .state('dashboard', {
+                cache: false,
+                url: '/',
+                templateUrl: 'pages/dashboard-page/dashboard-page.html',
+                controller: 'DashboardCtrl as vm',
+                resolve: {
+                    dashboardPlayer: function ($myPlayer, requestHandler, $log, $state) {
+                        return new Promise(function (resolve, reject) {
+                            requestHandler.createRequest({
+                                event: 'getUser',
+                                params: {
+                                    userId: $myPlayer.getPlayer().id
+                                },
+                                onSuccess: function (user) {
+                                    resolve(user);
+                                },
+                                onError: function (error) {
+                                    $log.error("failed to get user", error);
+
+                                    //if failed to get user - logout and move to login
+                                    $myPlayer.logout();
+                                    $state.go('login');
+
+                                    reject("failed to get user");
+                                }
+                            });
+                        });
+                    }
+                }
+            })
+
+            .state('scores', {
+                cache: false,
+                url: '/scores',
+                templateUrl: 'pages/scores-page/scores-page.html',
+                controller: 'ScoresCtrl as vm',
+                resolve: {
+                    topUsers: function (requestHandler, $log, $state) {
+                        return new Promise(function (resolve, reject) {
+                            requestHandler.createRequest({
+                                event: 'getScores',
+                                params: {},
+                                onSuccess: function (users) {
+                                    resolve(users);
+                                },
+                                onError: function (error) {
+                                    $log.error("failed to get top scorers", error);
+
+                                    //on error - move to dashboard
+                                    $state.go('dashboard');
+
+                                    reject("failed to get top scorers");
+                                }
+                            });
+                        });
+                    }
+                }
+            })
+
+            .state('rules', {
+                url: '/rules',
+                templateUrl: 'pages/rules-page/rules-page.html',
+                controller: 'RulesCtrl as vm'
             })
 
             .state('create-room', {
@@ -96,14 +155,7 @@ angular.module('starter', [
                 cache: false,
                 url: '/room/:roomId:roomName',
                 templateUrl: 'pages/room-page/room-page.html',
-                controller: 'RoomCtrl as vm',
-                resolve: {
-                    pageData: function ($myPlayer, $state) {
-                        if ($myPlayer.getPlayer() == null) {
-                            $state.go('login');
-                        }
-                    }
-                }
+                controller: 'RoomCtrl as vm'
             });
 
         // if none of the above states are matched, use this as the fallback
@@ -194,6 +246,11 @@ angular.module('starter', [
                 return player != null;
             },
 
+            logout: function () {
+                player = null;
+                $window.localStorage.removeItem('player');
+            },
+
             removeSocketEvents: function () {
                 //remove socket listeners
                 mySocket.getSocket().removeAllListeners();
@@ -219,7 +276,7 @@ angular.module('starter', [
             }
         };
 
-        var selectedEnvironment = ENVIRONMENTS.PRODUCTION;
+        var selectedEnvironment = ENVIRONMENTS.TEAMMATE;
 
         $log.debug("environment host selected = ", selectedEnvironment.host);
 

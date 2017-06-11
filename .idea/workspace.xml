@@ -20,24 +20,121 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="config.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/config.xml">
+      <file leaf-file-name="scores-page.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/pages/scores-page/scores-page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="61" lean-forward="false" selection-start-line="1" selection-start-column="61" selection-end-line="1" selection-end-column="61" />
+            <state relative-caret-position="374">
+              <caret line="22" column="54" lean-forward="false" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#tr#0;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#1;n#tr#0;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#2;n#tr#0;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#tr#1;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#2;n#tr#1;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#3;n#tr#1;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="scores-page.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/pages/scores-page/scores-page.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="18" column="17" lean-forward="false" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="room-page.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/pages/room-page/room-page.js">
+      <file leaf-file-name="dashboard-page.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="334" column="31" lean-forward="false" selection-start-line="334" selection-start-column="31" selection-end-line="334" selection-end-column="31" />
+            <state relative-caret-position="221">
+              <caret line="13" column="57" lean-forward="false" selection-start-line="13" selection-start-column="57" selection-end-line="13" selection-end-column="57" />
               <folding>
-                <marker date="1497138174971" expanded="true" signature="18124:18125" ph="{...}" />
+                <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h4#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h4#1;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#hr#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rules-page.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/pages/rules-page/rules-page.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="663">
+              <caret line="45" column="50" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/js/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="301">
+              <caret line="119" column="28" lean-forward="false" selection-start-line="119" selection-start-column="20" selection-end-line="119" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="179">
+              <caret line="33" column="49" lean-forward="false" selection-start-line="33" selection-start-column="49" selection-end-line="33" selection-end-column="49" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rules-page.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/pages/rules-page/rules-page.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dashboard-page.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="25" column="41" lean-forward="false" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="scores-page.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/pages/scores-page/scores-page.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" column="32" lean-forward="false" selection-start-line="13" selection-start-column="32" selection-end-line="13" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rooms-page.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/pages/rooms-page/rooms-page.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="26" column="23" lean-forward="true" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -48,43 +145,44 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Html5" />
-        <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>40px !i</find>
-      <find>, true</find>
-      <find>chatOn</find>
-      <find>Total</find>
-      <find>messag</find>
-      <find>messages</find>
-      <find>Orie</find>
-      <find>diceSta</find>
-      <find>DEVE</find>
-      <find>body</find>
-      <find>.run</find>
-      <find>&lt;</find>
-      <find>diceStat</find>
-      <find>Send</find>
-      <find>messages.</find>
-      <find>478</find>
-      <find>PROD</find>
-      <find>andr</find>
-      <find>cdvMinSdkVersion</find>
-      <find>depen</find>
-      <find>dependencies</find>
-      <find>min</find>
-      <find>minsdk</find>
       <find>xwalkVersion</find>
       <find>.css</find>
       <find>angular</find>
       <find>FadeSplashScreenDuration</find>
       <find>setGam</find>
       <find>setGamb</find>
+      <find>www</find>
+      <find>unbind</find>
       <find>setGambleRetries</find>
+      <find>login</find>
+      <find>fa-star</find>
+      <find>font-</find>
+      <find>reg</find>
+      <find>rooms</find>
+      <find>history</find>
+      <find>hr</find>
+      <find>logou</find>
+      <find>dash</find>
+      <find>rules</find>
+      <find>LOCAL</find>
+      <find>rul</find>
+      <find>scores-pa</find>
+      <find>h2</find>
+      <find>state</find>
+      <find>remove</find>
+      <find>localst</find>
+      <find>resolve</find>
+      <find>Rules</find>
+      <find>requ</find>
+      <find>cont</find>
     </findStrings>
     <replaceStrings>
       <replace>vm.$myPlayer</replace>
@@ -95,6 +193,7 @@
       <replace>vm</replace>
       <replace>showRestartButton</replace>
       <replace>Lato</replace>
+      <replace>label</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\Users\Yair\CubesProject\CubesClient\www</dir>
@@ -116,26 +215,36 @@
         <option value="$PROJECT_DIR$/www/services/PushCase.js" />
         <option value="$PROJECT_DIR$/www/pages/rooms-page/create-room-page.html" />
         <option value="$PROJECT_DIR$/.editorconfig" />
-        <option value="$PROJECT_DIR$/www/pages/register-page/register-page.js" />
         <option value="$PROJECT_DIR$/www/services/RequestHandler.js" />
-        <option value="$PROJECT_DIR$/www/pages/login-page/login-page.js" />
         <option value="$PROJECT_DIR$/www/directives/loader.js" />
         <option value="$PROJECT_DIR$/www/directives/loader/loader.js" />
         <option value="$PROJECT_DIR$/www/directives/loader/loader.html" />
-        <option value="$PROJECT_DIR$/www/pages/rooms-page/rooms-page.html" />
         <option value="$PROJECT_DIR$/www/pages/rooms-page/rooms-page.js" />
         <option value="$PROJECT_DIR$/www/pages/room-page/popover.html" />
         <option value="$PROJECT_DIR$/www/pages/rooms-page/create-room-page.js" />
         <option value="$PROJECT_DIR$/www/pages/login-page/login-page.html" />
         <option value="$PROJECT_DIR$/www/pages/register-page/register-page.html" />
-        <option value="$PROJECT_DIR$/www/css/style.css" />
-        <option value="$PROJECT_DIR$/www/js/app.js" />
         <option value="$PROJECT_DIR$/www/pages/room-page/room-page.html" />
         <option value="$PROJECT_DIR$/platforms/android/build/intermediates/exploded-aar/org.xwalk/xwalk_core_library/21.51.546.7/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/platforms/android/build/intermediates/exploded-aar/com.android.support/support-v13/23.4.0/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/www/index.html" />
-        <option value="$PROJECT_DIR$/www/pages/room-page/room-page.js" />
         <option value="$PROJECT_DIR$/config.xml" />
+        <option value="$PROJECT_DIR$/www/node_modules/angularjs-scroll-glue/src/scrollglue.js" />
+        <option value="$PROJECT_DIR$/www/pages/login-page/login-page.js" />
+        <option value="$PROJECT_DIR$/www/pages/register-page/register-page.js" />
+        <option value="$PROJECT_DIR$/www/pages/rooms-page/rooms-page.html" />
+        <option value="$PROJECT_DIR$/www/css/style.css" />
+        <option value="$PROJECT_DIR$/www/pages/room-page/room-page.js" />
+        <option value="$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.css" />
+        <option value="$PROJECT_DIR$/www/pages/rules-page/rules-page.js" />
+        <option value="$PROJECT_DIR$/www/pages/rules-page/rules-page.css" />
+        <option value="$PROJECT_DIR$/www/pages/rules-page/rules-page.html" />
+        <option value="$PROJECT_DIR$/www/index.html" />
+        <option value="$PROJECT_DIR$/www/pages/scores-page/scores-page.css" />
+        <option value="$PROJECT_DIR$/www/pages/scores-page/scores-page.html" />
+        <option value="$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.js" />
+        <option value="$PROJECT_DIR$/www/js/app.js" />
+        <option value="$PROJECT_DIR$/www/pages/scores-page/scores-page.js" />
+        <option value="$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.html" />
       </list>
     </option>
   </component>
@@ -217,6 +326,10 @@
               <option name="myItemId" value="pages" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scores-page" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -233,10 +346,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="pages" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="room-page" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -261,6 +370,7 @@
     <property name="javascript.nodejs.core.library.configured.version" value="5.10.1" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -387,12 +497,12 @@
       <workItem from="1496567978729" duration="18000" />
       <workItem from="1496579240525" duration="21974000" />
       <workItem from="1496702054952" duration="4035000" />
-      <workItem from="1497177921479" duration="107000" />
+      <workItem from="1497177921479" duration="14166000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="184563000" />
+    <option name="totallyTimeSpent" value="198622000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -412,9 +522,11 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32827735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39935064" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -426,12 +538,10 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39935064" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3261105" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -472,77 +582,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/platforms/android/assets/www/img/cube-1.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/icon.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/android/icon/drawable-mdpi-icon.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/android/splash/drawable-land-hdpi-screen.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/splash.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/ionic-platform-web-client/src/util/util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/ionic-platform-web-client/src/auth/auth.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="159" column="9" lean-forward="false" selection-start-line="159" selection-start-column="9" selection-end-line="159" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/ionic-numberpicker/src/ionic-numberpicker.styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/platforms/android/assets/www/img/dice.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/services/PushCase.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="23" lean-forward="false" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/platforms/browser/browser.json" />
-    <entry file="file://$PROJECT_DIR$/www/lib/ionic/js/ionic-angular.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-314">
-          <caret line="2966" column="8" lean-forward="false" selection-start-line="2966" selection-start-column="8" selection-end-line="2966" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/pages/rooms-page/create-room-page.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
@@ -581,21 +625,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/pages/register-page/register-page.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1241">
-          <caret line="73" column="50" lean-forward="false" selection-start-line="73" selection-start-column="50" selection-end-line="73" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/pages/login-page/login-page.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/directives/loader/loader.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -615,25 +644,11 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/pages/rooms-page/rooms-page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="41" lean-forward="false" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/pages/room-page/popover.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="54" lean-forward="false" selection-start-line="3" selection-start-column="54" selection-end-line="3" selection-end-column="54" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/pages/rooms-page/rooms-page.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="44" column="55" lean-forward="false" selection-start-line="44" selection-start-column="55" selection-end-line="44" selection-end-column="55" />
         </state>
       </provider>
     </entry>
@@ -664,20 +679,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/pages/register-page/register-page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="34" column="19" lean-forward="false" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="5" lean-forward="false" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/platforms/android/cordova/defaults.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -689,14 +690,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="18" column="43" lean-forward="false" selection-start-line="18" selection-start-column="43" selection-end-line="18" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="205" column="28" lean-forward="false" selection-start-line="205" selection-start-column="28" selection-end-line="205" selection-end-column="28" />
           <folding />
         </state>
       </provider>
@@ -754,6 +747,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="56746">
           <caret line="3338" column="2" lean-forward="false" selection-start-line="3338" selection-start-column="2" selection-end-line="3338" selection-end-column="74" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -768,6 +762,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="19" column="3" lean-forward="false" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="3" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -775,14 +770,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="16" lean-forward="false" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="501">
-          <caret line="30" column="75" lean-forward="false" selection-start-line="30" selection-start-column="75" selection-end-line="30" selection-end-column="75" />
           <folding />
         </state>
       </provider>
@@ -800,29 +787,208 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="18" lean-forward="true" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="64" lean-forward="false" selection-start-line="3" selection-start-column="64" selection-end-line="3" selection-end-column="64" />
+        <state relative-caret-position="208">
+          <caret line="14" column="8" lean-forward="false" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/node_modules/angularjs-scroll-glue/src/scrollglue.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="108" column="31" lean-forward="false" selection-start-line="108" selection-start-column="31" selection-end-line="108" selection-end-column="31" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/register-page/register-page.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="36" column="0" lean-forward="true" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/register-page/register-page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="33" column="58" lean-forward="false" selection-start-line="33" selection-start-column="58" selection-end-line="33" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/assets/font-awesome-4.7.0/css/font-awesome.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="3" column="3324" lean-forward="false" selection-start-line="3" selection-start-column="3317" selection-end-line="3" selection-end-column="3324" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/login-page/login-page.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="61" column="22" lean-forward="false" selection-start-line="61" selection-start-column="19" selection-end-line="61" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/register-page/register-page.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="37" column="75" lean-forward="true" selection-start-line="37" selection-start-column="75" selection-end-line="37" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/rooms-page/rooms-page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="17" lean-forward="false" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/pages/room-page/room-page.js">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="391" column="19" lean-forward="true" selection-start-line="391" selection-start-column="19" selection-end-line="391" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="302" column="32" lean-forward="true" selection-start-line="302" selection-start-column="32" selection-end-line="302" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/rules-page/rules-page.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="20" lean-forward="false" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/rules-page/rules-page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="45" column="50" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="33" column="49" lean-forward="false" selection-start-line="33" selection-start-column="49" selection-end-line="33" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/rules-page/rules-page.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="25" column="41" lean-forward="false" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/rooms-page/rooms-page.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="26" column="23" lean-forward="true" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="119" column="28" lean-forward="false" selection-start-line="119" selection-start-column="20" selection-end-line="119" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/scores-page/scores-page.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="32" lean-forward="false" selection-start-line="13" selection-start-column="32" selection-end-line="13" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/scores-page/scores-page.html">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
-          <caret line="334" column="31" lean-forward="false" selection-start-line="334" selection-start-column="31" selection-end-line="334" selection-end-column="31" />
+          <caret line="22" column="54" lean-forward="false" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
           <folding>
-            <marker date="1497138174971" expanded="true" signature="18124:18125" ph="{...}" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#tr#0;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#1;n#tr#0;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#2;n#tr#0;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#tr#1;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#2;n#tr#1;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#3;n#tr#1;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.xml">
+    <entry file="file://$PROJECT_DIR$/www/pages/scores-page/scores-page.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="61" lean-forward="false" selection-start-line="1" selection-start-column="61" selection-end-line="1" selection-end-column="61" />
+        <state relative-caret-position="306">
+          <caret line="18" column="17" lean-forward="false" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="57" lean-forward="false" selection-start-line="13" selection-start-column="57" selection-end-line="13" selection-end-column="57" />
+          <folding>
+            <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h4#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h4#1;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#hr#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
