@@ -6,6 +6,7 @@
 angular.module('starter', [
     'ionic', 'ionic.service.core',
     'ui.router',
+    'luegg.directives',
 
     //BOWER
     'ionic-numberpicker',
@@ -16,6 +17,7 @@ angular.module('starter', [
 
     // DIRECTIVES
     'MyCubes.directives.loader',
+    'MyCubes.directives.input',
 
     //CONTROLLERS
     'MyCubes.controllers.rooms-page',
@@ -28,7 +30,9 @@ angular.module('starter', [
     .run(function ($rootScope, $ionicPlatform, $myPlayer, $state) {
         $ionicPlatform.ready(function () {
             setTimeout(function() {
-                navigator.splashscreen.hide();
+                if(navigator && navigator.splashscreen) {
+                    navigator.splashscreen.hide();
+                }
             }, 100);
         });
 
