@@ -18,10 +18,17 @@
 
     <!--LATO FONT-->
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="assets/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!--STYLES-->
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+
+    <!--PAGES CSS-->
+    <link href="directives/input/input.css" rel="stylesheet">
+    <link href="pages/login-page/login-page.css" rel="stylesheet">
+    <link href="pages/register-page/register-page.css" rel="stylesheet">
+    <link href="pages/rooms-page/create-room-page.css" rel="stylesheet">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -33,6 +40,7 @@
     <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
     <script src="node_modules/socket.io-client/dist/socket.io.min.js"></script>
     <script src="lib/angular-socket-io/socket.js"></script>
+    <script src="node_modules/angularjs-scroll-glue/src/scrollglue.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
@@ -49,6 +57,7 @@
 
     <!--DIRECTIVES-->
     <script src="directives/loader/loader.js"></script>
+    <script src="directives/input/input.js"></script>
 
     <!--CONTROLLERS-->
     <script src="pages/rooms-page/rooms-page.js"></script>
@@ -56,6 +65,7 @@
     <script src="pages/room-page/room-page.js"></script>
     <script src="pages/login-page/login-page.js"></script>
     <script src="pages/register-page/register-page.js"></script>
+    <script src="pages/redirect-page/redirect-page.js"></script>
 
     <!-- your app's js -->
     <script src="js/app.js"></script>

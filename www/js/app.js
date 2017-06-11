@@ -6,6 +6,7 @@
 angular.module('starter', [
     'ionic', 'ionic.service.core',
     'ui.router',
+    'luegg.directives',
 
     //BOWER
     'ionic-numberpicker',
@@ -16,30 +17,69 @@ angular.module('starter', [
 
     // DIRECTIVES
     'MyCubes.directives.loader',
+    'MyCubes.directives.input',
 
     //CONTROLLERS
     'MyCubes.controllers.rooms-page',
     'MyCubes.controllers.create-room-page',
     'MyCubes.controllers.room-page',
     'MyCubes.controllers.login-page',
-    'MyCubes.controllers.register-page'
+    'MyCubes.controllers.register-page',
+    'MyCubes.controllers.redirect-page'
 ])
 
     .run(function ($rootScope, $ionicPlatform, $myPlayer, $state) {
         $ionicPlatform.ready(function () {
             setTimeout(function() {
-                navigator.splashscreen.hide();
+                if(navigator && navigator.splashscreen) {
+                    navigator.splashscreen.hide();
+                }
             }, 100);
         });
 
+        /**
+         * get mobile operating system
+         * @returns {*}
+         */
+        function getMobileOperatingSystem() {
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            // Windows Phone must come first because its UA also contains "Android"
+            if (/windows phone/i.test(userAgent)) {
+                return "Windows Phone";
+            }
+
+            if (/android/i.test(userAgent)) {
+                return "Android";
+            }
+
+            // iOS detection from: http://stackoverflow.com/a/9039885/177710
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                return "iOS";
+            }
+
+            return "unknown";
+        }
+
+        /**
+         * on status changed handler
+         */
         $rootScope.$on('$stateChangeStart', function(event, toState){
 
+            if(getMobileOperatingSystem() === "Android" && toState.name !== 'redirect'){
+                event.preventDefault();
+                $state.go('redirect');
+                return;
+            }
+
+            //if user logon - and try to reach login page - move to rooms
             if(toState.name === 'login' && $myPlayer.isLoggedIn()){
                 event.preventDefault();
                 $state.go('rooms');
             }
 
-            if(!$myPlayer.isLoggedIn() && toState.name !== 'login' && toState.name !== 'register'){
+            //if user is not login and try to reach other page than login or register - move to login
+            if(!$myPlayer.isLoggedIn() && toState.name !== 'login' && toState.name !== 'register' && toState.name !== 'redirect'){
                 event.preventDefault();
                 $state.go('login');
             }
@@ -47,15 +87,6 @@ angular.module('starter', [
     })
 
     .config(function ($stateProvider, $urlRouterProvider) {
-
-        // var validPageFunction = function ($myPlayer, $state, $timeout, $log) {
-        //     if ($myPlayer.getPlayer() != null) {
-        //         $log.debug("there is a player - move to rooms state");
-        //         return $timeout(function () {
-        //             $state.go('rooms');
-        //         }, 0);
-        //     }
-        // };
 
         // Ionic uses AngularUI Router which uses the concept of states
         // Learn more here: https://github.com/angular-ui/ui-router
@@ -88,18 +119,17 @@ angular.module('starter', [
                 controller: 'CreateRoomCtrl'
             })
 
+            .state('redirect', {
+                url: '/redirect',
+                templateUrl: 'pages/redirect-page/redirect-page.html',
+                controller: 'RedirectCtrl'
+            })
+
             .state('room', {
                 cache: false,
                 url: '/room/:roomId:roomName',
                 templateUrl: 'pages/room-page/room-page.html',
-                controller: 'RoomCtrl as vm',
-                resolve: {
-                    pageData: function ($myPlayer, $state) {
-                        if ($myPlayer.getPlayer() == null) {
-                            $state.go('login');
-                        }
-                    }
-                }
+                controller: 'RoomCtrl as vm'
             });
 
         // if none of the above states are matched, use this as the fallback

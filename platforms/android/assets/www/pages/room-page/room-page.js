@@ -99,9 +99,9 @@ RoomCtrl.prototype.initController = function () {
             vm.unreadMessages++;
         }
 
-        if (vm.messages.length > 10) {
-            vm.messages.splice(0, 1);
-        }
+        // if (vm.messages.length > 10) {
+        //     vm.messages.splice(0, 1);
+        // }
         vm.scrollToLastMessage();
     });
 
@@ -171,6 +171,11 @@ RoomCtrl.prototype.onRoundEnded = function (users, endRoundResult, isUserLeft) {
     //calc time of waiting
     var timeToWait = vm.room.numOfCubes * 1000;
     timeToWait = timeToWait < 6000 || isUserLeft ? 6000 : timeToWait;
+
+    //max 10 second
+    if(timeToWait > 10000){
+        timeToWait = 10000;
+    }
 
     if (isUserLeft && !vm.playerReturnToRooms) {
         //update user left
@@ -706,10 +711,5 @@ RoomCtrl.prototype.changeDiceStatus = function () {
 RoomCtrl.prototype.scrollToLastMessage = function () {
     var vm = this;
 
-    $('.chat-div').ready(function () {
-        var ulLi = $('ul li');
-        if (ulLi.last().position()) {
-            $('.chat-div').scrollTop(ulLi.last().position().top + ulLi.last().height());
-        }
-    });
+    // $("html,body").animate({scrollTop: $('ul#ul-chat li:last').offset().top+30});
 };
