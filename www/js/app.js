@@ -77,7 +77,35 @@ angular.module('starter', [
                 cache: false,
                 url: '/rooms',
                 templateUrl: 'pages/rooms-page/rooms-page.html',
-                controller: 'RoomsCtrl'
+                controller: 'RoomsCtrl',
+                resolve: {
+                    rooms: function (requestHandler, $log) {
+                        return new Promise(function (resolve, reject) {
+                            requestHandler.createRequest({
+                                event: 'getRooms',
+                                params: {},
+                                onSuccess: function (rooms) {
+
+                                    rooms.sort(function (a, b) {
+                                        var aUsers = a.users.length;
+                                        var bUsers = b.users.length;
+                                        if (aUsers > bUsers) return -1;
+                                        else if (aUsers < bUsers) return 1;
+                                        return 0;
+                                    });
+
+                                    $log.debug("successfully get rooms", rooms);
+
+                                    resolve(rooms);
+                                },
+                                onError: function (error) {
+                                    reject(error);
+                                    $log.error("failed to get rooms", error);
+                                }
+                            });
+                        });
+                    }
+                }
             })
 
             .state('dashboard', {
@@ -271,12 +299,15 @@ angular.module('starter', [
             TEAMMATE: {
                 host: '192.168.1.105:3000'
             },
+            TEAMMATE2: {
+                host: '192.168.43.233:3000'
+            },
             PRODUCTION: {
                 host: 'http://40.68.96.104:3000'
             }
-        };
+        };//
 
-        var selectedEnvironment = ENVIRONMENTS.TEAMMATE;
+        var selectedEnvironment = ENVIRONMENTS.TEAMMATE2;
 
         $log.debug("environment host selected = ", selectedEnvironment.host);
 

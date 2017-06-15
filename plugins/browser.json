@@ -27,10 +27,6 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.mycubes943218"
-        },
-        "phonegap-plugin-push": {
-            "SENDER_ID": "GCM_PROJECT_NUMBER",
-            "PACKAGE_NAME": "com.ionicframework.mycubes943218"
         }
     },
     "dependent_plugins": {}

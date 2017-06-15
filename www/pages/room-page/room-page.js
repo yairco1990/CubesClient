@@ -387,9 +387,8 @@ RoomCtrl.prototype.returnToRooms = function (force) {
                 vm.$log.debug("failed to restart the game");
             },
             onFinally: function () {
-                vm.$ionicHistory.nextViewOptions({
-                    disableBack: true
-                });
+
+                //TODO disable back to the room page on navigation back button
 
                 //move to rooms page
                 vm.$state.go('rooms', {reload: true});

@@ -132,34 +132,34 @@ angular.module('MyCubes.controllers.rooms-page', [])
             });
         }
 
-
-        //back button event function
-        var doCustomBack = function () {
-            closeTheApp(false);
-        };
-
-        function closeTheApp(force) {
-            if (force) {
-                ionic.Platform.exitApp(); // stops the app
-                window.close();
-            } else {
-                $ionicPopup.alert({
-                    title: "Close the app?",
-                    buttons: [
-                        {
-                            text: 'Cancel'
-                        },
-                        {
-                            text: 'Exit',
-                            type: 'button-positive',
-                            onTap: function (e) {
-                                closeTheApp(true);
-                            }
-                        }
-                    ]
-                }).then();
-            }
-        }
+        //
+        // //back button event function
+        // var doCustomBack = function () {
+        //     closeTheApp(false);
+        // };
+        //
+        // function closeTheApp(force) {
+        //     if (force) {
+        //         ionic.Platform.exitApp(); // stops the app
+        //         window.close();
+        //     } else {
+        //         $ionicPopup.alert({
+        //             title: "Close the app?",
+        //             buttons: [
+        //                 {
+        //                     text: 'Cancel'
+        //                 },
+        //                 {
+        //                     text: 'Exit',
+        //                     type: 'button-positive',
+        //                     onTap: function (e) {
+        //                         closeTheApp(true);
+        //                     }
+        //                 }
+        //             ]
+        //         }).then();
+        //     }
+        // }
 
         // registerBackButtonAction() returns a function which can be used to deregister it
         var deregisterHardBack = $ionicPlatform.registerBackButtonAction(

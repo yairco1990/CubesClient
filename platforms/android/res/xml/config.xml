@@ -1,13 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.dicelies943218" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionicframework.dicelies943218" version="1.0.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
-    <preference name="webView" value="org.crosswalk.engine.XWalkWebViewEngine" />
-    <preference name="xwalkVersion" value="21+" />
-    <preference name="xwalkLiteVersion" value="xwalk_core_library_canary:17+" />
-    <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect" />
-    <preference name="xwalkMode" value="embedded" />
-    <preference name="xwalkMultipleApk" value="true" />
-    <preference name="android-minSdkVersion" value="16" />
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
     </feature>
@@ -26,9 +19,6 @@
     <feature name="Keyboard">
         <param name="android-package" value="io.ionic.keyboard.IonicKeyboard" />
         <param name="onload" value="true" />
-    </feature>
-    <feature name="PushNotification">
-        <param name="android-package" value="com.adobe.phonegap.push.PushPlugin" />
     </feature>
     <icon density="ldpi" src="resources/android/icon/res/drawable-mdpi/ic_launcher.png" />
     <icon density="mdpi" src="resources/android/icon/res/drawable-mdpi/ic_launcher.png" />
@@ -55,7 +45,7 @@
     <author email="yairco1990@gmail.com">
         Yair Cohen
     </author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.43.233:8100" />
     <access origin="*" />
     <preference name="android-minSdkVersion" value="14" />
     <preference name="webviewbounce" value="false" />
@@ -69,5 +59,4 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="1000" />
     <preference name="FadeSplashScreenDuration" value="1000" />
-    <preference name="xwalkVersion" value="19" />
 </widget>

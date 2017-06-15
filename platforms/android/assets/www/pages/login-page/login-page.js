@@ -32,15 +32,15 @@ angular.module('MyCubes.controllers.login-page', [])
                         title: 'Successfully logged in!'
                     });
 
-                    //close popup after 3 seconds and move to rooms
+                    //close popup after 3 seconds and move to dashboard
                     $timeout(function () {
                         alertPopup.close();
 
-                        //set new root of history to the rooms page
+                        //set new root of history to the dashboard page
                         $ionicHistory.nextViewOptions({historyRoot: true});
 
-                        //move to rooms
-                        $state.go('rooms', {reload: true});
+                        //move to dashboard
+                        $state.go('dashboard', {reload: true});
                     }, 500);
                 },
                 onError: function (error) {

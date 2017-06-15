@@ -14,9 +14,7 @@
             on-refresh="getRooms()">
         </ion-refresher>
 
-        <loader is-loaded="!isLoaded" loading-text="Loading rooms..."></loader>
-
-        <ion-list ng-show="isLoaded">
+        <ion-list>
             <ion-item class="item-avatar item-icon-right main-color" style="padding-left: 20px;"
                       ng-repeat="room in rooms" type="item-text-wrap"
                       ng-click="getIntoRoom(room.id, room.name, room.password)">

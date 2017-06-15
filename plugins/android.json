@@ -10,14 +10,6 @@
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.ionicframework.dicelies943218"
         },
-        "cordova-plugin-crosswalk-webview": {
-            "XWALK_VERSION": "21+",
-            "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
-            "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
-            "XWALK_MODE": "embedded",
-            "XWALK_MULTIPLEAPK": "true",
-            "PACKAGE_NAME": "com.ionicframework.dicelies943218"
-        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.dicelies943218"
         },
@@ -31,10 +23,6 @@
             "PACKAGE_NAME": "com.ionicframework.dicelies943218"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.dicelies943218"
-        },
-        "phonegap-plugin-push": {
-            "SENDER_ID": "GCM_PROJECT_NUMBER",
             "PACKAGE_NAME": "com.ionicframework.dicelies943218"
         }
     },
