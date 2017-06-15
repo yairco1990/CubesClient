@@ -3,7 +3,7 @@
  */
 angular.module('MyCubes.controllers.rooms-page', [])
 
-    .controller('RoomsCtrl', function ($scope, $http, $state, $myPlayer, $window, $rootScope, $log, requestHandler, $ionicPopup, $ionicPlatform) {
+    .controller('RoomsCtrl', function ($scope, $http, $state, $myPlayer, $window, $rootScope, $log, requestHandler, $ionicPopup, $ionicPlatform, rooms, $timeout, alertPopup) {
 
         $log.debug("init rooms ctrl");
 
@@ -26,18 +26,35 @@ angular.module('MyCubes.controllers.rooms-page', [])
 
                     $scope.rooms = rooms;
 
-                    // Stop the ion-refresher from spinning
-                    $scope.$broadcast('scroll.refreshComplete');
-
                     $scope.isLoaded = true;
                 },
                 onError: function (error) {
                     $log.error("failed to get rooms", error);
+
+                    alertPopup("Failed to get rooms", "Please try later");
+                },
+                onFinally: function () {
+                    // Stop the ion-refresher from spinning
+                    $scope.$broadcast('scroll.refreshComplete');
                 }
             });
         };
 
-        $rootScope.getRooms();
+        //check if to reload page with delay
+        var toLoadRoomsWithDelay = $state.params.reloadRooms;
+        if (toLoadRoomsWithDelay) {
+            $scope.isLoaded = false;
+            $timeout(function () {
+                $rootScope.getRooms();
+            }, 1000);
+        } else {
+            $scope.isLoaded = true;
+            if (rooms) {
+                $scope.rooms = rooms;
+            } else {
+                $rootScope.getRooms();
+            }
+        }
 
         /**
          * on room selected - go to room page
@@ -62,7 +79,7 @@ angular.module('MyCubes.controllers.rooms-page', [])
 
                         $myPlayer.setRoomId(roomId);
 
-                        $state.go('room', {
+                        $state.go('game', {
                             roomId: roomId,
                             roomName: roomName
                         });
@@ -162,11 +179,4 @@ angular.module('MyCubes.controllers.rooms-page', [])
         // }
 
         // registerBackButtonAction() returns a function which can be used to deregister it
-        var deregisterHardBack = $ionicPlatform.registerBackButtonAction(
-            doCustomBack, 101
-        );
-
-        $scope.$on('$destroy', function () {
-            deregisterHardBack();
-        });
     });

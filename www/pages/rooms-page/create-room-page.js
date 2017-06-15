@@ -69,7 +69,7 @@ angular.module('MyCubes.controllers.create-room-page', [])
      * logout
      */
     $scope.backToRooms = function () {
-      $state.go('rooms', {reload: true});
+      $state.go('rooms');
     };
 
   });

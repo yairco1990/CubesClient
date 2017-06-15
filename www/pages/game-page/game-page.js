@@ -1,23 +1,11 @@
 /**
  * Created by Yair on 10/11/2016.
  */
-angular.module('MyCubes.controllers.room-page', [])
+angular.module('MyCubes.controllers.game-page', [])
 
-    .controller('RoomCtrl', RoomCtrl);
+    .controller('GameCtrl', GameCtrl);
 
-/**
- * room constructor
- * @param $stateParams
- * @param $state
- * @param $myPlayer
- * @param $log
- * @param $ionicPopup
- * @param $timeout
- * @param mySocket
- * @param requestHandler
- * @constructor
- */
-function RoomCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, mySocket, requestHandler, $ionicPlatform, $scope, $ionicHistory, $ionicPopover) {
+function GameCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, mySocket, requestHandler, $ionicPlatform, $scope, alertPopup) {
 
     var vm = this;
 
@@ -31,8 +19,7 @@ function RoomCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, 
     vm.requestHandler = requestHandler;
     vm.$ionicPlatform = $ionicPlatform;
     vm.$scope = $scope;
-    vm.$ionicHistory = $ionicHistory;
-    vm.$ionicPopover = $ionicPopover;
+    vm.alertPopup = alertPopup;
 
     vm.initController();
 }
@@ -40,7 +27,7 @@ function RoomCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, 
 /**
  * init room
  */
-RoomCtrl.prototype.initController = function () {
+GameCtrl.prototype.initController = function () {
 
     var vm = this;
 
@@ -54,6 +41,20 @@ RoomCtrl.prototype.initController = function () {
     vm.mySocket.getSocket().on(pushCase.UPDATE_GAME, function () {
         vm.$log.debug("PUSH RECEIVED:", pushCase.UPDATE_GAME);
         vm.getGame();
+    });
+
+    //player said bluff
+    vm.mySocket.getSocket().on(pushCase.SAID_BLUFF, function (bluffedUser) {
+        vm.$log.info("PUSH RECEIVED:", pushCase.SAID_BLUFF);
+        vm.bluffedUser = bluffedUser;
+    });
+
+    //player won the game
+    vm.mySocket.getSocket().on(pushCase.PLAYER_WON, function (winnerPlayer) {
+        vm.$log.info("PUSH RECEIVED:", pushCase.PLAYER_WON);
+        vm.$timeout(function () {
+            vm.showWinnerPopup(winnerPlayer);
+        }, 3000);
     });
 
     //in case that session end
@@ -137,9 +138,11 @@ RoomCtrl.prototype.initController = function () {
 /**
  * when round ended - show cubes and restart the game after X time
  */
-RoomCtrl.prototype.onRoundEnded = function (users, endRoundResult, isUserLeft) {
+GameCtrl.prototype.onRoundEnded = function (users, endRoundResult, isUserLeft) {
 
     var vm = this;
+
+    vm.bluffedUser = null;
 
     //that's mean that now only one player(2 is before he quit) left in the room
     if (isUserLeft && users && users.length == 2) {
@@ -173,7 +176,7 @@ RoomCtrl.prototype.onRoundEnded = function (users, endRoundResult, isUserLeft) {
     timeToWait = timeToWait < 6000 || isUserLeft ? 6000 : timeToWait;
 
     //max 10 second
-    if(timeToWait > 10000){
+    if (timeToWait > 10000) {
         timeToWait = 10000;
     }
 
@@ -201,7 +204,7 @@ RoomCtrl.prototype.onRoundEnded = function (users, endRoundResult, isUserLeft) {
 /**
  * get game details - users, room state and cubes.
  */
-RoomCtrl.prototype.getGame = function (isStartOfRound) {
+GameCtrl.prototype.getGame = function (isStartOfRound) {
 
     var vm = this;
 
@@ -254,7 +257,7 @@ RoomCtrl.prototype.getGame = function (isStartOfRound) {
 /**
  * parse user object
  */
-RoomCtrl.prototype.parseUsersObject = function (users) {
+GameCtrl.prototype.parseUsersObject = function (users) {
 
     var vm = this;
 
@@ -283,7 +286,7 @@ RoomCtrl.prototype.parseUsersObject = function (users) {
  * @param users
  * @param currentUsrTurnId
  */
-RoomCtrl.prototype.sortUsers = function (users, currentUsrTurnId) {
+GameCtrl.prototype.sortUsers = function (users, currentUsrTurnId) {
 
     var newUsersList = [];
     var key = 1;
@@ -314,7 +317,7 @@ RoomCtrl.prototype.sortUsers = function (users, currentUsrTurnId) {
 /**
  * send gamble
  */
-RoomCtrl.prototype.setGamble = function (gambleTimes, gambleCube, isLying) {
+GameCtrl.prototype.setGamble = function (gambleTimes, gambleCube, isLying) {
 
     var vm = this;
 
@@ -341,7 +344,7 @@ RoomCtrl.prototype.setGamble = function (gambleTimes, gambleCube, isLying) {
                 if (result == "CORRECT_GAMBLE") {
 
                     vm.showAlert("You wrong!", "The gamble was correct!", "red");
-                } else {
+                } else if (result == "WRONG_GAMBLE") {
 
                     vm.showAlert("You right!", "He is a bluffer!", "green");
                 }
@@ -363,7 +366,7 @@ RoomCtrl.prototype.setGamble = function (gambleTimes, gambleCube, isLying) {
 /**
  * return to rooms page
  */
-RoomCtrl.prototype.returnToRooms = function (force) {
+GameCtrl.prototype.returnToRooms = function (force) {
 
     var vm = this;
 
@@ -385,16 +388,10 @@ RoomCtrl.prototype.returnToRooms = function (force) {
             },
             onError: function () {
                 vm.$log.debug("failed to restart the game");
-            },
-            onFinally: function () {
-                vm.$ionicHistory.nextViewOptions({
-                    disableBack: true
-                });
-
-                //move to rooms page
-                vm.$state.go('rooms', {reload: true});
             }
         });
+        //move to rooms page
+        vm.$state.go('rooms');
     } else {
         //ask the user if he want to exit
         vm.$ionicPopup.show({
@@ -419,7 +416,7 @@ RoomCtrl.prototype.returnToRooms = function (force) {
 /**
  * restart room
  */
-RoomCtrl.prototype.restartGame = function () {
+GameCtrl.prototype.restartGame = function () {
     var vm = this;
 
     //get the game request
@@ -438,7 +435,7 @@ RoomCtrl.prototype.restartGame = function () {
     });
 };
 
-RoomCtrl.prototype.sendMessage = function () {
+GameCtrl.prototype.sendMessage = function () {
     var vm = this;
 
     if (vm.messageContent) {
@@ -463,7 +460,7 @@ RoomCtrl.prototype.sendMessage = function () {
 /**
  * send socket id
  */
-RoomCtrl.prototype.setSocketDetails = function () {
+GameCtrl.prototype.setSocketDetails = function () {
     var vm = this;
 
     vm.$myPlayer.setSocketDetails();
@@ -474,7 +471,7 @@ RoomCtrl.prototype.setSocketDetails = function () {
 /**
  * show alert
  */
-RoomCtrl.prototype.showAlert = function (title, description, color) {
+GameCtrl.prototype.showAlert = function (title, description, color) {
 
     var vm = this;
 
@@ -488,7 +485,7 @@ RoomCtrl.prototype.showAlert = function (title, description, color) {
     }, 2500);
 };
 
-RoomCtrl.prototype.getGambleTimes = function () {
+GameCtrl.prototype.getGambleTimes = function () {
     var vm = this;
 
     if (vm.gambleTimes == null) {
@@ -497,7 +494,7 @@ RoomCtrl.prototype.getGambleTimes = function () {
     }
     return vm.gambleTimes;
 };
-RoomCtrl.prototype.getGambleCube = function () {
+GameCtrl.prototype.getGambleCube = function () {
 
     var vm = this;
 
@@ -511,7 +508,7 @@ RoomCtrl.prototype.getGambleCube = function () {
 /**
  * set gamble to minimum option
  */
-RoomCtrl.prototype.setGambleToMinimum = function () {
+GameCtrl.prototype.setGambleToMinimum = function () {
 
     var vm = this;
 
@@ -525,7 +522,7 @@ RoomCtrl.prototype.setGambleToMinimum = function () {
  * get the next minimum gamble that possible
  * @returns {*}
  */
-RoomCtrl.prototype.getNextMinimumGamble = function () {
+GameCtrl.prototype.getNextMinimumGamble = function () {
     var vm = this;
 
     var room = vm.room;
@@ -556,7 +553,7 @@ RoomCtrl.prototype.getNextMinimumGamble = function () {
  * @param cubeNum
  * @returns {string}
  */
-RoomCtrl.prototype.getCubeImage = function (cubeNum) {
+GameCtrl.prototype.getCubeImage = function (cubeNum) {
     var vm = this;
 
     return "img/cube-" + cubeNum + ".png";
@@ -566,7 +563,7 @@ RoomCtrl.prototype.getCubeImage = function (cubeNum) {
  * @param cubeNum
  * @returns {*}
  */
-RoomCtrl.prototype.getMyCubeImage = function (cubeNum) {
+GameCtrl.prototype.getMyCubeImage = function (cubeNum) {
     var vm = this;
 
     if (!vm.showMyDice) {
@@ -576,13 +573,13 @@ RoomCtrl.prototype.getMyCubeImage = function (cubeNum) {
     }
 };
 
-RoomCtrl.prototype.isMe = function (user) {
+GameCtrl.prototype.isMe = function (user) {
     var vm = this;
 
     return user.id == vm.$myPlayer.getId();
 };
 
-RoomCtrl.prototype.getMessageText = function (message) {
+GameCtrl.prototype.getMessageText = function (message) {
 
     var vm = this;
 
@@ -596,7 +593,7 @@ RoomCtrl.prototype.getMessageText = function (message) {
     return text;
 };
 
-RoomCtrl.prototype.getEndRoundTextResult = function () {
+GameCtrl.prototype.getEndRoundTextResult = function () {
     var vm = this;
 
     var text = "";
@@ -616,7 +613,7 @@ RoomCtrl.prototype.getEndRoundTextResult = function () {
  * get total dice
  * @returns {number}
  */
-RoomCtrl.prototype.getNumOfTotalDice = function () {
+GameCtrl.prototype.getNumOfTotalDice = function () {
     var vm = this;
 
     var numOfTotalCubes = 0;
@@ -636,7 +633,7 @@ RoomCtrl.prototype.getNumOfTotalDice = function () {
  * chat opened or closed
  * @param isOn
  */
-RoomCtrl.prototype.setChatStatus = function (isOn) {
+GameCtrl.prototype.setChatStatus = function (isOn) {
     var vm = this;
 
     //set on or off
@@ -652,7 +649,7 @@ RoomCtrl.prototype.setChatStatus = function (isOn) {
 };
 
 /////////////////////////////////////////increase and decrease gambling details - works very good until 21/2/2017!/////////////////////////////////////////////////
-RoomCtrl.prototype.canDecreaseCube = function () {
+GameCtrl.prototype.canDecreaseCube = function () {
     var vm = this;
 
     //can decrease the cube number when the times of current gamble is higher than the selected
@@ -662,18 +659,18 @@ RoomCtrl.prototype.canDecreaseCube = function () {
         (vm.gambleTimes == vm.getNextMinimumGamble().gambleTimes && vm.gambleCube > (vm.getNextMinimumGamble().gambleCube)));
 };
 
-RoomCtrl.prototype.canDecreaseTimes = function () {
+GameCtrl.prototype.canDecreaseTimes = function () {
     var vm = this;
 
     //when the gamble times is lower than the selected one
     return vm.gambleTimes > 1 && (vm.gambleTimes > vm.getNextMinimumGamble().gambleTimes);
 };
-RoomCtrl.prototype.increaseTimes = function () {
+GameCtrl.prototype.increaseTimes = function () {
     var vm = this;
 
     vm.gambleTimes++;
 };
-RoomCtrl.prototype.decreaseTimes = function () {
+GameCtrl.prototype.decreaseTimes = function () {
     var vm = this;
 
     if (vm.gambleTimes > 1 && vm.canDecreaseTimes()) {
@@ -684,21 +681,21 @@ RoomCtrl.prototype.decreaseTimes = function () {
         }
     }
 };
-RoomCtrl.prototype.increaseCube = function () {
+GameCtrl.prototype.increaseCube = function () {
     var vm = this;
 
     if (vm.gambleCube < 6) {
         vm.gambleCube++;
     }
 };
-RoomCtrl.prototype.decreaseCube = function () {
+GameCtrl.prototype.decreaseCube = function () {
     var vm = this;
 
     if (vm.gambleCube > 2 && vm.canDecreaseCube()) {
         vm.gambleCube--;
     }
 };
-RoomCtrl.prototype.changeDiceStatus = function () {
+GameCtrl.prototype.changeDiceStatus = function () {
     var vm = this;
 
     vm.showMyDice = !vm.showMyDice;
@@ -707,10 +704,10 @@ RoomCtrl.prototype.changeDiceStatus = function () {
 };
 
 /**
- * scroll to last message on chat
+ * show winner popup
  */
-RoomCtrl.prototype.scrollToLastMessage = function () {
+GameCtrl.prototype.showWinnerPopup = function (winner) {
     var vm = this;
 
-    // $("html,body").animate({scrollTop: $('ul#ul-chat li:last').offset().top+30});
+    vm.alertPopup("The Winner Is " + winner.name, "Good Job!", 3000);
 };

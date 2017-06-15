@@ -5,7 +5,7 @@ angular.module('MyCubes.controllers.dashboard-page', [])
 
     .controller('DashboardCtrl', DashboardCtrl);
 
-function DashboardCtrl($scope, requestHandler, $http, $state, $ionicPopup, $myPlayer, $timeout, $log, $ionicHistory, $window, dashboardPlayer) {
+function DashboardCtrl($scope, requestHandler, $http, $state, $ionicPopup, $myPlayer, $timeout, $log, $window, dashboardPlayer) {
     var vm = this;
 
     vm.$scope = $scope;
@@ -13,7 +13,6 @@ function DashboardCtrl($scope, requestHandler, $http, $state, $ionicPopup, $myPl
     vm.$myPlayer = $myPlayer;
     vm.$timeout = $timeout;
     vm.$log = $log;
-    vm.$ionicHistory = $ionicHistory;
     vm.$window = $window;
     vm.dashboardPlayer = dashboardPlayer;
 

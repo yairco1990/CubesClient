@@ -14,6 +14,7 @@ angular.module('starter', [
 
     //SERVICES
     'MyCubes.services.request-handler',
+    'MyCubes.services.alert-popup',
 
     // DIRECTIVES
     'MyCubes.directives.loader',
@@ -22,7 +23,7 @@ angular.module('starter', [
     //CONTROLLERS
     'MyCubes.controllers.rooms-page',
     'MyCubes.controllers.create-room-page',
-    'MyCubes.controllers.room-page',
+    'MyCubes.controllers.game-page',
     'MyCubes.controllers.login-page',
     'MyCubes.controllers.dashboard-page',
     'MyCubes.controllers.rules-page',
@@ -75,37 +76,9 @@ angular.module('starter', [
 
             .state('rooms', {
                 cache: false,
-                url: '/rooms',
+                url: '/rooms?{reloadRooms}',
                 templateUrl: 'pages/rooms-page/rooms-page.html',
-                controller: 'RoomsCtrl',
-                resolve: {
-                    rooms: function (requestHandler, $log) {
-                        return new Promise(function (resolve, reject) {
-                            requestHandler.createRequest({
-                                event: 'getRooms',
-                                params: {},
-                                onSuccess: function (rooms) {
-
-                                    rooms.sort(function (a, b) {
-                                        var aUsers = a.users.length;
-                                        var bUsers = b.users.length;
-                                        if (aUsers > bUsers) return -1;
-                                        else if (aUsers < bUsers) return 1;
-                                        return 0;
-                                    });
-
-                                    $log.debug("successfully get rooms", rooms);
-
-                                    resolve(rooms);
-                                },
-                                onError: function (error) {
-                                    reject(error);
-                                    $log.error("failed to get rooms", error);
-                                }
-                            });
-                        });
-                    }
-                }
+                controller: 'RoomsCtrl'
             })
 
             .state('dashboard', {
@@ -114,7 +87,7 @@ angular.module('starter', [
                 templateUrl: 'pages/dashboard-page/dashboard-page.html',
                 controller: 'DashboardCtrl as vm',
                 resolve: {
-                    dashboardPlayer: function ($myPlayer, requestHandler, $log, $state) {
+                    dashboardPlayer: function ($myPlayer, requestHandler, $log, $state, alertPopup) {
                         return new Promise(function (resolve, reject) {
                             requestHandler.createRequest({
                                 event: 'getUser',
@@ -129,7 +102,10 @@ angular.module('starter', [
 
                                     //if failed to get user - logout and move to login
                                     $myPlayer.logout();
+
                                     $state.go('login');
+
+                                    alertPopup();
 
                                     reject("failed to get user");
                                 }
@@ -145,7 +121,7 @@ angular.module('starter', [
                 templateUrl: 'pages/scores-page/scores-page.html',
                 controller: 'ScoresCtrl as vm',
                 resolve: {
-                    topUsers: function (requestHandler, $log, $state) {
+                    topUsers: function (requestHandler, $log, $state, alertPopup) {
                         return new Promise(function (resolve, reject) {
                             requestHandler.createRequest({
                                 event: 'getScores',
@@ -159,7 +135,9 @@ angular.module('starter', [
                                     //on error - move to dashboard
                                     $state.go('dashboard');
 
-                                    reject("failed to get top scorers");
+                                    alertPopup();
+
+                                    reject("failed to get top scores");
                                 }
                             });
                         });
@@ -179,11 +157,11 @@ angular.module('starter', [
                 controller: 'CreateRoomCtrl'
             })
 
-            .state('room', {
+            .state('game', {
                 cache: false,
-                url: '/room/:roomId:roomName',
-                templateUrl: 'pages/room-page/room-page.html',
-                controller: 'RoomCtrl as vm'
+                url: '/game/:roomId:roomName',
+                templateUrl: 'pages/game-page/game-page.html',
+                controller: 'GameCtrl as vm'
             });
 
         // if none of the above states are matched, use this as the fallback
