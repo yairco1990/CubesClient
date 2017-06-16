@@ -1,4 +1,4 @@
-<ion-view id="roomPage" view-title="">
+<ion-view id="gamePage" view-title="">
     <ion-nav-buttons side="right">
 
         <button class="button" ng-click="vm.setChatStatus(vm.chatOn = !vm.chatOn)"
@@ -32,7 +32,7 @@
         </ion-refresher>
 
         <!--CHAT DIV-->
-        <div
+        <div id="chat-wrapper"
             style="position: absolute;min-width: 100%;min-height: 100%;background-color: rgba(0, 0, 0, 0.34);z-index: 10;"
             ng-show="vm.chatOn">
             <!--CHAT DIV-->
@@ -73,7 +73,6 @@
 
         <!--GAME DIV-->
         <div class="game-div">
-
             <ion-list>
 
                 <!--LIST ITEM-->
@@ -96,9 +95,18 @@
                             </h2>
                         </div>
 
+                        <!--SHOW USER SAID BLUFF-->
+                        <div class="col-60 animated flash"
+                             ng-if="vm.bluffedUser && user.id == vm.bluffedUser.id">
+                            <h3 ng-class="{'bluffed-user': user.id == vm.bluffedUser.id}"
+                                style="text-align: center">
+                                It's a bluff!
+                            </h3>
+                        </div>
+
                         <!--GAMBLING DETAILS-->
-                        <div class="col col-60"
-                             ng-show="(!vm.showUsersCubes && user.gambleTimes != null && user.gambleCube != null) && !vm.bluffedUser">
+                        <div class="col col-60 animated bounceIn"
+                             ng-if="!vm.bluffedUser && (!vm.showUsersCubes && user.gambleTimes != null && user.gambleCube != null)">
                             <h3 ng-class="{'last-player-turn': user.lastUser}"
                                 ng-show="user.id != vm.room.currentUserTurnId"
                                 style="text-align: center">
@@ -109,20 +117,12 @@
                         </div>
 
                         <!--SHOW USER CUBES AFTER ROUND FINISHED-->
-                        <div class="col-80" ng-show="vm.showUsersCubes && !vm.bluffedUser" style="display: flex;">
+                        <div id="users-dice" class="col-80 animated lightSpeedIn" ng-if="vm.showUsersCubes && !vm.bluffedUser" style="display: flex;animation-duration: 1.0s;">
                             <span ng-repeat="cube in user.cubes" style="align-self: center">
                               <img class="user-cube"
                                    ng-class="{'gambled-cube': cube.cubeNum == vm.room.lastGambleCube || cube.cubeNum == 1}"
                                    ng-src="{{vm.getCubeImage(cube.cubeNum)}}"/>
                             </span>
-                        </div>
-
-                        <!--SHOW USER CUBES AFTER ROUND FINISHED-->
-                        <div class="col-60" ng-show="user.id == vm.bluffedUser.id">
-                            <h3 ng-class="{'bluffed-user': user.id == vm.bluffedUser.id}"
-                                style="text-align: center">
-                                It's a bluff!
-                            </h3>
                         </div>
                     </div>
                 </ion-item>
@@ -182,63 +182,56 @@
 
                 <br/>
 
-                <!--GAMBLING-->
-                <div ng-show="vm.isMyTurn && vm.showUserPanel" class="row vertical-center no-padding">
+                <div class="gamble-section" ng-show="vm.isMyTurn">
+                    <!--GAMBLING-->
+                    <div class="row vertical-center no-padding">
 
-                    <!--GAMBLE TIMES-->
-                    <div class="col col-20" style="color: white; font-size: 20px;padding-top: 0">
-                        <div class="col" ng-click="vm.increaseTimes()">
-                            <i class="ion-chevron-up"></i>
+                        <!--GAMBLE TIMES-->
+                        <div class="col col-20" style="color: white; font-size: 20px;padding-top: 0">
+                            <div class="col" ng-click="vm.increaseTimes()">
+                                <i class="ion-chevron-up"></i>
+                            </div>
+                            {{vm.getGambleTimes()}}
+                            <div class="col" ng-click="vm.decreaseTimes()"
+                                 ng-class="{'opacity-05': !vm.canDecreaseTimes()}">
+                                <i class="ion-chevron-down"></i>
+                            </div>
                         </div>
-                        {{vm.getGambleTimes()}}
-                        <div class="col" ng-click="vm.decreaseTimes()"
-                             ng-class="{'opacity-05': !vm.canDecreaseTimes()}">
-                            <i class="ion-chevron-down"></i>
+
+                        <!--JUST TEXT-->
+                        <div class="col col-20" style="color: white; font-size: 20px">
+                            X
                         </div>
+
+                        <!--GAMBLE CUBE-->
+                        <div class="col col-20" style="color: white; font-size: 20px;padding-top: 0">
+                            <div class="col" ng-click="vm.increaseCube()" style="padding-bottom: 3px">
+                                <i class="ion-chevron-up"></i>
+                            </div>
+                            <img style="height: 34px !important;width: 34px !important;padding: 1px 0px 0px 1px;"
+                                 ng-src="{{vm.getCubeImage(vm.getGambleCube())}}"/>
+                            <div class="col" ng-click="vm.decreaseCube()" style="padding-top: 3px"
+                                 ng-class="{'opacity-05': !vm.canDecreaseCube()}">
+                                <i class="ion-chevron-down"></i>
+                            </div>
+                        </div>
+
+                        <!--SEND GAMBLE BUTTON-->
+                        <button class="col col-34 button button-balanced"
+                                ng-click="vm.setGamble(vm.gambleTimes, vm.gambleCube, false)">
+                            Send gamble
+                        </button>
                     </div>
 
-                    <!--JUST TEXT-->
-                    <div class="col col-20" style="color: white; font-size: 20px">
-                        X
-                    </div>
-
-                    <!--GAMBLE CUBE-->
-                    <div class="col col-20" style="color: white; font-size: 20px;padding-top: 0">
-                        <div class="col" ng-click="vm.increaseCube()" style="padding-bottom: 3px">
-                            <i class="ion-chevron-up"></i>
-                        </div>
-                        <img style="height: 34px !important;width: 34px !important;padding: 1px 0px 0px 1px;"
-                             ng-src="{{vm.getCubeImage(vm.getGambleCube())}}"/>
-                        <div class="col" ng-click="vm.decreaseCube()" style="padding-top: 3px"
-                             ng-class="{'opacity-05': !vm.canDecreaseCube()}">
-                            <i class="ion-chevron-down"></i>
-                        </div>
-                    </div>
-
-                    <!--SEND GAMBLE BUTTON-->
-                    <button class="col col-34 button button-balanced"
-                            ng-click="vm.setGamble(vm.gambleTimes, vm.gambleCube, false)">
-                        Send gamble
+                    <!--LYING BUTTON-->
+                    <button
+                        ng-show="vm.room.lastGambleCube != null && vm.room.lastGambleTimes != null"
+                        style="margin-bottom: 7px;margin-top: 5px"
+                        class="button button-assertive no-padding lie-button"
+                        ng-click="vm.setGamble(null, null, true)">
+                        It's a lie!
                     </button>
                 </div>
-
-                <!--LYING BUTTON-->
-                <button
-                    ng-show="vm.isMyTurn && vm.room.lastGambleCube != null && vm.room.lastGambleTimes != null && vm.showUserPanel"
-                    style="margin-bottom: 7px;margin-top: 5px"
-                    class="button button-assertive no-padding lie-button"
-                    ng-click="vm.setGamble(null, null, true)">
-                    It's a lie!
-                </button>
-
-                <!--REFRESH FOR DEBUG!!-->
-                <button ng-show="vm.showRestartButton" style="    margin: 5px;
-    position: absolute;
-    bottom: 0;
-    left: 0;" class="button button-energized no-padding" ng-click="vm.restartGame()">
-                    Restart
-                </button>
-
             </div>
         </div>
     </ion-content>

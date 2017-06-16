@@ -322,6 +322,7 @@ GameCtrl.prototype.setGamble = function (gambleTimes, gambleCube, isLying) {
     var vm = this;
 
     vm.showUserPanel = false;
+    vm.isMyTurn = false;
 
     //send gamble request
     vm.requestHandler.createRequest({
@@ -642,9 +643,6 @@ GameCtrl.prototype.setChatStatus = function (isOn) {
     if (isOn) {
         //if opened - zero the messages counter
         vm.unreadMessages = 0;
-
-        //scroll to last message
-        vm.scrollToLastMessage();
     }
 };
 
@@ -709,5 +707,5 @@ GameCtrl.prototype.changeDiceStatus = function () {
 GameCtrl.prototype.showWinnerPopup = function (winner) {
     var vm = this;
 
-    vm.alertPopup("The Winner Is " + winner.name, "Good Job!", 3000);
-};
+    vm.alertPopup("The Winner Is " + winner.name, "Good Game!", 3000);
+};//

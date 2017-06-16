@@ -5,7 +5,7 @@ angular.module('MyCubes.controllers.game-page', [])
 
     .controller('GameCtrl', GameCtrl);
 
-function GameCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, mySocket, requestHandler, $ionicPlatform, $scope, $ionicPopover) {
+function GameCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, mySocket, requestHandler, $ionicPlatform, $scope, alertPopup) {
 
     var vm = this;
 
@@ -19,7 +19,7 @@ function GameCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, 
     vm.requestHandler = requestHandler;
     vm.$ionicPlatform = $ionicPlatform;
     vm.$scope = $scope;
-    vm.$ionicPopover = $ionicPopover;
+    vm.alertPopup = alertPopup;
 
     vm.initController();
 }
@@ -41,6 +41,21 @@ GameCtrl.prototype.initController = function () {
     vm.mySocket.getSocket().on(pushCase.UPDATE_GAME, function () {
         vm.$log.debug("PUSH RECEIVED:", pushCase.UPDATE_GAME);
         vm.getGame();
+    });
+
+    //player said bluff
+    vm.mySocket.getSocket().on(pushCase.SAID_BLUFF, function (bluffedUser) {
+        vm.$log.info("PUSH RECEIVED:", pushCase.SAID_BLUFF);
+        vm.bluffedUser = bluffedUser;
+        $('#its-bluff-wrapper').animateCss('bounce');
+    });
+
+    //player won the game
+    vm.mySocket.getSocket().on(pushCase.PLAYER_WON, function (winnerPlayer) {
+        vm.$log.info("PUSH RECEIVED:", pushCase.PLAYER_WON);
+        vm.$timeout(function () {
+            vm.showWinnerPopup(winnerPlayer);
+        }, 3000);
     });
 
     //in case that session end
@@ -128,6 +143,8 @@ GameCtrl.prototype.onRoundEnded = function (users, endRoundResult, isUserLeft) {
 
     var vm = this;
 
+    vm.bluffedUser = null;
+
     //that's mean that now only one player(2 is before he quit) left in the room
     if (isUserLeft && users && users.length == 2) {
         vm.getGame();
@@ -160,7 +177,7 @@ GameCtrl.prototype.onRoundEnded = function (users, endRoundResult, isUserLeft) {
     timeToWait = timeToWait < 6000 || isUserLeft ? 6000 : timeToWait;
 
     //max 10 second
-    if(timeToWait > 10000){
+    if (timeToWait > 10000) {
         timeToWait = 10000;
     }
 
@@ -328,7 +345,7 @@ GameCtrl.prototype.setGamble = function (gambleTimes, gambleCube, isLying) {
                 if (result == "CORRECT_GAMBLE") {
 
                     vm.showAlert("You wrong!", "The gamble was correct!", "red");
-                } else {
+                } else if (result == "WRONG_GAMBLE") {
 
                     vm.showAlert("You right!", "He is a bluffer!", "green");
                 }
@@ -375,7 +392,7 @@ GameCtrl.prototype.returnToRooms = function (force) {
             }
         });
         //move to rooms page
-        vm.$state.go('rooms', {reloadRooms: true});
+        vm.$state.go('rooms');
     } else {
         //ask the user if he want to exit
         vm.$ionicPopup.show({
@@ -688,10 +705,10 @@ GameCtrl.prototype.changeDiceStatus = function () {
 };
 
 /**
- * scroll to last message on chat
+ * show winner popup
  */
-GameCtrl.prototype.scrollToLastMessage = function () {
+GameCtrl.prototype.showWinnerPopup = function (winner) {
     var vm = this;
 
-    // $("html,body").animate({scrollTop: $('ul#ul-chat li:last').offset().top+30});
+    vm.alertPopup("The Winner Is " + winner.name, "Good Job!", 3000);
 };

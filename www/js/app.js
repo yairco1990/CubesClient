@@ -6,6 +6,7 @@
 angular.module('starter', [
     'ionic', 'ionic.service.core',
     'ui.router',
+    'ngAnimate',
     'luegg.directives',
 
     //BOWER
@@ -285,7 +286,7 @@ angular.module('starter', [
             }
         };//
 
-        var selectedEnvironment = ENVIRONMENTS.TEAMMATE2;
+        var selectedEnvironment = ENVIRONMENTS.PRODUCTION;
 
         $log.debug("environment host selected = ", selectedEnvironment.host);
 

@@ -78,39 +78,7 @@ angular.module('starter', [
                 cache: false,
                 url: '/rooms?{reloadRooms}',
                 templateUrl: 'pages/rooms-page/rooms-page.html',
-                controller: 'RoomsCtrl',
-                resolve: {
-                    rooms: function (requestHandler, $log, alertPopup) {
-                        return new Promise(function (resolve, reject) {
-                            requestHandler.createRequest({
-                                event: 'getRooms',
-                                params: {},
-                                onSuccess: function (rooms) {
-
-                                    rooms.sort(function (a, b) {
-                                        var aUsers = a.users.length;
-                                        var bUsers = b.users.length;
-                                        if (aUsers > bUsers) return -1;
-                                        else if (aUsers < bUsers) return 1;
-                                        return 0;
-                                    });
-
-                                    $log.debug("successfully get rooms", rooms);
-
-                                    resolve(rooms);
-                                },
-                                onError: function (error) {
-
-                                    alertPopup();
-
-                                    $log.error("failed to get rooms", error);
-
-                                    reject(error);
-                                }
-                            });
-                        });
-                    }
-                }
+                controller: 'RoomsCtrl'
             })
 
             .state('dashboard', {

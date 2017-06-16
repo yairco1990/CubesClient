@@ -3,7 +3,7 @@
  */
 angular.module('MyCubes.controllers.rooms-page', [])
 
-    .controller('RoomsCtrl', function ($scope, $http, $state, $myPlayer, $window, $rootScope, $log, requestHandler, $ionicPopup, $ionicPlatform, rooms, $timeout, alertPopup) {
+    .controller('RoomsCtrl', function ($scope, $http, $state, $myPlayer, $window, $rootScope, $log, requestHandler, $ionicPopup, $ionicPlatform, $timeout, alertPopup) {
 
         $log.debug("init rooms ctrl");
 
@@ -40,21 +40,10 @@ angular.module('MyCubes.controllers.rooms-page', [])
             });
         };
 
-        //check if to reload page with delay
-        var toLoadRoomsWithDelay = $state.params.reloadRooms;
-        if (toLoadRoomsWithDelay) {
-            $scope.isLoaded = false;
-            $timeout(function () {
-                $rootScope.getRooms();
-            }, 1000);
-        } else {
-            $scope.isLoaded = true;
-            if (rooms) {
-                $scope.rooms = rooms;
-            } else {
-                $rootScope.getRooms();
-            }
-        }
+        $scope.isLoaded = false;
+        $timeout(function () {
+            $rootScope.getRooms();
+        }, 1000);
 
         /**
          * on room selected - go to room page

@@ -20,11 +20,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="game-page.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/www/pages/game-page/game-page.js">
+      <file leaf-file-name="scores-page.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/pages/scores-page/scores-page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="56" column="12" lean-forward="false" selection-start-line="56" selection-start-column="12" selection-end-line="56" selection-end-column="12" />
+            <state relative-caret-position="17">
+              <caret line="1" column="38" lean-forward="false" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dashboard-page.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="38" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/css/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="21" column="42" lean-forward="false" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -33,30 +53,52 @@
       <file leaf-file-name="game-page.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/pages/game-page/game-page.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
-              <caret line="120" column="78" lean-forward="false" selection-start-line="120" selection-start-column="64" selection-end-line="120" selection-end-column="78" />
+            <state relative-caret-position="553">
+              <caret line="119" column="171" lean-forward="false" selection-start-line="119" selection-start-column="171" selection-end-line="119" selection-end-column="171" />
               <folding>
-                <element signature="n#style#0;n#h3#0;n#div#3;n#div#0;n#ion-item#0;n#ion-list#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h3#0;n#div#1;n#div#0;n#ion-item#0;n#ion-list#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#div#0;n#div#1;n#div#2;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <file leaf-file-name="animate.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/css/animate.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="237" column="14" lean-forward="false" selection-start-line="237" selection-start-column="14" selection-end-line="237" selection-end-column="14" />
+            <state relative-caret-position="187">
+              <caret line="11" column="2" lean-forward="false" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="game-page.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/pages/game-page/game-page.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="369">
+              <caret line="188" column="1" lean-forward="false" selection-start-line="188" selection-start-column="1" selection-end-line="188" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="game-page.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/pages/game-page/game-page.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="446">
+              <caret line="710" column="4" lean-forward="false" selection-start-line="710" selection-start-column="4" selection-end-line="710" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="80" column="39" lean-forward="false" selection-start-line="80" selection-start-column="39" selection-end-line="80" selection-end-column="39" />
+            <state relative-caret-position="288">
+              <caret line="291" column="0" lean-forward="true" selection-start-line="291" selection-start-column="0" selection-end-line="291" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -75,38 +117,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="64" column="0" lean-forward="true" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rooms-page.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/pages/rooms-page/rooms-page.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="748">
-              <caret line="44" column="34" lean-forward="false" selection-start-line="44" selection-start-column="34" selection-end-line="44" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="create-room-page.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/pages/rooms-page/create-room-page.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="424">
-              <caret line="71" column="23" lean-forward="false" selection-start-line="71" selection-start-column="23" selection-end-line="71" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dashboard-page.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="30" column="24" lean-forward="false" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
+            <state relative-caret-position="267">
+              <caret line="80" column="22" lean-forward="false" selection-start-line="80" selection-start-column="22" selection-end-line="80" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -119,43 +131,43 @@
       <list>
         <option value="Html5" />
         <option value="HTML File" />
-        <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>load</find>
-      <find>history</find>
-      <find>disa</find>
-      <find>disable</find>
-      <find>url:</find>
-      <find>resolve</find>
-      <find>dashboardPlayer</find>
-      <find>scores</find>
-      <find>histor</find>
-      <find>RoomCtrl</find>
-      <find>room'</find>
-      <find>room-pa</find>
-      <find>$state.go('rooms</find>
-      <find>hist</find>
-      <find>room-</find>
-      <find>rooms</find>
-      <find>cube</find>
-      <find>last-player-turn</find>
-      <find>state.go</find>
-      <find>vm.bluffedUser</find>
-      <find>onRoundEnded</find>
-      <find>bluffed</find>
-      <find>winnerPopup</find>
-      <find>pop</find>
       <find>$ionicPopover</find>
-      <find>bluff</find>
       <find>right</find>
       <find>You wrong</find>
       <find>The winner</find>
+      <find>bluff</find>
       <find>showWinnerPopup</find>
+      <find>rooms</find>
+      <find>setSocketD</find>
+      <find>GAMBLING ST</find>
+      <find>roomPage</find>
+      <find>id=</find>
+      <find>scroll</find>
+      <find>bluffed-user</find>
+      <find>lie-button</find>
+      <find>gamePage</find>
+      <find>gamble-section</find>
+      <find>vm.isMyTurn &amp;&amp; vm.showUserPanel</find>
+      <find>isMyTurn</find>
+      <find>activated</find>
+      <find>lie</find>
+      <find>setGa</find>
+      <find>showUserPanel</find>
+      <find>bluffed-user-animated</find>
+      <find>bluffed</find>
+      <find>users-dice</find>
+      <find>good jo</find>
+      <find>room-pa</find>
+      <find>chat-wrapper</find>
+      <find>url</find>
+      <find>debug</find>
     </findStrings>
     <replaceStrings>
       <replace>vm.$myPlayer</replace>
@@ -168,6 +180,7 @@
       <replace>Lato</replace>
       <replace>label</replace>
       <replace>GameCtrl</replace>
+      <replace>gamePage</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\Users\Yair\CubesProject\CubesClient\www</dir>
@@ -205,26 +218,28 @@
         <option value="$PROJECT_DIR$/www/pages/rules-page/rules-page.css" />
         <option value="$PROJECT_DIR$/www/pages/rules-page/rules-page.html" />
         <option value="$PROJECT_DIR$/www/pages/scores-page/scores-page.css" />
-        <option value="$PROJECT_DIR$/www/pages/scores-page/scores-page.html" />
         <option value="$PROJECT_DIR$/www/pages/scores-page/scores-page.js" />
         <option value="$PROJECT_DIR$/plugins/android.json" />
         <option value="$PROJECT_DIR$/plugins/fetch.json" />
         <option value="$PROJECT_DIR$/plugins/browser.json" />
         <option value="$PROJECT_DIR$/config.xml" />
-        <option value="$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.html" />
         <option value="$PROJECT_DIR$/www/pages/rooms-page/rooms-page.html" />
         <option value="$PROJECT_DIR$/www/js/utils.js" />
         <option value="$PROJECT_DIR$/www/services/alertPopup.js" />
         <option value="$PROJECT_DIR$/www/pages/room-page/room-page.js" />
-        <option value="$PROJECT_DIR$/www/index.html" />
         <option value="$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.js" />
         <option value="$PROJECT_DIR$/www/pages/rooms-page/create-room-page.js" />
-        <option value="$PROJECT_DIR$/www/js/app.js" />
         <option value="$PROJECT_DIR$/www/pages/rooms-page/rooms-page.js" />
-        <option value="$PROJECT_DIR$/www/pages/game-page/game-page.html" />
-        <option value="$PROJECT_DIR$/www/css/style.css" />
         <option value="$PROJECT_DIR$/www/services/PushCase.js" />
+        <option value="$PROJECT_DIR$/www/css/animate.css" />
+        <option value="$PROJECT_DIR$/www/pages/game-page/game-page.css" />
+        <option value="$PROJECT_DIR$/www/pages/game-page/game-page.html" />
         <option value="$PROJECT_DIR$/www/pages/game-page/game-page.js" />
+        <option value="$PROJECT_DIR$/www/index.html" />
+        <option value="$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.html" />
+        <option value="$PROJECT_DIR$/www/pages/scores-page/scores-page.html" />
+        <option value="$PROJECT_DIR$/www/css/style.css" />
+        <option value="$PROJECT_DIR$/www/js/app.js" />
       </list>
     </option>
   </component>
@@ -348,6 +363,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CubesClient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CubesClient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="img" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -371,19 +404,19 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Yair\CubesProject\CubesClient" />
-      <recent name="C:\Users\Yair\CubesProject\CubesClient\www\lib\ionic\js" />
-      <recent name="C:\Users\Yair\CubesProject\CubesClient\resources\android\splash" />
-      <recent name="C:\Users\Yair\CubesProject\CubesClient\www\img" />
-      <recent name="C:\Users\Yair\CubesProject\CubesClient\platforms\android\assets\www\img" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Yair\CubesProject\CubesClient\www\directives\loader" />
       <recent name="C:\Users\Yair\CubesProject\CubesClient\www\img" />
       <recent name="C:\Users\Yair\CubesProject\CubesClient\resources\android" />
       <recent name="C:\Users\Yair\CubesProject\CubesClient\resources\ios" />
       <recent name="C:\Users\Yair\MyCubes\www" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Yair\CubesProject\CubesClient\www\css" />
+      <recent name="C:\Users\Yair\CubesProject\CubesClient" />
+      <recent name="C:\Users\Yair\CubesProject\CubesClient\www\lib\ionic\js" />
+      <recent name="C:\Users\Yair\CubesProject\CubesClient\resources\android\splash" />
+      <recent name="C:\Users\Yair\CubesProject\CubesClient\www\img" />
     </key>
   </component>
   <component name="RunManager" selected="JavaScript Debug.index.html">
@@ -497,12 +530,12 @@
       <workItem from="1496702054952" duration="4035000" />
       <workItem from="1497177921479" duration="16180000" />
       <workItem from="1497530701257" duration="5082000" />
-      <workItem from="1497540488581" duration="7927000" />
+      <workItem from="1497540488581" duration="16965000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="213645000" />
+    <option name="totallyTimeSpent" value="222683000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -514,7 +547,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1932" height="1056" extended-state="1" />
+    <frame x="-8" y="-8" width="1932" height="1056" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -587,21 +620,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/android/splash/drawable-land-ldpi-screen.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/android/splash/drawable-land-xxhdpi-screen.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/img/dice.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/pages/login-page/login-page.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -783,47 +801,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/pages/scores-page/scores-page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="19" column="36" lean-forward="true" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#tr#0;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#td#1;n#tr#0;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#td#2;n#tr#0;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#td#3;n#tr#0;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#tr#1;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#td#2;n#tr#1;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#td#3;n#tr#1;n#table#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/pages/scores-page/scores-page.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="18" column="17" lean-forward="false" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="44" column="30" lean-forward="false" selection-start-line="44" selection-start-column="30" selection-end-line="44" selection-end-column="30" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#h4#0;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#h4#1;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#i#0;n#h4#1;n#div#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#hr#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#3;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -869,14 +851,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="64" column="0" lean-forward="true" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
@@ -889,22 +863,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="424">
           <caret line="71" column="23" lean-forward="false" selection-start-line="71" selection-start-column="23" selection-end-line="71" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="80" column="39" lean-forward="false" selection-start-line="80" selection-start-column="39" selection-end-line="80" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="237" column="14" lean-forward="false" selection-start-line="237" selection-start-column="14" selection-end-line="237" selection-end-column="14" />
           <folding />
         </state>
       </provider>
@@ -925,16 +883,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/pages/game-page/game-page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="120" column="78" lean-forward="false" selection-start-line="120" selection-start-column="64" selection-end-line="120" selection-end-column="78" />
-          <folding>
-            <element signature="n#style#0;n#h3#0;n#div#3;n#div#0;n#ion-item#0;n#ion-list#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/services/alertPopup.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -943,10 +891,83 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/game-page/game-page.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="188" column="1" lean-forward="false" selection-start-line="188" selection-start-column="1" selection-end-line="188" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/animate.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="2" lean-forward="false" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/www/pages/game-page/game-page.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="56" column="12" lean-forward="false" selection-start-line="56" selection-start-column="12" selection-end-line="56" selection-end-column="12" />
+        <state relative-caret-position="446">
+          <caret line="710" column="4" lean-forward="false" selection-start-line="710" selection-start-column="4" selection-end-line="710" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/img/crossword.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="80" column="22" lean-forward="false" selection-start-line="80" selection-start-column="22" selection-end-line="80" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/game-page/game-page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="553">
+          <caret line="119" column="171" lean-forward="false" selection-start-line="119" selection-start-column="171" selection-end-line="119" selection-end-column="171" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h3#0;n#div#1;n#div#0;n#ion-item#0;n#ion-list#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#div#0;n#div#1;n#div#2;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/dashboard-page/dashboard-page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="38" lean-forward="false" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/pages/scores-page/scores-page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="38" lean-forward="false" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="21" column="42" lean-forward="false" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="291" column="0" lean-forward="true" selection-start-line="291" selection-start-column="0" selection-end-line="291" selection-end-column="0" />
           <folding />
         </state>
       </provider>
