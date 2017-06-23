@@ -16,10 +16,13 @@ angular.module('starter', [
     //SERVICES
     'MyCubes.services.request-handler',
     'MyCubes.services.alert-popup',
+    'MyCubes.services.my-socket',
+    'MyCubes.services.my-player',
 
     // DIRECTIVES
     'MyCubes.directives.loader',
     'MyCubes.directives.input',
+    'MyCubes.directives.focusMe',
 
     //CONTROLLERS
     'MyCubes.controllers.rooms-page',
@@ -33,21 +36,17 @@ angular.module('starter', [
 ])
 
     .run(function ($rootScope, $ionicPlatform, $myPlayer, $state) {
-        $ionicPlatform.ready(function () {
-            setTimeout(function () {
-                if (navigator && navigator.splashscreen) {
-                    navigator.splashscreen.hide();
-                }
-            }, 100);
-        });
 
+        //on state change start
         $rootScope.$on('$stateChangeStart', function (event, toState) {
 
+            //if try move to 'login' and the player is logged in - move to dashboard
             if (toState.name === 'login' && $myPlayer.isLoggedIn()) {
                 event.preventDefault();
                 $state.go('dashboard');
             }
 
+            //if not logged in, but try move to login or register - force move to login.
             if (!$myPlayer.isLoggedIn() && toState.name !== 'login' && toState.name !== 'register') {
                 event.preventDefault();
                 $state.go('login');
@@ -57,10 +56,6 @@ angular.module('starter', [
 
     .config(function ($stateProvider, $urlRouterProvider) {
 
-        // Ionic uses AngularUI Router which uses the concept of states
-        // Learn more here: https://github.com/angular-ui/ui-router
-        // Set up the various states which the app can be in.
-        // Each state's controller can be found in controllers.js
         $stateProvider
 
             .state('login', {
@@ -160,7 +155,7 @@ angular.module('starter', [
 
             .state('game', {
                 cache: false,
-                url: '/game/:roomId:roomName',
+                url: '/game/?{roomId}{roomName}',
                 templateUrl: 'pages/game-page/game-page.html',
                 controller: 'GameCtrl as vm'
             });
@@ -168,136 +163,5 @@ angular.module('starter', [
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/login');
 
-    })
-
-    .factory('$myPlayer', function ($window, requestHandler, $log, mySocket, $rootScope) {
-
-        var player = null;
-
-        //check for user in local storage
-        var localStoragePlayer = $window.localStorage.getItem('player');
-        if (localStoragePlayer && isJson(localStoragePlayer)) {
-            player = JSON.parse(localStoragePlayer);
-            setSocketDetails();
-        }
-
-        //is json function
-        function isJson(str) {
-            try {
-                JSON.parse(str);
-            } catch (e) {
-                return false;
-            }
-            return true;
-        }
-
-        //set socket id for user
-        function setSocketDetails() {
-
-            if (player && player.roomId) {
-                requestHandler.createRequest({
-                    event: 'setSocketDetails',
-                    params: {
-                        roomId: player.roomId,
-                        userId: player.userId
-                    },
-                    onSuccess: function () {
-                        $log.warn("successfully set socket details");
-                    },
-                    onError: function (error) {
-                        $log.error("failed to set socket details");
-                    }
-                });
-            }
-        }
-
-        return {
-
-            setSocketDetails: function () {
-                setSocketDetails();
-            },
-
-            setRoomId: function (roomId) {
-                player.roomId = roomId;
-                $window.localStorage.setItem('player', JSON.stringify(player));
-
-                //register the user for room notifications
-                setSocketDetails();
-            },
-
-            //set player
-            setPlayer: function (user) {
-                player = user;
-                $window.localStorage.setItem('player', JSON.stringify(user));
-            },
-
-            //set player to null
-            setPlayerToNull: function () {
-                player = null;
-            },
-
-            //get player
-            getPlayer: function () {
-                return player;
-            },
-
-            //get the player id
-            getId: function () {
-                if (player == null) {
-                    return null;
-                }
-                return player.id;
-            },
-
-            isLoggedIn: function () {
-                return player != null;
-            },
-
-            logout: function () {
-                player = null;
-                $window.localStorage.removeItem('player');
-            },
-
-            removeSocketEvents: function () {
-                //remove socket listeners
-                mySocket.getSocket().removeAllListeners();
-
-                // setReconnectSocketEvent();
-            }
-        };
-    })
-
-    .factory('mySocket', function (socketFactory, $log) {
-
-        var mySocket = {};
-
-        var ENVIRONMENTS = {
-            LOCAL: {
-                host: 'localhost:3000'
-            },
-            TEAMMATE: {
-                host: '192.168.1.105:3000'
-            },
-            TEAMMATE2: {
-                host: '192.168.43.233:3000'
-            },
-            PRODUCTION: {
-                host: 'http://40.68.96.104:3000'
-            }
-        };//
-
-        var selectedEnvironment = ENVIRONMENTS.PRODUCTION;
-
-        $log.debug("environment host selected = ", selectedEnvironment.host);
-
-        mySocket = socketFactory({
-            ioSocket: io.connect(selectedEnvironment.host)
-        });
-
-        return {
-            getSocket: function () {
-                return mySocket;
-            }
-        };
     })
 ;

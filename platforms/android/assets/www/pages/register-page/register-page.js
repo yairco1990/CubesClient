@@ -3,7 +3,7 @@
  */
 angular.module('MyCubes.controllers.register-page', [])
 
-    .controller('RegisterCtrl', function ($scope, requestHandler, $http, $state, $ionicPopup, $myPlayer, $timeout, $log, $ionicHistory) {
+    .controller('RegisterCtrl', function ($scope, requestHandler, $http, $state, $ionicPopup, $myPlayer, $timeout, $log, $ionicHistory, alertPopup) {
 
         $log.debug("init register ctrl");
 
@@ -31,13 +31,13 @@ angular.module('MyCubes.controllers.register-page', [])
                         $myPlayer.setPlayer(user);
 
                         //show success popup
-                        var alertPopup = $ionicPopup.show({
+                        var registerPopup = $ionicPopup.show({
                             title: 'Successfully registered!'
                         });
 
                         //close popup after 3 seconds and move to dashboard
                         $timeout(function () {
-                            alertPopup.close();
+                            registerPopup.close();
 
                             //set new root of history to the dashboard page
                             $ionicHistory.nextViewOptions({historyRoot: true});
@@ -52,12 +52,14 @@ angular.module('MyCubes.controllers.register-page', [])
 
                         if (error == "ALREADY_EXIST") {
                             //show success popup
-                            var alertPopup = $ionicPopup.alert({
+                            var registerPopup = $ionicPopup.alert({
                                 title: 'Failed to register',
                                 subTitle: 'User with this name already exist'
                             });
-                            alertPopup.then(function (res) {
+                            registerPopup.then(function (res) {
                             });
+                        } else {
+                            alertPopup();
                         }
                     }
                 });

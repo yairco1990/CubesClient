@@ -5,7 +5,7 @@ angular.module('MyCubes.controllers.game-page', [])
 
     .controller('GameCtrl', GameCtrl);
 
-function GameCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, mySocket, requestHandler, $ionicPlatform, $scope, alertPopup) {
+function GameCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, mySocket, requestHandler, $ionicPlatform, $scope, alertPopup, $interval) {
 
     var vm = this;
 
@@ -20,6 +20,7 @@ function GameCtrl($stateParams, $state, $myPlayer, $log, $ionicPopup, $timeout, 
     vm.$ionicPlatform = $ionicPlatform;
     vm.$scope = $scope;
     vm.alertPopup = alertPopup;
+    vm.$interval = $interval;
 
     vm.initController();
 }
@@ -33,13 +34,14 @@ GameCtrl.prototype.initController = function () {
 
     vm.showUsersCubes = false;
     vm.messages = [];
+    vm.messagesCopy = [];
     vm.unreadMessages = 0;
 
     vm.$log.debug("init room ctrl");
 
     //general update
     vm.mySocket.getSocket().on(pushCase.UPDATE_GAME, function () {
-        vm.$log.debug("PUSH RECEIVED:", pushCase.UPDATE_GAME);
+        vm.$log.info("PUSH RECEIVED:", pushCase.UPDATE_GAME);
         vm.getGame();
     });
 
@@ -59,51 +61,48 @@ GameCtrl.prototype.initController = function () {
 
     //in case that session end
     vm.mySocket.getSocket().on(pushCase.SESSION_ENDED, function (data) {
-        vm.$log.debug("PUSH RECEIVED:", pushCase.SESSION_ENDED);
+        vm.$log.info("PUSH RECEIVED:", pushCase.SESSION_ENDED);
         vm.onRoundEnded(data.users, data.endRoundResult, data.isUserLeft);
     });
 
     //in case that some user gambled
     vm.mySocket.getSocket().on(pushCase.PLAYER_GAMBLED, function () {
-        vm.$log.debug("PUSH RECEIVED:", pushCase.PLAYER_GAMBLED);
+        vm.$log.info("PUSH RECEIVED:", pushCase.PLAYER_GAMBLED);
         vm.getGame();
     });
 
     //in case of game over
     vm.mySocket.getSocket().on(pushCase.GAME_OVER, function (data) {
-        vm.$log.debug("PUSH RECEIVED:", pushCase.GAME_OVER);
+        vm.$log.info("PUSH RECEIVED:", pushCase.GAME_OVER);
         // refresh game
         vm.onRoundEnded(data.users, data.endRoundResult, data.isUserLeft);
     });
 
     //in case of game restarted
     vm.mySocket.getSocket().on(pushCase.GAME_RESTARTED, function () {
-        vm.$log.debug("PUSH RECEIVED:", pushCase.GAME_RESTARTED);
+        vm.$log.info("PUSH RECEIVED:", pushCase.GAME_RESTARTED);
+        vm.alertPopup("Game Restarted", "Good Luck!", 3000);
         // refresh game
         vm.getGame(true);
     });
 
     //handle user reconnect
     vm.mySocket.getSocket().on("connect", function () {
-        vm.$log.debug("player reconnected - send socket id(room page)");
+        vm.$log.info("player reconnected - send socket id(room page)");
         // refresh game
         vm.setSocketDetails();
     });
 
-    //in case of game restarted
+    //in case of new message
     vm.mySocket.getSocket().on(pushCase.NEW_MESSAGE, function (message) {
-        vm.$log.debug("PUSH RECEIVED:", pushCase.NEW_MESSAGE);
+        vm.$log.info("PUSH RECEIVED:", pushCase.NEW_MESSAGE);
+        vm.handleNewMessage(message);
+    });
 
-        //insert the new message
-        vm.messages.push(message);
-        if (!vm.chatOn) {
-            vm.unreadMessages++;
-        }
-
-        // if (vm.messages.length > 10) {
-        //     vm.messages.splice(0, 1);
-        // }
-        vm.scrollToLastMessage();
+    //in case of user set auto lye
+    vm.mySocket.getSocket().on(pushCase.SET_AUTO_LYE, function (data) {
+        vm.$log.info("PUSH RECEIVED:", pushCase.SET_AUTO_LYE);
+        vm.updateUserWithAutoLye(data);
     });
 
     //back button event function
@@ -126,13 +125,27 @@ GameCtrl.prototype.initController = function () {
     vm.diceStatusButton = "Hide";
     vm.pageTitle = vm.$stateParams.roomName;
 
-    //count number of retries to send gamble
-    vm.setGambleRetries = 0;
-
     //TODO for debug only
     vm.showRestartButton = false;
 
     vm.getGame(true);
+
+    //TODO messages interval
+    vm.intervalObject = vm.$interval(function () {
+        //if there is a message to show
+        if (vm.messagesCopy[0]) {
+            vm.lastMessage = vm.getMessageText(angular.copy(vm.messagesCopy[0]), true);
+            vm.showGameMessage = true;
+            vm.messagesCopy.splice(0, 1);
+        } else {
+            vm.showGameMessage = false;
+        }
+    }, 4000);
+
+    vm.$scope.$on('$destroy', function () {
+        vm.$log.info("scope destroyed");
+        vm.$interval.cancel(vm.intervalObject);
+    });
 };
 
 /**
@@ -197,6 +210,7 @@ GameCtrl.prototype.onRoundEnded = function (users, endRoundResult, isUserLeft) {
 
     //set time out for cubes preview
     vm.$timeout(function () {
+        vm.endRoundResult = null;
         vm.getGame(true);
     }, timeToWait);
 };
@@ -226,6 +240,7 @@ GameCtrl.prototype.getGame = function (isStartOfRound) {
                 vm.startRoundUserId = vm.room.currentUserTurnId;
 
                 vm.showMyDice = true;
+                vm.autoLye = false;
                 vm.diceStatusButton = "Hide";
             }
 
@@ -243,9 +258,15 @@ GameCtrl.prototype.getGame = function (isStartOfRound) {
             vm.showUserPanel = true;
 
             vm.endRoundResult = null;
+            vm.bluffedUser = null;
 
             // Stop the ion-refresher from spinning
             vm.$scope.$broadcast('scroll.refreshComplete');
+
+            //if its my turn and I set autolye - send the lye request
+            if (vm.isMyTurn && vm.autoLye) {
+                vm.setGamble(null, null, true);
+            }
         },
         onError: function (error) {
             vm.$log.error("failed to get game", error);
@@ -336,8 +357,6 @@ GameCtrl.prototype.setGamble = function (gambleTimes, gambleCube, isLying) {
         },
         onSuccess: function (result) {
 
-            vm.setGambleRetries = 0;
-
             vm.$log.debug("successfully sent gamble");
 
             if (isLying) {
@@ -353,13 +372,11 @@ GameCtrl.prototype.setGamble = function (gambleTimes, gambleCube, isLying) {
         },
         onError: function (error) {
 
-            vm.setGambleRetries++;
-
-            if (vm.setGambleRetries < 3) {
-                vm.setGamble(gambleTimes, gambleCube, isLying);
-            }
-
             vm.$log.error("failed to set gamble due to", error);
+
+            vm.$timeout(function () {
+                vm.getGame();
+            }, 500);
         }
     });
 };
@@ -464,9 +481,11 @@ GameCtrl.prototype.sendMessage = function () {
 GameCtrl.prototype.setSocketDetails = function () {
     var vm = this;
 
-    vm.$myPlayer.setSocketDetails();
-
-    vm.getGame();
+    vm.$myPlayer.setSocketDetails().then(function () {
+        vm.getGame();
+    }).catch(function (err) {
+        vm.$log.error(err);
+    });
 };
 
 /**
@@ -491,7 +510,6 @@ GameCtrl.prototype.getGambleTimes = function () {
 
     if (vm.gambleTimes == null) {
         vm.gambleTimes = 1;
-        return 1;
     }
     return vm.gambleTimes;
 };
@@ -501,7 +519,6 @@ GameCtrl.prototype.getGambleCube = function () {
 
     if (vm.gambleCube == null) {
         vm.gambleCube = 2;
-        return 2;
     }
     return vm.gambleCube;
 };
@@ -528,7 +545,7 @@ GameCtrl.prototype.getNextMinimumGamble = function () {
 
     var room = vm.room;
 
-    //if there is no gamble yet
+    //if there is a gamble
     if (room != null && room.lastGambleCube != null && room.lastGambleTimes != null) {
         //if the current gamble is 6, must to increase the times
         if (room.lastGambleCube == 6) {
@@ -537,12 +554,13 @@ GameCtrl.prototype.getNextMinimumGamble = function () {
                 gambleCube: 2 //min cube
             };
         }
-        // if its not six
+        // if its not 6
         return {
             gambleTimes: room.lastGambleTimes,
             gambleCube: room.lastGambleCube + 1
         };
     }
+    //if there is no gamble yet
     return {
         gambleTimes: 1,
         gambleCube: 2
@@ -580,13 +598,17 @@ GameCtrl.prototype.isMe = function (user) {
     return user.id == vm.$myPlayer.getId();
 };
 
-GameCtrl.prototype.getMessageText = function (message) {
+GameCtrl.prototype.getMessageText = function (message, isLastMessage) {
 
     var vm = this;
 
     var classes = "";
     if (message.userId == vm.$myPlayer.getId()) {
-        classes = "message-its-me"
+        classes = "message-its-me";
+    }
+
+    if (isLastMessage) {
+        classes = "last-message-sender";
     }
 
     var text = "<label class='message-sender " + classes + "'>" + message.name + "</label>:" + "<label class='message-content'>&nbsp" + message.content + "</label>";
@@ -646,6 +668,78 @@ GameCtrl.prototype.setChatStatus = function (isOn) {
     }
 };
 
+/**
+ * handle new message
+ * @param message
+ */
+GameCtrl.prototype.handleNewMessage = function (message) {
+    var vm = this;
+
+    //insert the new message to the chat
+    vm.messages.push(message);
+    vm.messagesCopy.push(message);
+
+    //set unread messages counter
+    if (!vm.chatOn) {
+        vm.unreadMessages++;
+    }
+
+    //remove old messages to improve performance
+    if (vm.messages.length > 20) {
+        vm.messages.splice(0, 1);
+    }
+
+    //if the interval is empty - show the new message
+    if (!vm.showGameMessage) {
+        vm.lastMessage = vm.getMessageText(angular.copy(message), true);
+        vm.showGameMessage = true;
+    }
+};
+
+/**
+ * show winner popup
+ */
+GameCtrl.prototype.showWinnerPopup = function (winner) {
+    var vm = this;
+
+    vm.alertPopup("The Winner Is " + winner.name, "Good Game!", 4500);
+};
+
+/**
+ * set auto lye
+ */
+GameCtrl.prototype.setAutoLye = function () {
+    var vm = this;
+
+    vm.requestHandler.createRequest({
+        event: 'setAutoLye',
+        params: {
+            autoLye: vm.autoLye
+        },
+        onSuccess: function () {
+            vm.$log.debug("successfully setAutoLye");
+        },
+        onError: function (error) {
+            vm.$log.error("failed to setAutoLye", error);
+        }
+    });
+};
+
+/**
+ * set user with auto lye
+ */
+GameCtrl.prototype.updateUserWithAutoLye = function (data) {
+    var vm = this;
+
+    vm.users.forEach(function (player) {
+        //find the user
+        if (player.id == data.userId) {
+            //set auto lye property
+            player.autoLye = data.autoLye;
+        }
+    });
+};
+
 /////////////////////////////////////////increase and decrease gambling details - works very good until 21/2/2017!/////////////////////////////////////////////////
 GameCtrl.prototype.canDecreaseCube = function () {
     var vm = this;
@@ -693,19 +787,3 @@ GameCtrl.prototype.decreaseCube = function () {
         vm.gambleCube--;
     }
 };
-GameCtrl.prototype.changeDiceStatus = function () {
-    var vm = this;
-
-    vm.showMyDice = !vm.showMyDice;
-
-    vm.diceStatusButton = vm.showMyDice ? "Hide" : "Show";
-};
-
-/**
- * show winner popup
- */
-GameCtrl.prototype.showWinnerPopup = function (winner) {
-    var vm = this;
-
-    vm.alertPopup("The Winner Is " + winner.name, "Good Game!", 3000);
-};//
