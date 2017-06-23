@@ -23,7 +23,7 @@ angular.module('MyCubes.services.my-socket', [])
             }
         };
 
-        var selectedEnvironment = ENVIRONMENTS.TEAMMATE2;//
+        var selectedEnvironment = ENVIRONMENTS.PRODUCTION;//
 
         $log.debug("environment host selected = ", selectedEnvironment.host);
 

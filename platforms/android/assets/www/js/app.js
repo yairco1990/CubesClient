@@ -37,6 +37,14 @@ angular.module('starter', [
 
     .run(function ($rootScope, $ionicPlatform, $myPlayer, $state) {
 
+        $ionicPlatform.ready(function () {
+            setTimeout(function () {
+                if (navigator && navigator.splashscreen) {
+                    navigator.splashscreen.hide();
+                }
+            }, 100);
+        });
+
         //on state change start
         $rootScope.$on('$stateChangeStart', function (event, toState) {
 
