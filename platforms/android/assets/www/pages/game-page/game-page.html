@@ -91,7 +91,7 @@
                     <div class="row">
 
                         <!--AUTO LYE INDICATOR-->
-                        <div class="auto-lye-indicator" ng-if="user.autoLye">
+                        <div class="auto-lye-indicator" ng-if="user.isAutoLie && user.isLoggedIn">
                         </div>
 
                         <!--USER NAME-->
@@ -204,13 +204,13 @@
                 </div>
 
                 <!--AUTO LYING-->
-                <div style="display: inline-block;margin-bottom: 5px" ng-show="!vm.isMyTurn">
+                <div style="display: inline-block;margin-bottom: 5px" ng-show="!vm.isMyTurn && vm.showAutoLie && !vm.bluffedUser">
                     <div class="vertical-center">
                         <label style="margin-right: 10px;font-size: 17px;color: white">
                             Auto Lying?
                         </label>
                         <label class="toggle toggle-assertive" style="margin-top: 5px">
-                            <input type="checkbox" ng-model="vm.autoLye" ng-click="vm.setAutoLye()">
+                            <input type="checkbox" ng-model="vm.isAutoLie" ng-click="vm.setAutoLie()">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>

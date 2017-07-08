@@ -2,7 +2,7 @@
     <ion-nav-buttons side="right">
 
         <button class="button" ng-click="vm.returnToRooms()" style="margin-left: 2px">
-            Back to rooms
+            Rooms
         </button>
 
         <button class="button" ng-click="vm.setChatStatus(vm.chatOn = !vm.chatOn)"
@@ -80,6 +80,7 @@
                 <!--USER ITEM-->
                 <ion-item class="item-avatar item-icon-right vertical-center user-item"
                           ng-repeat="user in vm.users | orderBy: 'key'"
+                          ng-click="vm.openUserOptions(user)"
                           ng-class="{
                             'current-user-turn': (user.currentUser && vm.users.length > 1) || vm.showUsersCubes,
                             'not-current-user-turn': !user.currentUser && !vm.showUsersCubes,
@@ -91,17 +92,17 @@
                     <div class="row">
 
                         <!--AUTO LYE INDICATOR-->
-                        <div class="auto-lye-indicator" ng-if="user.autoLye">
+                        <div class="auto-lye-indicator" ng-if="user.isAutoLie && user.isLoggedIn && !vm.showUsersCubes">
                         </div>
 
                         <!--USER NAME-->
                         <div class="col" ng-class="{'col-40': !vm.showUsersCubes, 'col-20': vm.showUsersCubes}">
-                            <h2 ng-class="{'foo': user.currentUser}" ng-show="!user.isMe">
+                            <h2 ng-class="{'wrong-gambler-text': vm.endRoundResult.wrongId == user.id}" ng-show="!user.isMe">
                                 <i class="ion-chevron-right" ng-show="user.currentUser && !vm.showUsersCubes"></i>
                                 {{user.name}} ({{user.currentNumOfCubes && vm.users.length > 1 ? user.currentNumOfCubes
                                 : 'Off'}})
                             </h2>
-                            <h2 ng-class="{'foo': user.currentUser}" ng-show="user.isMe" style="font-weight: 900">
+                            <h2 ng-class="{'wrong-gambler-text': vm.endRoundResult.wrongId == user.id}" ng-show="user.isMe" style="font-weight: 900">
                                 <i class="ion-chevron-right"
                                    ng-show="user.currentUser && !vm.showUsersCubes && vm.users.length > 1"></i>
                                 Me
@@ -204,13 +205,13 @@
                 </div>
 
                 <!--AUTO LYING-->
-                <div style="display: inline-block;margin-bottom: 5px" ng-show="!vm.isMyTurn">
+                <div style="display: inline-block;margin-bottom: 5px" ng-show="!vm.isMyTurn && vm.showAutoLie && !vm.bluffedUser">
                     <div class="vertical-center">
                         <label style="margin-right: 10px;font-size: 17px;color: white">
                             Auto Lying?
                         </label>
                         <label class="toggle toggle-assertive" style="margin-top: 5px">
-                            <input type="checkbox" ng-model="vm.autoLye" ng-click="vm.setAutoLye()">
+                            <input type="checkbox" ng-model="vm.isAutoLie" ng-click="vm.setAutoLie()">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>

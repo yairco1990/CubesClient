@@ -100,9 +100,9 @@ GameCtrl.prototype.initController = function () {
     });
 
     //in case of user set auto lye
-    vm.mySocket.getSocket().on(pushCase.SET_AUTO_LYE, function (data) {
-        vm.$log.info("PUSH RECEIVED:", pushCase.SET_AUTO_LYE);
-        vm.updateUserWithAutoLye(data);
+    vm.mySocket.getSocket().on(pushCase.SET_AUTO_LIE, function (data) {
+        vm.$log.info("PUSH RECEIVED:", pushCase.SET_AUTO_LIE);
+        vm.updateUserWithAutoLie(data);
     });
 
     //back button event function
@@ -235,12 +235,13 @@ GameCtrl.prototype.getGame = function (isStartOfRound) {
             vm.showUsersCubes = false;
             vm.users = result.users;
             vm.room = result.room;
+            vm.showAutoLie = true;
 
             if (isStartOfRound) {
                 vm.startRoundUserId = vm.room.currentUserTurnId;
 
                 vm.showMyDice = true;
-                vm.autoLye = false;
+                vm.isAutoLie = false;
                 vm.diceStatusButton = "Hide";
             }
 
@@ -263,9 +264,14 @@ GameCtrl.prototype.getGame = function (isStartOfRound) {
             // Stop the ion-refresher from spinning
             vm.$scope.$broadcast('scroll.refreshComplete');
 
-            //if its my turn and I set autolye - send the lye request
-            if (vm.isMyTurn && vm.autoLye) {
-                vm.setGamble(null, null, true);
+            //if its my turn and I set autolie - send the lye request
+            if (vm.isMyTurn && vm.isAutoLie) {
+                //hide the user panel and say false, like he committed.
+                vm.isMyTurn = false;
+                vm.showAutoLie = false;
+                vm.$timeout(function () {
+                    vm.setGamble(null, null, true);
+                }, 3000);
             }
         },
         onError: function (error) {
@@ -502,7 +508,7 @@ GameCtrl.prototype.showAlert = function (title, description, color) {
 
     vm.$timeout(function () {
         alertPopup.close();
-    }, 2500);
+    }, 1500);
 };
 
 GameCtrl.prototype.getGambleTimes = function () {
@@ -708,19 +714,19 @@ GameCtrl.prototype.showWinnerPopup = function (winner) {
 /**
  * set auto lye
  */
-GameCtrl.prototype.setAutoLye = function () {
+GameCtrl.prototype.setAutoLie = function () {
     var vm = this;
 
     vm.requestHandler.createRequest({
-        event: 'setAutoLye',
+        event: 'setAutoLie',
         params: {
-            autoLye: vm.autoLye
+            isAutoLie: vm.isAutoLie
         },
         onSuccess: function () {
-            vm.$log.debug("successfully setAutoLye");
+            vm.$log.debug("successfully setAutoLie");
         },
         onError: function (error) {
-            vm.$log.error("failed to setAutoLye", error);
+            vm.$log.error("failed to setAutoLie", error);
         }
     });
 };
@@ -728,14 +734,14 @@ GameCtrl.prototype.setAutoLye = function () {
 /**
  * set user with auto lye
  */
-GameCtrl.prototype.updateUserWithAutoLye = function (data) {
+GameCtrl.prototype.updateUserWithAutoLie = function (data) {
     var vm = this;
 
     vm.users.forEach(function (player) {
         //find the user
         if (player.id == data.userId) {
             //set auto lye property
-            player.autoLye = data.autoLye;
+            player.isAutoLie = data.isAutoLie;
         }
     });
 };

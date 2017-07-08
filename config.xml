@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.dicelies943218" version="1.0.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionicframework.dicelies943218" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Dice Lies</name>
-  <description>
-        The game of the bluffers, now, on application(BETA).
+  <description>&#xD;
+        The game of the bluffers, now, on application(BETA).&#xD;
     </description>
-  <author email="yairco1990@gmail.com">
-        Yair Cohen
+  <author email="yairco1990@gmail.com">&#xD;
+        Yair Cohen&#xD;
     </author>
   <content src="index.html"/>
   <access origin="*"/>

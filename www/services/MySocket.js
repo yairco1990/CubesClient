@@ -13,7 +13,7 @@ angular.module('MyCubes.services.my-socket', [])
                 host: 'localhost:3000'
             },
             TEAMMATE: {
-                host: '192.168.1.105:3000'
+                host: '192.168.1.108:3000'
             },
             TEAMMATE2: {
                 host: '192.168.43.233:3000'
@@ -23,7 +23,7 @@ angular.module('MyCubes.services.my-socket', [])
             }
         };
 
-        var selectedEnvironment = ENVIRONMENTS.PRODUCTION;//
+        var selectedEnvironment = ENVIRONMENTS.TEAMMATE2;//
 
         $log.debug("environment host selected = ", selectedEnvironment.host);
 
